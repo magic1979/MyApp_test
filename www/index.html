@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>Liegi Nuts</title>
+
+<meta property="og:locale" content="en_US" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+<link rel="stylesheet" href="themes/Liegitheme2.css" />
+<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link href="http://fonts.googleapis.com/css?family=Roboto" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="js/jquery.mobile-1.4.2.min.css">
+
+<script src="jquery-1.10.2.min.js"></script>
+<script src="js/jquery.mobile-1.4.2.min.js"></script>
+
+<style>
+.div2 {
+background-color: #4F4F4F;
+}
+.div3 {
+background-color: black;
+}
+.scritta{
+font-family: 'Roboto', sans-serif;
+}
+</style>
+
+</head>
+<body>
+<div data-role="page" class="div2">
+<div data-role="header" align="center" data-theme="b" data-position="fixed">
+	<a href="#" class="ui-btn-right ui-btn ui-btn-inline ui-mini ui-corner-all ui-btn-icon-left ui-icon-grid"></a>
+	<span class="ui-title"><font color="red">Tournament</font></span>
+</div><!-- /header -->
+<div data-role="content" class="div2">
+	<center>
+	<img src="images/AnswerB.png" width="180px">
+        <script type="text/javascript" src="phonegap.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+	<br>
+</div>
+<br>
+	<table align="center" border="0" width="310px" height="110px">
+		<tr>
+			<td align="left">
+			<font size="2" color="gold" class="scritta">DATA:</font><font color="white" class="scritta" size="2">
+                <span id="classifica"></span></font>
+			</td>
+		</tr>
+			<tr>
+			<td align="left">
+			<font size="2" color="gold" class="scritta">Connessione:</font> <font color="white" class="scritta" size="2"><span id="connessione"></span></font>
+			</td>
+		</tr>
+			<tr>
+			<td align="left">
+			<font size="2" color="gold" class="scritta">Stack medio:</font> <font color="white" class="scritta" size="2">80.000</font>
+			</td>
+		</tr>
+			<tr>
+			<td align="left">
+			<font size="2" color="gold" class="scritta">Montepremi totale:</font> <font color="white" class="scritta" size="2">Euro 2.500</font>
+			</td>
+		</tr>
+	</table>
+<br>
+
+<ul data-role="listview" data-inset="true" data-theme="b">
+    <li><a href="DataBase.html" rel="external"><img src="images/hart.png" alt="France" class="ui-li-icon ui-corner-none">DataBase</a></li>
+    <li><a href="count3.html" data-transition="none" rel="external"><img src="images/news.png" alt="Germany" class="ui-li-icon">Json Mio</a></li>
+    <li><a href="Test.html" data-transition="none" rel="external"><img src="images/exit.png" alt="Great Britain" class="ui-li-icon">Play</a></li>
+    <li><a href="map.html" data-transition="none" rel="external"><img src="images/money.png" alt="Finland" class="ui-li-icon">Geo</a></li>
+</ul>
+
+<div data-role="footer" align="center" data-theme="b" data-position="fixed">
+	<a href="index_Answer.html" data-transition="none" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-bullets">Answer</a>
+	<a href="pull.html" data-transition="none" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-info">Pull</a>
+	<a href="Finder.html" data-transition="none" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-calendar">Parla</a>
+</div><!-- /footer -->
+</div><!-- /page -->
+</center>
+</body>
+</html>
+
+
+

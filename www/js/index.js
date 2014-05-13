@@ -51,7 +51,7 @@ var app = {
         localStorage.myname = "10";
         localStorage.setItem("example", "Binario")
 
-        console.log('Received Event: ' + id);
+        //console.log('Received Event: ' + id);
         //$('#classifica').html(numero);
         $('#classifica').html("DATA");
         
@@ -59,7 +59,7 @@ var app = {
         checkConnection()
         
         setTimeout(function() {
-                   navigator.splashscreen.hide();
+                navigator.splashscreen.hide();
         }, 2000);
 
     }
@@ -88,7 +88,20 @@ function checkConnection() {
     states[Connection.CELL]     = 'Cell generic connection';
     states[Connection.NONE]     = 'No network connection';
     
-    alert('Connection type: ' + states[networkState]);
+    //alert('Connection type: ' + states[networkState]);
+    
+    function alertDismissed() {
+        // do something
+    }
+    
+    navigator.notification.alert(
+       'Connection type: ' + states[networkState],  // message
+        alertDismissed,         // callback
+        'Game Over',            // title
+        'Done'                  // buttonName
+      );
+    
+    
     $('#connessione').html(states[networkState] + '\n');
 }
 

@@ -37,6 +37,8 @@
                  <script src="jquery-1.10.2.min.js"></script>
                  <script src="js/jquery.mobile-1.4.2.min.js"></script>
                  
+                 <script type="text/javascript" src="jquery.tablesorter.js"></script>
+                 
                   <script type="text/javascript" src="js/iscroll.js"></script>
                   
                   <script type="text/javascript">
@@ -46,9 +48,9 @@
                       generatedCount = 0;
                       
                       function pullDownAction () {
-                            app.initialize();
+                                onDeviceReady();
                                      
-                            myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+                                myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
                       }
                   
                   
@@ -99,10 +101,8 @@
                       }
                   
                   body {
-                      font-size:12px;
                       -webkit-user-select:none;
                       -webkit-text-size-adjust:none;
-                      font-family:helvetica;
                   }
                   
                   #header {
@@ -256,36 +256,67 @@
                          background-color: white;
                          opacity:0.5;
                          }
+                   
+                   table.tablesorter {
+                       font-family:arial;
+                       background-color: #f0f0f0;
+                       margin:10px 0pt 15px;
+                       font-size: 8pt;
+                       width: 95%;
+                       text-align: left;
+                       border: 2px solid #000000;
+                       
+                       border-radius: 10px;
+                       -moz-border-radius: 10px; /* firefox */
+                       -webkit-border-radius: 10px; /* safari, chrome */
+                       
+                   }
+                   table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+                       background-color: grey;
+                       border: 1px solid #FFF;
+                       font-size: 8pt;
+                       padding: 4px;
+                       width: 65%;
+                       
+                       border-radius: 10px;
+                       -moz-border-radius: 10px; /* firefox */
+                       -webkit-border-radius: 10px; /* safari, chrome */
+                       
+                   }
+                   table.tablesorter thead tr .header {
+                       background-image: url(bg.gif);
+                       background-repeat: no-repeat;
+                       background-position: center right;
+                       cursor: pointer;
+                   }
+                   table.tablesorter tbody td {
+                       color: #0f0f0f;
+                       padding: 4px;
+                       background-color: #FFF;
+                       vertical-align: top;
+                       
+                   }
+                   table.tablesorter tbody tr.odd td {
+                       background-color:#000000;
+                   }
+                   table.tablesorter thead tr .headerSortUp {
+                       background-image: url(asc.gif);
+                   }
+                   table.tablesorter thead tr .headerSortDown {
+                       background-image: url(desc.gif);
+                   }
+                   table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+                       background-color: #9d3434;
+                       
+                   }
                   </style>
     </head>
     <body>
-        <div data-role="page" class="div2" >
+        <div data-role="page" class="div2">
             
             <div data-role="header" align="center" data-theme="b" data-position="fixed">
-                <!--<span class="ui-title"> <img src="images/live.png" width="18px">&nbsp;ANSWER</span>-->
-                
-                 <img border="0" src="LogoAnswer.png" alt="Logo, Facebook" style="float:center; display:inline; height:30px"/>
+                <span class="ui-title"> <img src="images/live.png" width="18px">&nbsp;Tornei Live</span>
             </div><!-- /header -->
-            
-            <div id="wrapper">
-                <div id="scroller">
-                    <div id="pullDown">
-                        <span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
-                    </div>
-            
-            <div data-role="content" class="div2">
-                <script type="text/javascript" src="phonegap.js"></script>
-                <script type="text/javascript" src="js/index.js"></script>
-                <script type="text/javascript">
-                    app.initialize();
-            </script>
-               
-                <!--<center>
-                <img src="LogoAnswer.png" width="180px">-->
-            </div>
-            
-
-             <div id="classifica" align="center"></div>
             
             <div class="spinner" id="spinner">
                 <div class="bar1"></div>
@@ -302,40 +333,28 @@
                 <div class="bar12"></div>
             </div>
             
-            <br><br>
-
-        <div>
-            <ul data-role="listview"  data-theme="b" data-inset="true">
-                <li><a href="javascript:cambiap();" rel="external"><img src="img/radar.png">
-                    <h2><img src="images/finder.png" width="16px">&nbsp;Radar-Room</h2>
-                    <p>Cerca la poker room piu vicina</p></a>
-                </li>
-                <li><a href="FinderLive.html" rel="external"><img src="img/MTT.png">
-                    <h2><img src="images/live.png" width="16px">&nbsp;Tornei Live</h2>
-                    <p>Location, Data, buy-in</p></a>
-                </li>
-                <li><a href="#" rel="external"><img src="img/full.png">
-                    <h2><img src="images/chip.png" width="16px">&nbsp;Tornei On-Line</h2>
-                    <p>Tornei selezionati per orario</p></a>
-                </li>
-            </ul>
-        </div>
-
-          </div>
-     </div>
-            <!--<ul data-role="listview" data-inset="true" data-theme="b" >
-             <li><a href="Finder.html" data-transition="slide" rel="external"  ><img src="images/finder.png" class="ui-li-icon">Cerca Room</a></li>
-             <li><a href="FindLive.html" rel="external"><img src="images/live.png" class="ui-li-icon">Tornei Live</a></li>
-             <li><a href="FindOnline.html" rel="external"><img src="images/chip.png" class="ui-li-icon">Tornei On-Line</a></li>
-             <li><a href="index_Answer.html" rel="external"><img src="images/answer.png" class="ui-li-icon">Answer</a></li>
-             </ul>-->
+            <div id="wrapper">
+                <div id="scroller">
+                    <div id="pullDown">
+                        <span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
+                    </div>
             
-        <div data-role="footer" align="center" data-theme="b" data-position="fixed">
-            <a href="Finder.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-search">Regioni</a>
-            <a href="FinderLive.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-info">Pull</a>
-            <a href="javascript:send();" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-mail">Contatti</a>
-        </div><!-- /footer -->
+            
+            <div data-role="content" class="div2">
+                <script type="text/javascript" src="phonegap.js"></script>
+                <script type="text/javascript" src="js/FinderLive.js"></script>
+            </div>
+            <center>
+            <img src="img/Live/1.png" width="180px" class="circolare">
+
+             <div id="classifica" align="center"></div>
+
+        </div>
+          </div>
         
+        <div data-role="footer" align="left" data-theme="b" data-position="fixed">
+            <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>
+        </div><!-- /footer -->
         
     </div><!-- /page -->
     </body>

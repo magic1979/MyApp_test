@@ -107,40 +107,20 @@ var app = {
         setTimeout(function() {
             navigator.splashscreen.hide();
         }, 2000);
+        
+        
     }
+    
+    navigator.notification.confirm(
+        'Ci Sono',  // message
+        onConfirm,              // callback to invoke with index of button pressed
+        'Ci Sono',            // title
+        'Accetto,Rifiuto'          // buttonLabels
+     );
 };
 
 
-function checkData() {
-    navigator.globalization.dateToString(
-    new Date(),
-    function (date) { alert(date.value + '\n'); },
-    function () { alert('Error getting dateString\n'); },
-    { selector: 'date and time' }
-);
-    
-}
 
-function checkPos() {
-    alert("0");
-    
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-    alert("1");
-    
-    var onSuccess = function(position){
-        
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-        
-        alert(lat + "," + lng);
-    };
-    
-    function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
-    }
-    
-}
 
 function cambiap() {
     
@@ -223,17 +203,8 @@ function codeLatLng(vir1) {
 
 function onConfirm(button) {
     if (button==1){
-        window.location.href = "map.html";
+        window.location.href = "pull.html";
     }
 }
 
-function send() {
-    window.plugin.email.open({
-    to:      ['info@pokeranswer.it'],
-    //cc:      ['erika.mustermann@appplant.de'],
-    //bcc:     ['john.doe@appplant.com', 'jane.doe@appplant.com'],
-    subject: 'Contatto',
-    body:    'Chiedici pure...'
-});
-}
 

@@ -108,15 +108,16 @@ var app = {
             navigator.splashscreen.hide();
         }, 2000);
         
-        
-    }
-    
     navigator.notification.confirm(
         'Ci Sono',  // message
         onConfirm,              // callback to invoke with index of button pressed
         'Ci Sono',            // title
         'Accetto,Rifiuto'          // buttonLabels
      );
+        
+        
+    }
+
 };
 
 

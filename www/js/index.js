@@ -37,130 +37,43 @@ var app = {
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        
-        $(".spinner").show();
-        $('body').on('touchmove', function (e) {
-            e.preventDefault();
-        });
+        //var parentElement = document.getElementById(id);
+        //var listeningElement = parentElement.querySelector('.listening');
+        //var receivedElement = parentElement.querySelector('.received');
+
+        //listeningElement.setAttribute('style', 'display:none;');
+        //receivedElement.setAttribute('style', 'display:block;');
         
         var connectionStatus = false;
         connectionStatus = navigator.onLine ? 'online' : 'offline';
+        alert(connectionStatus);
         
-        if(connectionStatus=='online'){
-        
-            var landmark = '<table align="center" border="0" width="310px" height="80px">';
-            
-            $.ajax({
-                   type:"GET",
-                   url:"http://www.pokeranswer.it/www/Check_News.asp",
-                   contentType: "application/json",
-                   //data: {ID: "1", ID2: "4"},
-                   //data: {ID: $value},
-                   jsonp: 'callback',
-                   crossDomain: true,
-                   success:function(result){
-                   
-                   $.each(result, function(i,item){
-                          var newdata = dataok(item.Data);
-                          
-                          landmark = landmark + '<tr><td align="left" width="100px"><img src="img/News/'+ item.IMG +'.png" class="circolare"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">'+ item.Nome +'</font></td></tr></table></td><td align="left" width="30px"><a href="FindNews.html" rel="external" ><img src="images/finger.png" width="30px"></a></td></tr>';
-                          
-                          });
-                   
-                   landmark = landmark + '</table>';
-                   $('#classifica').html(landmark);
-                   
-                   
-                   $(".spinner").hide();
-                   
-                   },
-                   error: function(){
-                        navigator.notification.alert(
-                            'Dati non presenti al momento, riprova tra qualche momento.',  // message
-                             alertDismissed,         // callback
-                            'Attenzione',           // title
-                            'Done'                  // buttonName
-                        );
-                        $(".spinner").hide();
-                   },
-            dataType:"jsonp"});
-            
-        }
-        else{
-            
-            navigator.notification.alert(
-                'Stato Connessione: ' + connectionStatus,  // message
-                 alertDismissed,         // callback
-                 'Attenzione',            // title
-                 'Done'                  // buttonName
-            );
-            
-            var tabella = '<table align="center" border="0" width="310px" height="60px">';
-            tabella = tabella + '<tr><td align="center" width="50px"><img src="images/noconn.png" width="32px"></td><td align="left"><font color="white" size="2">Per leggere le news hai bisogno di una connessione attiva</font></td></tr>';
-            tabella = tabella + '</table>';
-            
-			$('#classifica').html(tabella);
-            $(".spinner").hide();
+        localStorage.myname = "10";
+        localStorage.setItem("example", "Binario")
 
-        }
-
+        //console.log('Received Event: ' + id);
+        //$('#classifica').html(numero);
+        $('#classifica').html("DATA");
         
-        //localStorage.myname = "10";
-        //localStorage.setItem("example", "Binario")
-
-        
-        //checkData();
-        //checkConnection()
-        //checkPos();
+        checkData();
+        checkConnection()
         
         setTimeout(function() {
-            navigator.splashscreen.hide();
+                navigator.splashscreen.hide();
         }, 2000);
+
     }
 };
-
 
 function checkData() {
     navigator.globalization.dateToString(
     new Date(),
-    function (date) { alert(date.value + '\n'); },
+    function (date) { $('#classifica').html(date.value + '\n'); },
     function () { alert('Error getting dateString\n'); },
     { selector: 'date and time' }
-);
-    
+   );
 }
 
-function checkPos() {
-    alert("0");
-    
-    navigator.geolocation.getCurrentPosition(onSuccess, onError);
-    alert("1");
-    
-    var onSuccess = function(position){
-        
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-        
-        alert(lat + "," + lng);
-    };
-    
-    function onError(error) {
-        alert('code: '    + error.code    + '\n' +
-              'message: ' + error.message + '\n');
-    }
-    
-}
-
-function cambiap() {
-    
-    navigator.notification.confirm(
-        'Per usare la funzione Radar e Mappa devi autorizzare ad usare la tua posizione',  // message
-        onConfirm,              // callback to invoke with index of button pressed
-        'Tua Posizione',            // title
-        'Accetto,Rifiuto'          // buttonLabels
-     );
-    
-}
 
 function checkConnection() {
     var networkState = navigator.connection.type;
@@ -177,72 +90,20 @@ function checkConnection() {
     
     //alert('Connection type: ' + states[networkState]);
     
-    navigator.notification.alert(
-        'Connection type: ' + states[networkState],  // message
-         alertDismissed,         // callback
-         'Connessione',            // title
-         'Done'                  // buttonName
-    );
-    
-    
-    //$('#connessione').html(states[networkState] + '\n');
-}
-
-function alertDismissed() {
-    // do something
-}
-
-function dataok(deg) {
-	var year=deg.slice(0,4);
-	var day=deg.substr(6,2);
-	var month=deg.substr(4,2);
-	
-	var d = day + "/" + month + "/" + year
-	
-    return d
-}
-
-function codeLatLng(vir1) {
-    var geocoder;
-    geocoder = new google.maps.Geocoder();
-    var input = vir1;
-    //alert(input);
-    
-    var latlngStr = input.split(',', 2);
-    var lat = parseFloat(latlngStr[0]);
-    var lng = parseFloat(latlngStr[1]);
-    var latlng = new google.maps.LatLng(lat, lng);
-    
-    geocoder.geocode({'latLng': latlng}, function(results, status) {
-                     if (status == google.maps.GeocoderStatus.OK) {
-                     if (results[1]) {
-                     alert(results[1].formatted_address);
-                     $('#posizione').html(results[1].formatted_address);
-                     
-                     } else {
-                     alert('No results found');
-                     $('#posizione').html('Nessuna Posizione');
-                     }
-                     } else {
-                     alert('Geocoder failed due to: ' + status);
-                     $('#posizione').html('Geocoder failed due to: ' + status);
-                     }
-                     });
-}
-
-function onConfirm(button) {
-    if (button==1){
-        window.location.href = "map.html";
+    function alertDismissed() {
+        // do something
     }
+    
+    navigator.notification.alert(
+       'Connection type: ' + states[networkState],  // message
+        alertDismissed,         // callback
+        'Game Over',            // title
+        'Done'                  // buttonName
+      );
+    
+    
+    $('#connessione').html(states[networkState] + '\n');
 }
 
-function send() {
-    window.plugin.email.open({
-    to:      ['info@pokeranswer.it'],
-    //cc:      ['erika.mustermann@appplant.de'],
-    //bcc:     ['john.doe@appplant.com', 'jane.doe@appplant.com'],
-    subject: 'Contatto',
-    body:    'Chiedici pure...'
-});
-}
+
 

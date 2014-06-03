@@ -103,15 +103,6 @@ var app = {
             $(".spinner").hide();
 
         }
-
-        
-        //localStorage.myname = "10";
-        //localStorage.setItem("example", "Binario")
-
-        
-        //checkData();
-        //checkConnection()
-        //checkPos();
         
         setTimeout(function() {
             navigator.splashscreen.hide();

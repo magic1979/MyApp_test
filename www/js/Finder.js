@@ -1,124 +1,142 @@
-$(document).ready(function(){
-	
-	var data = getdata();
-	localStorage.setItem("Data", data)
-	//alert(data);
-		
-	var ora = getora();
-		
-	//var ora = new Time();
-    //alert(data);
+document.addEventListener('deviceready', onDeviceReady, false);
 
-    function getdata() {
-        var oggi = new Date();
-
-        var G = oggi.getDate();
-        var M = (oggi.getMonth() + 1);
-		
-		//alert(G);
-		//alert(M);
-
-        if (G < 10) {
-            var gg = "0" + oggi.getDate();
-        }
-        else {
-            var gg = oggi.getDate();
-        }
-
-        if (M < 10) {
-            var mm = "0" + (oggi.getMonth() + 1);
-        }
-        else {
-            var mm = (oggi.getMonth() + 1);
-        }
-
-        var aa = oggi.getFullYear();
-
-        var data = aa + "" + mm + "" + gg;
-
-        return data;
+function onDeviceReady() {
+    
+    $('body').on('touchmove', function (e) {
+      e.preventDefault();
+    });
+    
+    
+    $(".spinner").show();
+    var connectionStatus = false;
+    connectionStatus = navigator.onLine ? 'online' : 'offline';
+    
+    if(connectionStatus=='online'){
+    
+    
+    var mialat;
+    var mialng;
+    var via;
+    
+    mialat = localStorage.getItem("lat");
+	mialng = localStorage.getItem("lng");
+    via = localStorage.getItem("Via");
+    
+    if (!via) {
+        via = "Non posso determinare il tuo indirizzo";
     }
-	
-
-    function getora() {
-        var oggi = new Date();
-
-        var O = oggi.getHours();
-        var M = oggi.getMinutes();
-		
-		if(M< 10)M="0"+M;
-		if(O< 10)O="0"+O;
-		
-        var ora = O + ":" + M;
-
-        return ora;
-    }
-	
-	
-    $('#mySelect').on('change', function(){
-        var $this = $(this),
-            $value = $this.val();
         
-        alert($value);
-		var distanza;
-		
-		var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Poker Room</font></th><th><font color="white" size="2">km <img src="img/giu.png" width="16px"></font></th></tr></thead><tbody id="classifica">';
-		
-     $.ajax({
-	 type:"GET",
-	 url:"http://pokeranswer.it/www/Check_Regioni.asp",
-	 contentType: "application/json",
-     //data: {ID: "1", ID2: "4"},
-	 //data: {ID: "1"},
-	 jsonp: 'callback',
-     crossDomain: true,
-        success:function(result){
-						
-				$.each(result, function(i,item){
-				distanza = getDistanceFromLatLonInKm();
-				landmark = landmark + '<tr><th><font size="2">'+ item.Nome +'</font><br>'+ item.Ind +'</br></th><th><font size="2">'+ distanza +'</font></th></tr>';
-				
-				//$('#classifica').append(landmark);
-			});
-			
-			landmark = landmark + '</tbody></table>';
-			$('#classifica').html(landmark); 
-			landmark = "";
-			
-          },
-		error: function(){
-		   alert('There was an error loading the data.');
-		},
-		dataType:"jsonp"});
+    var test;
+	test = 1
+        
+        var tabella = '<table align="center" border="0" width="310px" height="60px">';
+        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/marketer.png" width="32px"></td><td align="left"><font color="white" size="2">'+ via +'</font></td></tr>';
+        tabella = tabella + '</table>';
+        
+        $('#tabella').html(tabella);
+    
+    $(".spinner").hide();
+    
+    $('#mySelect').on('change', function(){
+        $(".spinner").show();
+        var $this = $(this),
+        $value = $this.val();
+                      
+        //alert($value);
+                      
+        var distanza;
+                      
+        var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Poker Room</font></th><th><font color="white" size="2"><img src="images/giu.png" width="16px">(Km)</font></th></tr></thead><tbody id="classifica">';
+                      
+                      $.ajax({
+                             type:"GET",
+                             url:"http://www.pokeranswer.it/www/Check_Room.asp",
+                             contentType: "application/json",
+                             //data: {ID: "1", ID2: "4"},
+                             data: {ID: $value},
+                             jsonp: 'callback',
+                             crossDomain: true,
+                             success:function(result){
+                             
+                             $.each(result, function(i,item){
+                                    if (item.lat == 0){
+                                    distanza = "0";
+                                    }
+                                    else{
+                                        distanza = getDistance(mialat,mialng,item.lat,item.lng).toFixed(1);
+                                        test = (parseInt(test)+1)
+                                    }
+                                    
+                                    landmark = landmark + '<tr><td><font size="2"><img src="images/marketer.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="maps:daddr='+ via +'&saddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/mappa.png" width="16px"></a></font></td></tr>';
+                                    
+                                    });
+                             
+                             landmark = landmark + '</tbody></table>';
+                             $('#classifica').html(landmark); 
+                             $("#myTable").tablesorter( {sortList: [[1,0]]} );
+                             
+                             $(".spinner").hide();
+                             
+                             },
+                                error: function(){
+                                    navigator.notification.alert(
+                                    'Dati non presenti al momento, riprova tra qualche momento.',  // message
+                                     alertDismissed,         // callback
+                                     'Attenzione',           // title
+                                     'Done'                  // buttonName
+                                      );
+                             
+                                $(".spinner").hide();
 
-	
-	//landmark = landmark + '<tr><th><font size="2">Liegi</font><br>Via Stamira, 7</br></th><th><font size="2">10</font></th></tr>';
-	
-	//distanza = getDistanceFromLatLonInKm();
-	//landmark = landmark + '<tr><th><font size="2">Cotton</font><br>Via Marziale, 43</br></th><th><font size="2">'+ distanza +'</font></th></tr>';
-	
+                             },
+                            dataType:"jsonp"});
+                      });
+        
+    }
+    
+    else{
+        
+        navigator.notification.alert(
+           'Stato Connessione: ' + connectionStatus,  // message
+           alertDismissed,         // callback
+           'Attenzione',            // title
+           'Done'                  // buttonName
+        );
+        
+        var tabella = '<table align="center" border="0" width="310px" height="60px">';
+        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/noconn.png" width="32px"></td><td align="left"><font color="white" size="2">Per leggere le news hai bisogno di una connessione attiva</font></td></tr>';
+        tabella = tabella + '</table>';
+        
+        $('#classifica').html(tabella);
+        $(".spinner").hide();
+        
+    }
 
-	$("#myTable").tablesorter( {sortList: [[1,0]]} );
-		
-   });
-	
-	//$("#myTable").tablesorter(); 
-	//$("#myTable").tablesorter( {sortList: [[2,0]]} ); 
-   
-	
-	var points = [40, 100, 1, 5, 25, 10];
-	points.sort(function(a, b){return a-b});
-	
-	//var landmark = '<li><font color="white" size="2"><b>1. '+points+'</b><br><img src="images/fiches.png"></br></font></li>';
-	//$('#classifica').append(landmark);
-	//$('#classifica').listview('refresh');
-	
-	var num = 15;
-	var n = num.toString();
-	
-});
 
-function getDistanceFromLatLonInKm() {
-    var d = 5.4; // Distance in km
+}
+
+function cambiap() {
+
+    window.location.href = "index.html";
+
+}
+
+function getDistance(lat1,lon1,lat2,lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lon2-lon1);
+    var a =
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ;
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+    var d = R * c; // Distance in km
     return d;
 }
+
+function deg2rad(deg) {
+    return deg * (Math.PI/180)
+}
+
+

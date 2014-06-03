@@ -1,66 +1,34 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
+    //$('#map').html("info.level");
     
-    $(".spinner").show();
-    var connectionStatus = false;
-    connectionStatus = navigator.onLine ? 'online' : 'offline';
+    //window.addEventListener("batterycritical", onBatteryCritical, false);
     
-    if(connectionStatus=='online'){
+    //function onBatteryCritical(info) {
+    // Handle the battery critical event
+    //alert("Battery Level Critical " + info.level + "%\nRecharge Soon!");
+    //}
+    
+    //checkConnection();
+    //geo2();
+    
     
     navigator.geolocation.getCurrentPosition (function (pos)
-                                              {
+    {
                                               
-                                              var lat = pos.coords.latitude;
-                                              var lng = pos.coords.longitude;
-                                              
-                                              alert(lat + "," + lng);
-                                              
-                                              localStorage.setItem("lat", lat)
-                                              localStorage.setItem("lng", lng)
-                                              
-                                              var destIcon = new google.maps.MarkerImage("images/marketer.png", null, null, null, new google.maps.Size(26,30));
-                                              
-                                              //var beaches = [
-                                                  //['MiaP', lat, lng, 1],
-                                                  //['Cotton', 41.913010, 12.442009, 2],
-                                                  //['Liegi', 41.914332, 12.523114, 3]
-                                              //];
-                                              
-                                              var beaches = [];
-                                              var posizione = 1;
-                                              
-                                              beaches.push(['Tua Posizione',lat,lng,1])
-                                              
-                                              $.ajax({
-                                                     type:"GET",
-                                                     url:"http://www.pokeranswer.it/www/Check_Room.asp",
-                                                     contentType: "application/json",
-                                                     //data: {ID: "1", ID2: "4"},
-                                                     data: {ID: "all"},
-                                                     jsonp: 'callback',
-                                                     crossDomain: true,
-                                                     success:function(result){
-                                                     
-                                                     $.each(result, function(i,item){
-                                                            
-                                                            posizione = (posizione+1);
-                                                            
-                                                            beaches.push([item.Room,item.lat,item.lng,posizione])
-
-                                                      });
-                                                     
-                                                     for (var i = 0; i < beaches.length; i++) {
-                                                        var beach = beaches[i];
-                                                        //alert(beach[0]);
-                                                     }	
-                                                     
-                                                     },
-                                                     error: function(){
-                                                     alert('There was an error loading the data.');
-                                                     },
-                                                     dataType:"jsonp"});
-                                              
+         var lat = pos.coords.latitude;
+         var lng = pos.coords.longitude;
+         
+         var originIcon = 'images/Chart.png';
+         var destIcon = 'img/marketer34.png';
+         $('#classifica').html("distanza");
+        
+                                              var beaches = [
+                                                             ['MiaP', lat, lng, 1],
+                                                             ['Cotton', 41.913010, 12.442009, 2],
+                                                             ['Liegi', 41.914332, 12.523114, 3]
+                                                             ];
                                               
                                               var image = {
                                               url: 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/images/gpsloc.png',
@@ -77,110 +45,92 @@ function onDeviceReady() {
                                               type: 'poly'
                                               };
                                               
-                                              var img = new google.maps.MarkerImage("images/gps18.png", null, null, null, new google.maps.Size(22,22));
+                                              var img = 'img/gps24.png'
                                               
-                                              var distanza = getDistanceFromLatLonInKm(lat,lng,41.913010,12.442009).toFixed(1);
-                                              codeLatLng(lat,lng);
+        
+                                            var distanza = getDistanceFromLatLonInKm(lat,lng,41.913010,12.442009).toFixed(1);
+                                            codeLatLng();
                                               
-                                              var dist = distanza;
+        alert(distanza);
+        var dist = distanza;
+        $('#classifica').html(dist);
+        //alert(getDistanceFromLatLonInKm(lat,lng,41.913010,12.442009).toFixed(1));
+                                           
                                               
-                                              var latlng = new google.maps.LatLng (lat, lng);
+         var latlng = new google.maps.LatLng (lat, lng);
+         var options = {
+         zoom : 11,
+         center : latlng,
+         mapTypeId : google.maps.MapTypeId.ROADMAP
+                                              
+    };
+
+                                              $("#btn").bind ("click", function (event)
+                                              {
+                                              var $content = $("#win2 div:jqmData(role=content)");
+                                              $content.height (screen.height - 50);
+                                              
+                                              var infowindow = new google.maps.InfoWindow();
+                                              
                                               var options = {
-                                              zoom : 6,
+                                              zoom : 11,
                                               center : latlng,
                                               mapTypeId : google.maps.MapTypeId.ROADMAP
                                               
                                               };
+                                              var map = new google.maps.Map($content[0], options);
+                                                              
                                               
-                                              $(".spinner").hide();
+                                              $.mobile.changePage ($("#win2"));
+                                               setTimeout(function() {
+                                                   google.maps.event.trigger(map, "resize");
+                                                   map.setCenter(latlng);
+                                                }, 1000);
                                               
-                                              $("#btn").bind ("click", function (event)
-                                                              {
-                                                              var $content = $("#win2 div:jqmData(role=content)");
-                                                              $content.height (screen.height - 100);
-                                                              
-                                                              var infowindow = new google.maps.InfoWindow();
-                                                              
-                                                              var options = {
-                                                              zoom : 6,
-                                                              center : latlng,
-                                                              mapTypeId : google.maps.MapTypeId.ROADMAP
-                                                              
-                                                              };
-                                                              var map = new google.maps.Map($content[0], options);
-                                                              
-                                                              
-                                                              $.mobile.changePage ($("#win2"));
-                                                              setTimeout(function() {
-                                                                 google.maps.event.trigger(map, "resize");
-                                                                 map.setCenter(latlng);
-                                                              }, 1000);
-                                                              
-                                                              for (var i = 0; i < beaches.length; i++) {
-                                                              
-                                                              var beach = beaches[i];
-                                                              //var k = i+1;
-                                                              
-                                                              var myLatLng = new google.maps.LatLng(beach[1], beach[2], beach[3]);
-                                                              
-                                                              
-                                                              if (i==0) {
-                                                              icon = img;
-                                                              }
-                                                              else {
-                                                              icon = destIcon;
-                                                              }
-                                                              
-                                                              marker = new google.maps.Marker (
-                                                                     {
-                                                                      map : map,
-                                                                      icon: icon,
-                                                                      animation : google.maps.Animation.DROP,
-                                                                      position : myLatLng,
-                                                                      content:'<div class="infowindow">'+ beach[0] +'</div>',
-                                                                      //shape: shape,
-                                                                      title: beach[0],
-                                                                      zIndex: beach[3]
-                                                                });
-                                                              
-                                                              
-                                                              google.maps.event.addListener(marker, 'click', function() {
-                                                                 infowindow.setContent(this.content);
-                                                                 infowindow.open(map, this);
-                                                              });
-                                                              
-                                                              }
-                                                              
-                                                              
-                                                              });
+                                              for (var i = 0; i < beaches.length; i++) {
                                               
-                                              },function (error) {
-                                                    alert('code: '    + error.code    + '\n' +
-                                                    'message: ' + error.message + '\n');
-                                                    $(".spinner").hide();
+                                              var beach = beaches[i];
+                                              
+                                              var myLatLng = new google.maps.LatLng(beach[1], beach[2], beach[3]);
+                                              
+                                              
+                                              if (i==0) {
+                                                icon = img;
+                                              }
+                                                else {
+                                                icon = destIcon;
+                                              }
+                                              
+                                              marker = new google.maps.Marker (
+                                               {
+                                                   map : map,
+                                                   icon: icon,
+                                                   animation : google.maps.Animation.DROP,
+                                                   position : myLatLng,
+                                                   content:'<div class="infowindow">Liegi</div>',
+                                                   //shape: shape,
+                                                   title: beach[0],
+                                                   zIndex: beach[3]
+                                               });
+                                                              
+                                                //if (i==0) {
+                                                //infowindow.setContent('Poker');
+                                                //infowindow.open(map, marker);
+                                                //}
+                                                              
+                                               google.maps.event.addListener(marker, 'click', function() {
+                                                  infowindow.setContent(this.content);
+                                                  infowindow.open(map, this);
+                                               });
+
+                                              }
+                                              
+                                                              
                                               });
+                                              
+  });
     
-    var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
-    
-}
-    
-    else{
-        
-        navigator.notification.alert(
-               'Stato Connessione: ' + connectionStatus,  // message
-                alertDismissed,         // callback
-                'Attenzione',            // title
-                'Done'                  // buttonName
-        );
-        
-        var tabella = '<table align="center" border="0" width="310px" height="60px">';
-        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/noconn.png" width="32px"></td><td align="left"><font color="white" size="2">Per leggere le news hai bisogno di una connessione attiva</font></td></tr>';
-        tabella = tabella + '</table>';
-        
-        $('#classifica').html(tabella);
-        $(".spinner").hide();
-        
-    }
+var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 30000 });
     
 }
 
@@ -211,41 +161,27 @@ function deg2rad(deg) {
     return deg * (Math.PI/180)
 }
 
-function codeLatLng(lati,lngi) {
+function codeLatLng() {
     var geocoder;
     geocoder = new google.maps.Geocoder();
-    //var input = "41.875094, 12.478151";
-    //var latlngStr = input.split(',', 2);
-    var lat = parseFloat(lati);
-    var lng = parseFloat(lngi);
+    var input = "41.875094, 12.478151";
+    var latlngStr = input.split(',', 2);
+    var lat = parseFloat(latlngStr[0]);
+    var lng = parseFloat(latlngStr[1]);
     var latlng = new google.maps.LatLng(lat, lng);
     
     geocoder.geocode({'latLng': latlng}, function(results, status) {
                      if (status == google.maps.GeocoderStatus.OK) {
                      if (results[1]) {
-                     
-                        var tabella = '<table align="center" border="0" width="310px" height="60px">';
-                        tabella = tabella + '<tr><td align="center" width="50px"><a href="maps:daddr=41.913010,12.442009&saddr=41.875094,12.478151"><img src="images/marketer.png" width="32px"></a></td><td align="left"><font color="white" size="2">'+ results[1].formatted_address +'</font></td></tr>';
-                        tabella = tabella + '</table>';
-                     
-                        var viadotto = results[1].formatted_address;
-                     
-                        localStorage.setItem("Via", viadotto)
-                     
-                        $('#classifica').html(tabella);
-                        $(".spinner").hide();
+                     alert(results[1].formatted_address);
                      
                      } else {
-                        $('#classifica').html('No results found');
-                        $(".spinner").hide();
+                     alert('No results found');
                      }
                      } else {
-                        $('#classifica').html('Geocoder failed due to: ' + status);
-                        $(".spinner").hide();
+                     alert('Geocoder failed due to: ' + status);
                      }
                      });
 }
-
-
 
 

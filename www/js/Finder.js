@@ -67,7 +67,7 @@ function onDeviceReady() {
                                         test = (parseInt(test)+1)
                                     }
                                     
-                                    landmark = landmark + '<tr><td><font size="2"><img src="images/marketer.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="maps:daddr='+ via +'&saddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/mappa.png" width="16px"></a></font></td></tr>';
+                                    landmark = landmark + '<tr><td><font size="2"><img src="images/marketer.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="http://maps.google.com/maps?saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/mappa.png" width="16px"></a></font></td></tr>';
                                     
                                     });
                              

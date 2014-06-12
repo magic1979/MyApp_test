@@ -257,29 +257,25 @@
                          }
                   </style>
     </head>
-    <body>
+    <body onload="init();">
         <div data-role="page" class="div2" >
+        
+        	<div data-role="panel" id="mypanel" data-display="overlay" data-theme="b" data-position-fixed="true">
+                <center>
+                        <img src="LogoAnswer.png" width="130px">
+                        <br>
+                        <ul data-role="listview" data-inset="true">
+                            <li><a href="#">Acura</a></li>
+                            <li><a href="#">Audi</a></li>
+                        </ul>
+                        </center>
+                <br>
+                <a href="#my-header" class="ui-btn ui-corner-all ui-btn-inline ui-icon-delete ui-btn-icon-left" data-rel="close">Close</a>
+            </div><!-- /panel -->
             
             <div data-role="header" align="center" data-theme="b" data-position="fixed">
                  <img border="0" src="LogoAnswer.png" alt="Logo, Facebook" style="float:center; display:inline; height:30px"/>
             </div><!-- /header -->
-            
-            <div id="wrapper">
-                <div id="scroller">
-                    <div id="pullDown">
-                        <span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
-                    </div>
-            
-            <div data-role="content" class="div2">
-                <script type="text/javascript" src="phonegap.js"></script>
-                <script type="text/javascript" src="js/index.js"></script>
-                <script type="text/javascript">
-                    app.initialize();
-            </script>
-
-            </div>
-
-             <div id="classifica" align="center"></div>
             
             <div class="spinner" id="spinner">
                 <div class="bar1"></div>
@@ -296,21 +292,40 @@
                 <div class="bar12"></div>
             </div>
             
-            <br><br>
+            <div id="wrapper">
+                <div id="scroller">
+                    <div id="pullDown">
+                        <span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
+                    </div>
+            
+            <div data-role="content" class="div2">
+                <script type="text/javascript" src="phonegap.js"></script>
+                <script type="text/javascript" src="PushNotification.js"></script>
+
+                <script type="text/javascript" src="js/index.js"></script>
+                <script type="text/javascript">
+                    app.initialize();
+            </script>
+
+            </div>
+
+             <div id="classifica" align="center"></div>
+
+            <br>
 
         <div>
             <ul data-role="listview"  data-theme="b" data-inset="true">
-                <li><a href="javascript:cambiap();" rel="external"><img src="img/radar2.png">
+                <li><a href="javascript:cambiap();" rel="external"><img src="img/italia.png" >
                     <h2><img src="images/finder.png" width="16px">&nbsp;Radar-Room</h2>
-                    <p>Cerca la poker room piu vicina</p></a>
+                    <p>Visualizza le strutture vicino a te</p></a>
                 </li>
-                <li><a href="Finder.html" rel="external"><img src="img/MTT.png">
-                    <h2><img src="images/live.png" width="16px">&nbsp;Tornei Live</h2>
-                    <p>Location, Data, buy-in</p></a>
+                <li><a href="#" rel="external"><img src="img/full3.png">
+                    <h2><img src="images/chip.png" width="16px">&nbsp;Cerca Player</h2>
+                    <p>Avatar, Andamanto, R.o.i</p></a>
                 </li>
-                <li><a href="#" rel="external"><img src="img/full.png">
-                    <h2><img src="images/chip.png" width="16px">&nbsp;Tornei On-Line</h2>
-                    <p>Tornei selezionati per orario</p></a>
+                <li><a href="FinderLive.html" rel="external"><img src="img/MTT.png" height="70">
+                    <h2><img src="images/live.png" width="16px">&nbsp;Cosa Giocare</h2>
+                    <p>Tornei Live, Tornei On-Line</p></a>
                 </li>
             </ul>
         </div>
@@ -318,12 +333,13 @@
           </div>
      </div>
             
-        <div data-role="footer" align="center" data-theme="b" data-position="fixed">
-            <a href="Finder.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-search">Regioni</a>
-            <a href="pull.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-info">Pull</a>
-            <a href="map.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-info">Mappa</a>
+		<div data-role="footer" align="center" data-theme="b" data-position="fixed" data-tap-toggle="false">
+            <table><tr><td width="200px">
+            <a href="#mypanel" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-grid">Altro</a>
+            <a href="mailto:info@pokeranswer.it?subject=Contatto&body=whatever body body" target="_blank" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-mail">Contatti</a>&nbsp;&nbsp;&nbsp;</td>
+            <td width="120px"><a href="javascript:apri();"><img src="images/aams_logo.png" width="32px">&nbsp;<img src="images/giocosicuro.png" width="38px">&nbsp;<img src="images/18.png" width="22px"></a></td>
+            </tr></table>
         </div><!-- /footer -->
-        
         
     </div><!-- /page -->
     </body>

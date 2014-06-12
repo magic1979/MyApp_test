@@ -16,6 +16,61 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+ 
+ function initPushwoosh()
+{
+    //get pushwoosh plugin
+    var pushNotification = window.plugins.pushNotification;
+    //notify plugin that device is ready, this is VERY important as it will dispatch on start push notification
+    pushNotification.onDeviceReady();
+ 
+    //register for push notifications
+    pushNotification.registerDevice({ projectid: "103551733757", appid : "5370F-D83D1" },
+        function(status) {
+            //this is push token
+            var pushToken = status;
+            console.warn('push token: ' + pushToken);
+        },
+        function(status) {
+            console.warn(JSON.stringify(['failed to register ', status]));
+            
+        navigator.notification.alert(
+          'Al momento non puoi ricevere alcuna notifiche',  // message
+           alertDismissed,         // callback
+           'Notifica',            // title
+           'Done'                  // buttonName
+       );
+
+        }
+    );
+ 
+    //this function gets called when push notifications has been received
+    document.addEventListener('push-notification', function(event) {
+        var title = event.notification.title;
+        var userData = event.notification.userdata;
+                                 
+        if(typeof(userData) != "undefined") {
+            console.warn('user data: ' + JSON.stringify(userData));
+        }
+        
+        navigator.notification.alert(
+           userData,  		  // message
+           alertDismissed,    // callback
+           title,             // title
+           'Done'            // buttonName
+        );
+        
+        //alert(title);
+    });
+}
+
+function init() {
+    document.addEventListener("deviceready", initPushwoosh, true);
+ 
+    //rest of the code
+}
+ 
+ 
 var app = {
     // Application Constructor
     initialize: function() {
@@ -206,6 +261,14 @@ function onConfirm(button) {
     if (button==1){
         window.location.href = "pull.html";
     }
+}
+
+function apri() {
+    
+    //var mapLocationUrl = 'maps.apple.com/ll=51.84,-8.30';
+    //var ref = window.open(encodeURI(mapLocationUrl), '_system', 'location=no');
+    
+    var ref = window.open('http://www.google.it', '_blank', 'location=yes');
 }
 
 

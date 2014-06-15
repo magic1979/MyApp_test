@@ -48,19 +48,28 @@
     document.addEventListener('push-notification', function(event) {
         var title = event.notification.title;
         var userData = event.notification.userdata;
+        var msg = event.notification.message;
                                  
-        if(typeof(userData) != "undefined") {
+        if(typeof(msg) != "undefined") {
             console.warn('user data: ' + JSON.stringify(userData));
         }
         
         navigator.notification.alert(
-           userData,  		  // message
+           msg,  		  	   // message
            alertDismissed,    // callback
            title,             // title
            'Done'            // buttonName
         );
         
-        //alert(title);
+       //var notification = event.notification;
+       //navigator.notification.alert(
+          //'News: ' + notification.aps.alert,  // message
+         //alertDismissed,         // callback
+         //'Notifica',            // title
+         //  'Done'                  // buttonName
+        //);
+        
+        //Next Test
     });
 }
 
@@ -163,14 +172,6 @@ var app = {
             navigator.splashscreen.hide();
         }, 2000);
         
-    navigator.notification.confirm(
-        'Ci Sono',  // message
-        onConfirm,              // callback to invoke with index of button pressed
-        'Ci Sono',            // title
-        'Accetto,Rifiuto'          // buttonLabels
-     );
-        
-        
     }
 
 };
@@ -179,14 +180,12 @@ var app = {
 
 
 function cambiap() {
-    
     navigator.notification.confirm(
         'Per usare la funzione Radar e Mappa devi autorizzare ad usare la tua posizione',  // message
         onConfirm,              // callback to invoke with index of button pressed
         'Tua Posizione',            // title
         'Accetto,Rifiuto'          // buttonLabels
      );
-    
 }
 
 function checkConnection() {
@@ -259,7 +258,7 @@ function codeLatLng(vir1) {
 
 function onConfirm(button) {
     if (button==1){
-        window.location.href = "pull.html";
+        window.location.href = "map.html";
     }
 }
 

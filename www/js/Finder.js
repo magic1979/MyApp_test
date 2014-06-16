@@ -30,7 +30,7 @@ function onDeviceReady() {
 	test = 1
         
         var tabella = '<table align="center" border="0" width="310px" height="60px">';
-        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/marketer.png" width="32px"></td><td align="left"><font color="white" size="2">'+ via +'</font></td></tr>';
+        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/mark.png" width="32px"></td><td align="left"><font color="white" size="2">'+ via +'</font></td></tr>';
         tabella = tabella + '</table>';
         
         $('#tabella').html(tabella);
@@ -67,7 +67,7 @@ function onDeviceReady() {
                                         test = (parseInt(test)+1)
                                     }
                                     
-                                    landmark = landmark + '<tr><td><font size="2"><img src="images/marketer.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="http://maps.google.com/maps?saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/mappa.png" width="16px"></a></font></td></tr>';
+                                    landmark = landmark + '<tr><td><font size="2"><img src="images/mark.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="http://maps.google.com/maps?saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="16px"></a></font></td></tr>';
                                     
                                     });
                              
@@ -137,6 +137,14 @@ function getDistance(lat1,lon1,lat2,lon2) {
 
 function deg2rad(deg) {
     return deg * (Math.PI/180)
+}
+
+function apri() {
+    
+    //var mapLocationUrl = 'maps.apple.com/ll=51.84,-8.30';
+    //var ref = window.open(encodeURI(mapLocationUrl), '_system', 'location=no');
+    
+    var ref = window.open('http://www.google.it', '_blank', 'location=yes');
 }
 
 

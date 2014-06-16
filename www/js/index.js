@@ -57,7 +57,7 @@
         navigator.notification.alert(
            msg,  		  	   // message
            alertDismissed,    // callback
-           title,             // title
+           'Notifica',             // title
            'Done'            // buttonName
         );
         
@@ -158,6 +158,8 @@ var app = {
                  'Attenzione',            // title
                  'Done'                  // buttonName
             );
+			
+			var landmark = '<table align="center" border="0" width="310px" height="80px">';
             
             var tabella = '<table align="center" border="0" width="310px" height="60px">';
             tabella = tabella + '<tr><td align="center" width="50px"><img src="images/noconn.png" width="32px"></td><td align="left"><font color="white" size="2">Per leggere le news hai bisogno di una connessione attiva</font></td></tr>';

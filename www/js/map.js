@@ -8,159 +8,323 @@ function onDeviceReady() {
     
     if(connectionStatus=='online'){
     
-    navigator.geolocation.getCurrentPosition (function (pos)
-                                              {
-                                              
-                                              var lat = pos.coords.latitude;
-                                              var lng = pos.coords.longitude;
-                                              
-                                              //alert(lat + "," + lng);
-                                              
-                                              localStorage.setItem("lat", lat)
-                                              localStorage.setItem("lng", lng)
-                                              
-                                              var destIcon = new google.maps.MarkerImage("images/marketer.png", null, null, null, new google.maps.Size(26,30));
-                                              
-                                              //var beaches = [
-                                                  //['MiaP', lat, lng, 1],
-                                                  //['Cotton', 41.913010, 12.442009, 2],
-                                                  //['Liegi', 41.914332, 12.523114, 3]
-                                              //];
-                                              
-                                              var beaches = [];
-                                              var posizione = 1;
-                                              
-                                              beaches.push(['Tua Posizione',lat,lng,1])
-                                              
-                                              $.ajax({
-                                                     type:"GET",
-                                                     url:"http://www.pokeranswer.it/www/Check_Room.asp",
-                                                     contentType: "application/json",
-                                                     //data: {ID: "1", ID2: "4"},
-                                                     data: {ID: "all"},
-                                                     jsonp: 'callback',
-                                                     crossDomain: true,
-                                                     success:function(result){
-                                                     
-                                                     $.each(result, function(i,item){
-                                                            
-                                                            posizione = (posizione+1);
-                                                            
-                                                            beaches.push([item.Room,item.lat,item.lng,posizione])
+    //var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { maximumAge: 18000000, timeout: 20000, enableHighAccuracy:true });
+	var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 20000, enableHighAccuracy: true });
+	
+	function onSuccess(position) {
+            ciao = position.coords.latitude;
+            ciao1 = position.coords.longitude;
+            
+            localStorage.setItem("lat", ciao)
 
-                                                      });
-                                                     
-                                                     for (var i = 0; i < beaches.length; i++) {
-                                                        var beach = beaches[i];
-                                                        //alert(beach[0]);
-                                                     }	
-                                                     
-                                                     },
-                                                     error: function(){
-                                                     alert('There was an error loading the data.');
-                                                     },
-                                                     dataType:"jsonp"});
+            localStorage.setItem("lng", ciao1)
+        }
+        
+        
+        function onError(error) {
+            alert('code: '    + error.code    + '\n' +
+                  'message: ' + error.message + '\n');
+        }
+        
+
+
+		  var lat = localStorage.getItem("lat");
+
+		  var lng = localStorage.getItem("lng");
+
                                               
+
+          var destIcon = new google.maps.MarkerImage("images/mark.png", null, null, null, new google.maps.Size(28,40));
+
                                               
-                                              var image = {
-                                              url: 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/images/gpsloc.png',
-                                              // This marker is 20 pixels wide by 32 pixels tall.
-                                              size: new google.maps.Size(20, 32),
-                                              // The origin for this image is 0,0.
-                                              origin: new google.maps.Point(0,0),
-                                              // The anchor for this image is the base of the flagpole at 0,32.
-                                              anchor: new google.maps.Point(0, 32)
-                                              };
-                                              
-                                              var shape = {
-                                              coord: [1, 1, 1, 20, 18, 20, 18 , 1],
-                                              type: 'poly'
-                                              };
-                                              
-                                              var img = new google.maps.MarkerImage("images/gps18.png", null, null, null, new google.maps.Size(22,22));
-                                              
-                                              var distanza = getDistanceFromLatLonInKm(lat,lng,41.913010,12.442009).toFixed(1);
-                                              codeLatLng(lat,lng);
-                                              
-                                              var dist = distanza;
-                                              
-                                              var latlng = new google.maps.LatLng (lat, lng);
-                                              var options = {
-                                              zoom : 6,
-                                              center : latlng,
-                                              mapTypeId : google.maps.MapTypeId.ROADMAP
-                                              
-                                              };
-                                              
-                                              $(".spinner").hide();
-                                              
-                                              $("#btn").bind ("click", function (event)
-                                                              {
-                                                              var $content = $("#win2 div:jqmData(role=content)");
-                                                              $content.height (screen.height - 100);
+
+		  var beaches = [];
+
+		  var posizione = 1;
+
+		  
+
+		  beaches.push(['Tua Posizione',lat,lng,1])
+
+		  
+
+		  $.ajax({
+
+				 type:"GET",
+
+				 url:"http://www.pokeranswer.it/www/Check_Room.asp",
+
+				 contentType: "application/json",
+
+				 //data: {ID: "1", ID2: "4"},
+
+				 data: {ID: "all"},
+
+				 jsonp: 'callback',
+
+				 crossDomain: true,
+
+				 success:function(result){
+
+				 
+
+				 $.each(result, function(i,item){
+
+						
+
+						posizione = (posizione+1);
+
+						
+
+						beaches.push([item.Room,item.lat,item.lng,posizione])
+
+
+
+				  });
+
+				 
+
+				 for (var i = 0; i < beaches.length; i++) {
+
+					var beach = beaches[i];
+
+					//alert(beach[0]);
+
+				 }	
+
+				 
+
+				 },
+
+				 error: function(){
+
+				 alert('There was an error loading the data.');
+
+				 },
+
+				 dataType:"jsonp"});
+
+		  
+
+		  
+
+		  var image = {
+
+		  url: 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/images/gpsloc.png',
+
+		  // This marker is 20 pixels wide by 32 pixels tall.
+
+		  size: new google.maps.Size(20, 32),
+
+		  // The origin for this image is 0,0.
+
+		  origin: new google.maps.Point(0,0),
+
+		  // The anchor for this image is the base of the flagpole at 0,32.
+
+		  anchor: new google.maps.Point(0, 32)
+
+		  };
+
+		  
+
+		  var shape = {
+
+		  coord: [1, 1, 1, 20, 18, 20, 18 , 1],
+
+		  type: 'poly'
+
+		  };
+
+		  
+
+		  var img = new google.maps.MarkerImage("images/gps.png", null, null, null, new google.maps.Size(22,22));
+
+		  
+
+		  var distanza = getDistanceFromLatLonInKm(lat,lng,41.913010,12.442009).toFixed(1);
+
+		  codeLatLng(lat,lng);
+
+		  
+
+		  var dist = distanza;
+
+		  
+
+		  var latlng = new google.maps.LatLng (lat, lng);
+
+		  var options = {
+
+		  zoom : 10,
+
+		  center : latlng,
+
+		  mapTypeId : google.maps.MapTypeId.ROADMAP
+
+		  
+
+		  };
+
+		  
+
+		  //$(".spinner").hide();
+
+		  
+
+		  $("#btn").bind ("click", function (event)
+
+						  {
+
+						  var $content = $("#win2 div:jqmData(role=content)");
+
+						  $content.height (screen.height - 120);
+
+						  
+
+						  $(".spinner").show();
+
+						  
+
+						  var options = {
+
+						  zoom : 10,
+
+						  center : latlng,
+
+						  mapTypeId : google.maps.MapTypeId.ROADMAP
+
+						  
+
+						  };
+
+						  var map = new google.maps.Map($content[0], options);
+
+						  
+
+						  
+
+						  $.mobile.changePage ($("#win2"));
+
+						  setTimeout(function() {
+
+							 google.maps.event.trigger(map, "resize");
+
+							 map.setCenter(latlng);
+
+						  }, 1000);
+
+						  
+
+						  var contentString1 =
+
+						  '<div class="popup">'+
+
+						  '<h2> My Pub</h2>'+
+
+						  '<p>Example Strasse n.1</b>'+
+
+						  //'<small><b>Lat.</b> 52.520196, <b>Lon.</b> 13.406067</small></p>'+
+
+						  //'<a target="_blank" href="http://www.marchettidesign.net">'+
+
+						  //'Visit Web Site &#187;</a> '+
+
+						  '</div>';
+
+						  
+
+						  var infowindow = new google.maps.InfoWindow({
+
+							  //content: contentString1,
+
+							  maxWidth: 200,
+
+							  maxHeight: 150,
+
+						  });
+
+						  
+
+						  for (var i = 0; i < beaches.length; i++) {
+
+						  
+
+						  var beach = beaches[i];
+
+						  //var k = i+1;
+
+						  
+
+						  var myLatLng = new google.maps.LatLng(beach[1], beach[2], beach[3]);
+
+						  
+
+						  
+
+						  if (i==0) {
+
+						  icon = img;
+
+						  }
+
+						  else {
+
+						  icon = destIcon;
+
+						  }
+
+						  
+
+						  marker = new google.maps.Marker (
+
+								 {
+
+								  map : map,
+
+								  icon: icon,
+
+								  animation : google.maps.Animation.DROP,
+
+								  position : myLatLng,
+
+								  content:'<div class="infowindow">'+ beach[0] +'</div>',
+
+								  shape: shape,
+
+								  title: beach[0],
+
+								  zIndex: beach[3]
+
+							});
+
+						  
+
+						  google.maps.event.addListener(marker, 'click', function() {
+
+							 infowindow.setContent(this.content);
+
+							 infowindow.open(map, this);
+
+						  });
+
+						  
+
+							//if (i==0) {
+
+								//new google.maps.event.trigger(marker, 'click' );
+
+							//}
+
+						  }
+
+						  
+
+						  $(".spinner").hide();
+
                                                               
-                                                              var infowindow = new google.maps.InfoWindow();
-                                                              
-                                                              var options = {
-                                                              zoom : 6,
-                                                              center : latlng,
-                                                              mapTypeId : google.maps.MapTypeId.ROADMAP
-                                                              
-                                                              };
-                                                              var map = new google.maps.Map($content[0], options);
-                                                              
-                                                              
-                                                              $.mobile.changePage ($("#win2"));
-                                                              setTimeout(function() {
-                                                                 google.maps.event.trigger(map, "resize");
-                                                                 map.setCenter(latlng);
-                                                              }, 1000);
-                                                              
-                                                              for (var i = 0; i < beaches.length; i++) {
-                                                              
-                                                              var beach = beaches[i];
-                                                              //var k = i+1;
-                                                              
-                                                              var myLatLng = new google.maps.LatLng(beach[1], beach[2], beach[3]);
-                                                              
-                                                              
-                                                              if (i==0) {
-                                                              icon = img;
-                                                              }
-                                                              else {
-                                                              icon = destIcon;
-                                                              }
-                                                              
-                                                              marker = new google.maps.Marker (
-                                                                     {
-                                                                      map : map,
-                                                                      icon: icon,
-                                                                      animation : google.maps.Animation.DROP,
-                                                                      position : myLatLng,
-                                                                      content:'<div class="infowindow">'+ beach[0] +'</div>',
-                                                                      //shape: shape,
-                                                                      title: beach[0],
-                                                                      zIndex: beach[3]
-                                                                });
-                                                              
-                                                              
-                                                              google.maps.event.addListener(marker, 'click', function() {
-                                                                 infowindow.setContent(this.content);
-                                                                 infowindow.open(map, this);
-                                                              });
-                                                              
-                                                              }
-                                                              
-                                                              
-                                                              });
-                                              
-                                              },function (error) {
-                                                    alert('code: '    + error.code    + '\n' +
-                                                    'message: ' + error.message + '\n');
-                                                    $(".spinner").hide();
-                                              });
-    
-    var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { maximumAge: 18000000, timeout: 20000, enableHighAccuracy:true });
+
+                  });
     
 }
     

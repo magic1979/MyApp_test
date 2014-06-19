@@ -112,7 +112,7 @@ var app = {
         
         if(connectionStatus=='online'){
         
-            var landmark = '<table align="center" border="0" width="310px" height="80px">';
+            var landmark = '<table align="center" border="0" width="310px" height="100px">';
             
             $.ajax({
                    type:"GET",
@@ -125,9 +125,17 @@ var app = {
                    success:function(result){
                    
                    $.each(result, function(i,item){
-                          var newdata = dataok(item.Data);
+                          if(item.Nome != '0'){
+                          		var newdata = dataok(item.Data);
                           
-                          landmark = landmark + '<tr><td align="left" width="100px"><img src="img/News/'+ item.IMG +'.png" class="circolare"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">'+ item.Nome +'</font></td></tr></table></td><td align="left" width="30px"><a href="FindNews.html" rel="external" ><img src="images/finger.png" width="30px"></a></td></tr>';
+                          		landmark = landmark + '<tr><td align="center" width="100px"><img src="logo2.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">'+ item.Nome +'</font></td></tr></table></td><td><a href="FindNews.html" rel="external" ><img src="images/finger.png" width="30px"></a></td></tr>';
+                          }
+                          else{
+                          
+                          		var newdata = 'PokerAnswer';
+                          
+                          		landmark = landmark + '<tr><td align="center" width="100px"><img src="logo2.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">La prima applicazione intorno al gioco del poker</font></td></tr></table></td><td><a href="FindNews.html" rel="external" ><img src="images/finger.png" width="30px"></a></td></tr>';
+                          }
                           
                           });
                    
@@ -270,6 +278,14 @@ function apri() {
     //var ref = window.open(encodeURI(mapLocationUrl), '_system', 'location=no');
     
     var ref = window.open('http://www.google.it', '_blank', 'location=yes');
+}
+
+function apripanel() {
+    $('#transp').removeClass('div2').addClass('div1');
+}
+
+function chiudipanel() {
+    $('#transp').removeClass('div1').addClass('div2');
 }
 
 

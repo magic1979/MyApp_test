@@ -22,8 +22,8 @@ function onDeviceReady() {
         
         
         function onError(error) {
-            alert('code: '    + error.code    + '\n' +
-                  'message: ' + error.message + '\n');
+            //alert('code: '    + error.code    + '\n' +
+            //'message: ' + error.message + '\n');
         }
         
 
@@ -178,7 +178,7 @@ function onDeviceReady() {
 
 						  var $content = $("#win2 div:jqmData(role=content)");
 
-						  $content.height (screen.height - 120);
+						  $content.height (screen.height - 150);
 
 						  
 

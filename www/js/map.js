@@ -9,7 +9,7 @@ function onDeviceReady() {
     if(connectionStatus=='online'){
     
     //var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { maximumAge: 18000000, timeout: 20000, enableHighAccuracy:true });
-	var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 20000, enableHighAccuracy: true });
+	var watchID = navigator.geolocation.watchPosition(onSuccess, onError3, { maximumAge:600000, timeout:25000, enableHighAccuracy: true });
 	
 	function onSuccess(position) {
             ciao = position.coords.latitude;
@@ -18,13 +18,49 @@ function onDeviceReady() {
             localStorage.setItem("lat", ciao)
 
             localStorage.setItem("lng", ciao1)
+			
+			localStorage.setItem("geoloc", "SI")
         }
         
         
-        function onError(error) {
-            //alert('code: '    + error.code    + '\n' +
-            //'message: ' + error.message + '\n');
+        function onError3(error) {
+			if (error.code == error.TIMEOUT)
+    		{
+				var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { maximumAge:600000, timeout:30000, enableHighAccuracy: false });
+        		return;
+			}
+			else
+			{
+				 if (error.code == 1){
+        			$('#classifica').html('Permesso negato');
+				}
+    			else if (error.code == 2){
+        			$('#classifica').html('posizione non trovata');
+				}
+				else{
+        			$('#classifica').html('Errore Generico');
+				}
+				
+				localStorage.setItem("geoloc", "NO")
+			}
         }
+		
+		function onError(error) {
+				if (error.code == 1){
+        			$('#classifica').html('Permesso negato');
+				}
+    			else if (error.code == 2){
+        			$('#classifica').html('posizione non trovata');
+				}
+				else if (error.code == 3){
+        			$('#classifica').html('Time Out');
+				}
+				else{
+        			$('#classifica').html('Errore Generico');
+				}
+				
+				localStorage.setItem("geoloc", "NO")
+		}
         
 
 
@@ -178,7 +214,7 @@ function onDeviceReady() {
 
 						  var $content = $("#win2 div:jqmData(role=content)");
 
-						  $content.height (screen.height - 150);
+						  $content.height (getRealContentHeight());
 
 						  
 
@@ -411,5 +447,17 @@ function codeLatLng(lati,lngi) {
 }
 
 
+function getRealContentHeight() {
+	var header = $.mobile.activePage.find("div[data-role='header']:visible");
+	var footer = $.mobile.activePage.find("div[data-role='footer']:visible");
+	var content = $.mobile.activePage.find("div[data-role='content']:visible:visible");
+	var viewport_height = $(window).height();
+    
+	var content_height = viewport_height - header.outerHeight() - footer.outerHeight();
+	if((content.outerHeight() - header.outerHeight() - footer.outerHeight()) <= viewport_height) {
+		content_height -= (content.outerHeight() - content.height());
+	}
+	return content_height;
+}
 
 

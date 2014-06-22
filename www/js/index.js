@@ -190,12 +190,21 @@ var app = {
 
 
 function cambiap() {
-    navigator.notification.confirm(
-        'Per usare la funzione Radar e Mappa devi autorizzare ad usare la tua posizione',  // message
-        onConfirm,              // callback to invoke with index of button pressed
-        'Tua Posizione',            // title
-        'Accetto,Rifiuto'          // buttonLabels
-     );
+	 var permessogeo = localStorage.getItem("permessogeo");
+	
+ 	if (permessogeo == "SI")
+    {
+        window.location.href = "map.html";
+    }
+    else{
+        navigator.notification.confirm(
+        'Per usare la funzione Radar e Mappa Poker Answer vuole usare la tua posizione',  // message
+         onConfirm,              // callback to invoke with index of button pressed
+         'Tua Posizione',            // title
+         'Accetto,Rifiuto'          // buttonLabels
+        );
+    }
+
 }
 
 function checkConnection() {
@@ -268,7 +277,8 @@ function codeLatLng(vir1) {
 
 function onConfirm(button) {
     if (button==1){
-        window.location.href = "map.html";
+        localStorage.setItem("permessogeo", "SI")
+		window.location.href = "map.html";
     }
 }
 

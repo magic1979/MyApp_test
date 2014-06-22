@@ -17,10 +17,12 @@ function onDeviceReady() {
     var mialat;
     var mialng;
     var via;
+	var geoloc;
     
     mialat = localStorage.getItem("lat");
 	mialng = localStorage.getItem("lng");
     via = localStorage.getItem("Via");
+	geoloc = localStorage.getItem("geoloc");
     
     if (!via) {
         via = "Non posso determinare il tuo indirizzo";
@@ -67,7 +69,14 @@ function onDeviceReady() {
                                         test = (parseInt(test)+1)
                                     }
                                     
-                                    landmark = landmark + '<tr><td><font size="2"><img src="images/mark.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="http://maps.google.com/maps?saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="16px"></a></font></td></tr>';
+                                    
+									if (geoloc == 'SI'){
+									landmark = landmark + '<tr><td><font size="2"><img src="images/mark.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="http://maps.google.com/maps?saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="16px"></a></font></td></tr>';
+									}
+									else{
+									landmark = landmark + '<tr><td><font size="2"><img src="images/mark.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="http://maps.google.com/maps?daddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="16px"></a></font></td></tr>';
+									}
+									
                                     
                                     });
                              
@@ -144,7 +153,7 @@ function apri() {
     //var mapLocationUrl = 'maps.apple.com/ll=51.84,-8.30';
     //var ref = window.open(encodeURI(mapLocationUrl), '_system', 'location=no');
     
-    var ref = window.open('http://www.google.it', '_blank', 'location=yes');
+    var ref = window.open('http://maps.google.com/maps?saddr=Via Ostiense,38,roma&daddr=via stamira,7,roma', '_blank', 'location=yes');
 }
 
 

@@ -2,18 +2,20 @@ document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
     
-    $(".spinner").show();
+    navigator.geolocation.clearWatch(watchID);
+	
+	$(".spinner").show();
     var connectionStatus = false;
     connectionStatus = navigator.onLine ? 'online' : 'offline';
     
     if(connectionStatus=='online'){
     
     //var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { maximumAge: 18000000, timeout: 20000, enableHighAccuracy:true });
-	var watchID = navigator.geolocation.watchPosition(onSuccess, onError3, { maximumAge:600000, timeout:25000, enableHighAccuracy: true });
+	var watchID = navigator.geolocation.watchPosition(onSuccess, onError3, { maximumAge:600000, timeout:30000, enableHighAccuracy: true });
 	
 	function onSuccess(position) {
-            ciao = position.coords.latitude;
-            ciao1 = position.coords.longitude;
+            var ciao = position.coords.latitude;
+            var ciao1 = position.coords.longitude;
             
             localStorage.setItem("lat", ciao)
 
@@ -144,26 +146,25 @@ function onDeviceReady() {
 
 		  
 
-		  var image = {
-
-		  url: 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/images/gpsloc.png',
-
-		  // This marker is 20 pixels wide by 32 pixels tall.
-
-		  size: new google.maps.Size(20, 32),
-
-		  // The origin for this image is 0,0.
-
-		  origin: new google.maps.Point(0,0),
-
-		  // The anchor for this image is the base of the flagpole at 0,32.
-
-		  anchor: new google.maps.Point(0, 32)
-
-		  };
+	//	  var image = {
+//
+//		  url: 'http://google-maps-utility-library-v3.googlecode.com/svn/trunk/geolocationmarker/images/gpsloc.png',
+//
+//		  // This marker is 20 pixels wide by 32 pixels tall.
+//
+//		  size: new google.maps.Size(20, 32),
+//
+//		  // The origin for this image is 0,0.
+//
+//		  origin: new google.maps.Point(0,0),
+//
+//		  // The anchor for this image is the base of the flagpole at 0,32.
+//
+//		  anchor: new google.maps.Point(0, 32)
+//
+//		  };
 
 		  
-
 		  var shape = {
 
 		  coord: [1, 1, 1, 20, 18, 20, 18 , 1],
@@ -176,15 +177,14 @@ function onDeviceReady() {
 
 		  var img = new google.maps.MarkerImage("images/gps.png", null, null, null, new google.maps.Size(22,22));
 
-		  
 
-		  var distanza = getDistanceFromLatLonInKm(lat,lng,41.913010,12.442009).toFixed(1);
+		  //var distanza = getDistanceFromLatLonInKm(lat,lng,41.913010,12.442009).toFixed(1);
 
 		  codeLatLng(lat,lng);
 
 		  
 
-		  var dist = distanza;
+		  //var dist = distanza;
 
 		  
 
@@ -436,7 +436,8 @@ function codeLatLng(lati,lngi) {
                         $(".spinner").hide();
                      
                      } else {
-                        $('#classifica').html('No results found');
+						 var string = "<a href='javascript:again()'>geolocation</a>";
+                        $('#classifica').html(string);
                         $(".spinner").hide();
                      }
                      } else {
@@ -458,6 +459,33 @@ function getRealContentHeight() {
 		content_height -= (content.outerHeight() - content.height());
 	}
 	return content_height;
+}
+
+function again() {
+	navigator.geolocation.getCurrentPosition(onSuccess1, onError1, { maximumAge:600000, timeout:30000, enableHighAccuracy: true });
+	
+	function onSuccess1(pos) {
+		var ciao2 = pos.coords.latitude;
+        var ciao3 = pos.coords.longitude;
+		
+		$('#classifica').html(ciao2);
+	}
+	
+	function onError1(err) {
+		navigator.geolocation.getCurrentPosition(onSuccess10, onError10, { maximumAge:600000, timeout:30000, enableHighAccuracy: false });
+	}
+	
+	function onSuccess10(pos) {
+		var ciao2 = pos.coords.latitude;
+        var ciao3 = pos.coords.longitude;
+		
+		$('#classifica').html(ciao2);
+	}
+	
+	function onError10(err) {
+		$('#classifica').html('Non ci riesco');
+	}
+	
 }
 
 

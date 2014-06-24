@@ -277,6 +277,7 @@ function codeLatLng(vir1) {
 
 function onConfirm(button) {
     if (button==1){
+		navigator.geolocation.clearWatch(watchID);
         localStorage.setItem("permessogeo", "SI")
 		window.location.href = "map.html";
     }

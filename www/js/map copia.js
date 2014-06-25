@@ -9,33 +9,9 @@ function onDeviceReady() {
     connectionStatus = navigator.onLine ? 'online' : 'offline';
     
     if(connectionStatus=='online'){
-		
-		if(geo_position_js.init()){
-			geo_position_js.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true});
-		}
-		else{
-			alert("Functionality not available, again");
-			again();
-		}
-
-		function success_callback(p)
-		{
-	        var ciao = p.coords.latitude;
-            var ciao1 = p.coords.longitude;
-            
-            localStorage.setItem("lat", ciao)
-
-            localStorage.setItem("lng", ciao1)
-			
-			localStorage.setItem("geoloc", "SI")
-		}
-		
-		function error_callback(p)
-		{
-			alert('error='+p.message);
-			var watchID = navigator.geolocation.watchPosition(onSuccess, onError3, { maximumAge:600000, timeout:50000, enableHighAccuracy: true });
-		}		
-	
+    
+    //var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { maximumAge: 18000000, timeout: 20000, enableHighAccuracy:true });
+	var watchID = navigator.geolocation.watchPosition(onSuccess, onError3, { maximumAge:600000, timeout:30000, enableHighAccuracy: true });
 	
 	function onSuccess(position) {
             var ciao = position.coords.latitude;
@@ -486,17 +462,17 @@ function getRealContentHeight() {
 }
 
 function again() {
-	navigator.geolocation.getCurrentPosition(onSuccess1, onError1, { maximumAge:600000, timeout:50000, enableHighAccuracy: true });
+	navigator.geolocation.getCurrentPosition(onSuccess1, onError1, { maximumAge:600000, timeout:30000, enableHighAccuracy: true });
 	
 	function onSuccess1(pos) {
 		var ciao2 = pos.coords.latitude;
         var ciao3 = pos.coords.longitude;
 		
-		$('#classifica').html('get current funziona');
+		$('#classifica').html(ciao2);
 	}
 	
 	function onError1(err) {
-		navigator.geolocation.getCurrentPosition(onSuccess10, onError10, { maximumAge:600000, timeout:50000, enableHighAccuracy: false });
+		navigator.geolocation.getCurrentPosition(onSuccess10, onError10, { maximumAge:600000, timeout:30000, enableHighAccuracy: false });
 	}
 	
 	function onSuccess10(pos) {

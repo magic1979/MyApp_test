@@ -144,6 +144,7 @@ var app = {
                    
                    
                    $(".spinner").hide();
+            	   checkPos();
                    
                    },
                    error: function(){
@@ -296,6 +297,33 @@ function apripanel() {
 
 function chiudipanel() {
     $('#transp').removeClass('div1').addClass('div2');
+}
+
+function checkPos() {
+    
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, { maximumAge:600000, timeout:80000, enableHighAccuracy: true });
+    
+    function onSuccess(position) {
+
+        var ciao = position.coords.latitude;
+
+        var ciao1 = position.coords.longitude;
+
+        localStorage.setItem("lat", ciao)
+
+        localStorage.setItem("lng", ciao1)
+
+        alert('si');
+
+        localStorage.setItem("geostory", "SI")
+
+    }
+
+    function onError(error) {
+        alert('no');
+        localStorage.setItem("geostory", "NO")
+    }
+    
 }
 
 

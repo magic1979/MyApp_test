@@ -10,91 +10,73 @@ function onDeviceReady() {
     
     if(connectionStatus=='online'){
 		
-		if(geo_position_js.init()){
-			geo_position_js.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true});
-		}
-		else{
-			alert("Functionality not available, again");
-			again();
-		}
-
-		function success_callback(p)
-		{
-	        var ciao = p.coords.latitude;
-            var ciao1 = p.coords.longitude;
-            
-            localStorage.setItem("lat", ciao)
-
-            localStorage.setItem("lng", ciao1)
-			
-			localStorage.setItem("geoloc", "SI")
-		}
+	var geostory = localStorage.getItem("geostory");
+	if (geostory == 'NO'){
+		navigator.geolocation.getCurrentPosition(onSuccess1, onError1, { maximumAge:600000, timeout:80000, enableHighAccuracy: true });
 		
-		function error_callback(p)
-		{
-			alert('error='+p.message);
-			var watchID = navigator.geolocation.watchPosition(onSuccess, onError3, { maximumAge:600000, timeout:50000, enableHighAccuracy: true });
-		}		
+		function onSuccess1(position) {
+				var ciao = position.coords.latitude;
+				var ciao1 = position.coords.longitude;
+				
+				localStorage.setItem("lat", ciao)
 	
-	
-	function onSuccess(position) {
-            var ciao = position.coords.latitude;
-            var ciao1 = position.coords.longitude;
-            
-            localStorage.setItem("lat", ciao)
-
-            localStorage.setItem("lng", ciao1)
+				localStorage.setItem("lng", ciao1)
+				
+				localStorage.setItem("geoloc", "SI")
+			}
 			
-			localStorage.setItem("geoloc", "SI")
-        }
-        
-        
-        function onError3(error) {
-			if (error.code == error.TIMEOUT)
-    		{
-				var watchID = navigator.geolocation.watchPosition(onSuccess, onError, { maximumAge:600000, timeout:30000, enableHighAccuracy: false });
-        		return;
+			
+			function onError1(error) {
+				if (error.code == error.TIMEOUT)
+				{
+					navigator.geolocation.getCurrentPosition(onSuccess1, onError, { maximumAge:600000, timeout:80000, enableHighAccuracy: false });
+					return;
+				}
+				else
+				{
+					 if (error.code == 1){
+						$('#classifica').html('Permesso negato');
+					}
+					else if (error.code == 2){
+						$('#classifica').html('posizione non trovata');
+					}
+					else{
+						navigator.geolocation.getCurrentPosition(onSuccess1, onError, { maximumAge:600000, timeout:80000, enableHighAccuracy: false });
+						$('#classifica').html('Errore Generico');
+					}
+					
+					localStorage.setItem("geoloc", "NO")
+					localStorage.setItem("lat", "41.881360")
+					localStorage.setItem("lng", "12.475004") 
+	
+				}
 			}
-			else
-			{
-				 if (error.code == 1){
-        			$('#classifica').html('Permesso negato');
-				}
-    			else if (error.code == 2){
-        			$('#classifica').html('posizione non trovata');
-				}
-				else{
-        			$('#classifica').html('Errore Generico');
-				}
-				
-				localStorage.setItem("geoloc", "NO")
+			
+			function onError(error) {
+					if (error.code == 1){
+						$('#classifica').html('Permesso negato');
+					}
+					else if (error.code == 2){
+						$('#classifica').html('posizione non trovata');
+					}
+					else if (error.code == 3){
+						$('#classifica').html('Time Out');
+					}
+					else{
+						$('#classifica').html('Errore Generico');
+					}
+					
+					localStorage.setItem("geoloc", "NO")
+					localStorage.setItem("lat", "41.881360")
+					localStorage.setItem("lng", "12.475004") 
 			}
-        }
-		
-		function onError(error) {
-				if (error.code == 1){
-        			$('#classifica').html('Permesso negato');
-				}
-    			else if (error.code == 2){
-        			$('#classifica').html('posizione non trovata');
-				}
-				else if (error.code == 3){
-        			$('#classifica').html('Time Out');
-				}
-				else{
-        			$('#classifica').html('Errore Generico');
-				}
-				
-				localStorage.setItem("geoloc", "NO")
 		}
-        
+
 
 
 		  var lat = localStorage.getItem("lat");
 
-		  var lng = localStorage.getItem("lng");
-
-                                              
+		  var lng = localStorage.getItem("lng");                                 
 
           var destIcon = new google.maps.MarkerImage("images/mark.png", null, null, null, new google.maps.Size(28,40));
 
@@ -226,11 +208,8 @@ function onDeviceReady() {
 
 		  };
 
-		  
-
 		  //$(".spinner").hide();
 
-		  
 
 		  $("#btn").bind ("click", function (event)
 
@@ -460,12 +439,12 @@ function codeLatLng(lati,lngi) {
                         $(".spinner").hide();
                      
                      } else {
-						 var string = "<a href='javascript:again()'>geolocation</a>";
-                        $('#classifica').html(string);
+						 var string = "<a href='javascript:again()'>RIPROVA</a>";
+                        $('#classifica').html('Non posso determinare la tua posizione, ti viene assegnata una posizione generica a Roma');
                         $(".spinner").hide();
                      }
                      } else {
-                        $('#classifica').html('Geocoder failed due to: ' + status);
+                        $('#classifica').html('Non posso determinare la tua posizione, ti viene assegnata una posizione generica a Roma');
                         $(".spinner").hide();
                      }
                      });
@@ -486,28 +465,26 @@ function getRealContentHeight() {
 }
 
 function again() {
-	navigator.geolocation.getCurrentPosition(onSuccess1, onError1, { maximumAge:600000, timeout:50000, enableHighAccuracy: true });
+	var watchID = navigator.geolocation.watchPosition(onSuccess2, onError2, { maximumAge:600000, timeout:50000, enableHighAccuracy: true });
 	
-	function onSuccess1(pos) {
+	function onSuccess2(pos) {
 		var ciao2 = pos.coords.latitude;
         var ciao3 = pos.coords.longitude;
 		
-		$('#classifica').html('get current funziona');
+		localStorage.setItem("geoloc", "SI")
+		$('#classifica').html('watch funziona');
 	}
 	
-	function onError1(err) {
-		navigator.geolocation.getCurrentPosition(onSuccess10, onError10, { maximumAge:600000, timeout:50000, enableHighAccuracy: false });
+	function onError2(err) {
+		var watchID = navigator.geolocation.watchPosition(onSuccess2, onError10, { maximumAge:600000, timeout:50000, enableHighAccuracy: false });
 	}
 	
-	function onSuccess10(pos) {
-		var ciao2 = pos.coords.latitude;
-        var ciao3 = pos.coords.longitude;
-		
-		$('#classifica').html(ciao2);
-	}
 	
 	function onError10(err) {
-		$('#classifica').html('Non ci riesco');
+		localStorage.setItem("geoloc", "NO")
+		localStorage.setItem("lat", "41.881360")
+        localStorage.setItem("lng", "12.475004") 
+		$('#classifica').html('Non posso determinare la tua posizione, ti viene assegnata una posizione generica a Roma');
 	}
 	
 }

@@ -234,16 +234,61 @@
                      .div2 {
                        background-color: #707070;
                      }
+                   .div3 {
+                       background: rgb(125,126,125); /* Old browsers */
+                       background: -moz-linear-gradient(top, rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%); /* FF3.6+ */
+                       background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1))); /* Chrome,Safari4+ */
+                       background: -webkit-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Chrome10+,Safari5.1+ */
+                       background: -o-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Opera 11.10+ */
+                       background: -ms-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* IE10+ */
+                       background: linear-gradient(to bottom, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* W3C */
+                       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */
+                   }
+                   .push_button{
+                       position:relative;
+                       width:60px;
+                       height:60px;
+                       color:#FFF;
+                       display:block;
+                       text-decoration:none;
+                       margin:0 auto;
+                       border-radius:999em;
+                       border:solid 1px #D94E3B;
+                       
+                       background: rgba(239,197,202,1);
+                       background: -moz-linear-gradient(-45deg, rgba(239,197,202,1) 0%, rgba(210,75,90,1) 94%, rgba(186,39,55,1) 99%, rgba(241,142,153,1) 100%);
+                       background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(239,197,202,1)), color-stop(94%, rgba(210,75,90,1)), color-stop(99%, rgba(186,39,55,1)), color-stop(100%, rgba(241,142,153,1)));
+                       background: -webkit-linear-gradient(-45deg, rgba(239,197,202,1) 0%, rgba(210,75,90,1) 94%, rgba(186,39,55,1) 99%, rgba(241,142,153,1) 100%);
+                       background: -o-linear-gradient(-45deg, rgba(239,197,202,1) 0%, rgba(210,75,90,1) 94%, rgba(186,39,55,1) 99%, rgba(241,142,153,1) 100%);
+                       background: -ms-linear-gradient(-45deg, rgba(239,197,202,1) 0%, rgba(210,75,90,1) 94%, rgba(186,39,55,1) 99%, rgba(241,142,153,1) 100%);
+                       background: linear-gradient(135deg, rgba(239,197,202,1) 0%, rgba(210,75,90,1) 94%, rgba(186,39,55,1) 99%, rgba(241,142,153,1) 100%);
+                       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efc5ca', endColorstr='#f18e99', GradientType=1 );
+                       
+                       text-align:center;
+                       padding:30px 30px;
+                       
+                       -webkit-transition: all 0.1s;
+                       -moz-transition: all 0.1s;
+                       transition: all 0.1s;
+                       
+                       -webkit-box-shadow: 0px 9px 0px #84261a;
+                       -moz-box-shadow: 0px 9px 0px #84261a;
+                       box-shadow: 0px 9px 0px #84261a;
+                   }
+                   .push_button:active{
+                       text-decoration: none;
+                       -webkit-box-shadow: 0px 2px 0px #84261a;
+                       -moz-box-shadow: 0px 2px 0px #84261a;
+                       box-shadow: 0px 2px 0px #84261a;
+                       position:relative;
+                       top:7px;
+                   }
                      .div3 {
-                         background: rgb(125,126,125); /* Old browsers */
-                         background: -moz-linear-gradient(top, rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%); /* FF3.6+ */
-                         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1))); /* Chrome,Safari4+ */
-                         background: -webkit-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Chrome10+,Safari5.1+ */
-                         background: -o-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Opera 11.10+ */
-                         background: -ms-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* IE10+ */
-                         background: linear-gradient(to bottom, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* W3C */
-                         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */
+                       background-color: black;
                       }
+                   body.iOS7 {
+                       -webkit-transform: translate3d(0, 20px, 0);
+                   }
 
                        .circolare {
                          width: 77px;
@@ -283,7 +328,7 @@
                        border: 1px solid #FFF;
                        font-size: 8pt;
                        padding: 4px;
-                       width: 50%;
+                       width: 65%;
                        
                        border-radius: 5px;
                        -moz-border-radius: 5px; /* firefox */
@@ -322,10 +367,23 @@
         <div data-role="page" class="div2">
             
             <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
-                <span class="ui-title"> <img src="images/live.png" width="18px">&nbsp;Tornei Live</span>
+                <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
             </div><!-- /header -->
             
-            <div class="spinner" id="spinner"></div>
+            <div class="spinner" id="spinner">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+                <div class="bar4"></div>
+                <div class="bar5"></div>
+                <div class="bar6"></div>
+                <div class="bar7"></div>
+                <div class="bar8"></div>
+                <div class="bar9"></div>
+                <div class="bar10"></div>
+                <div class="bar11"></div>
+                <div class="bar12"></div>
+            </div>
             
             <div id="wrapper">
                 <div id="scroller">
@@ -333,18 +391,35 @@
                         <span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
                     </div>
             
+            
             <div data-role="content" class="div2">
                 <script type="text/javascript" src="phonegap.js"></script>
                 <script type="text/javascript" src="js/FinderLive.js"></script>
             </div>
             <center>
-                <select name="flip-2" id="flip-2" data-role="flipswitch" data-theme="b">
-                    <option value="live">Live</option>
-                    <option value="on">Web</option>
-                </select>
+                <ul id="online" data-role="listview" data-inset="true" data-theme="b">
+                    <li><a href="javascript:online()" rel="external"><img src="img/MTT.png">
+                        <h2><img src="images/finder.png" width="16px">&nbsp;On-Line</h2>
+                        <p>Tornei On-Line</p></a>
+                    </li>
+                </ul>
+                
+                <ul id="live" data-role="listview" data-inset="true" data-theme="b" style="display:none">
+                    <li><a href="javascript:live()" rel="external"><img src="img/MTT.png">
+                        <h2><img src="images/finder.png" width="16px">&nbsp;Live</h2>
+                        <p>Tornei Live</p></a>
+                    </li>
+                </ul>
+                
+                <!--<a href="#" class="push_button" style="color:white;">
+                    Live
+                </a>-->
+                
                 <br>
                 
-            <img src="img/Live/1.png" width="180px" class="circolare">
+                <form name="formia" action="entra.asp" method="post">
+                    <div id="selezione" align="center"></div>
+                </form>
 
 
             <div id="classifica" align="center"></div>

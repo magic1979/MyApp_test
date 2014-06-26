@@ -315,7 +315,7 @@ function checkPos() {
 
         localStorage.setItem("geostory", "SI")
 		
-		 alert('si');
+		 alert(ciao + "--" + ciao1 + "One");
 
     }
 

@@ -1,16 +1,17 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
-    
-    navigator.geolocation.clearWatch(watchID);
-	
+
+	var geostory;
 	$(".spinner").show();
     var connectionStatus = false;
     connectionStatus = navigator.onLine ? 'online' : 'offline';
     
     if(connectionStatus=='online'){
-		
-	var geostory = localStorage.getItem("geostory");
+	
+	geostory = localStorage.getItem("geostory");
+	
+	alert(geostory + "Two");
 	
 	if (geostory == 'NO'){
 		navigator.geolocation.getCurrentPosition(onSuccess1, onError1, { maximumAge:600000, timeout:80000, enableHighAccuracy: true });
@@ -28,6 +29,7 @@ function onDeviceReady() {
 			
 			
 			function onError1(error) {
+				alert('errore1');
 				if (error.code == error.TIMEOUT)
 				{
 					navigator.geolocation.getCurrentPosition(onSuccess1, onError, { maximumAge:600000, timeout:80000, enableHighAccuracy: false });
@@ -48,11 +50,11 @@ function onDeviceReady() {
 					localStorage.setItem("geoloc", "NO")
 					localStorage.setItem("lat", "41.881360")
 					localStorage.setItem("lng", "12.475004")
-	
 				}
 			}
 			
 			function onError(error) {
+				alert('errore');
 					if (error.code == 1){
 						$('#classifica').html('Permesso negato');
 					}
@@ -72,16 +74,17 @@ function onDeviceReady() {
 			}
 		}
 		else{
-			localStorage.setItem("geoloc", "NO")
-			localStorage.setItem("lat", "41.881360")
-			localStorage.setItem("lng", "12.475004") 
+			alert('ha letto SI');
 		}
-
+			
+		
 
 
 		  var lat = localStorage.getItem("lat");
 
-		  var lng = localStorage.getItem("lng");                                 
+		  var lng = localStorage.getItem("lng");
+		  
+		  alert(lat + "--" + lng);                            
 
           var destIcon = new google.maps.MarkerImage("images/mark.png", null, null, null, new google.maps.Size(28,40));
 

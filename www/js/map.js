@@ -11,6 +11,7 @@ function onDeviceReady() {
     if(connectionStatus=='online'){
 		
 	var geostory = localStorage.getItem("geostory");
+	
 	if (geostory == 'NO'){
 		navigator.geolocation.getCurrentPosition(onSuccess1, onError1, { maximumAge:600000, timeout:80000, enableHighAccuracy: true });
 		
@@ -34,20 +35,19 @@ function onDeviceReady() {
 				}
 				else
 				{
-					 if (error.code == 1){
+					if (error.code == 1){
 						$('#classifica').html('Permesso negato');
 					}
 					else if (error.code == 2){
 						$('#classifica').html('posizione non trovata');
 					}
 					else{
-						navigator.geolocation.getCurrentPosition(onSuccess1, onError, { maximumAge:600000, timeout:80000, enableHighAccuracy: false });
 						$('#classifica').html('Errore Generico');
 					}
 					
 					localStorage.setItem("geoloc", "NO")
 					localStorage.setItem("lat", "41.881360")
-					localStorage.setItem("lng", "12.475004") 
+					localStorage.setItem("lng", "12.475004")
 	
 				}
 			}
@@ -70,6 +70,11 @@ function onDeviceReady() {
 					localStorage.setItem("lat", "41.881360")
 					localStorage.setItem("lng", "12.475004") 
 			}
+		}
+		else{
+			localStorage.setItem("geoloc", "NO")
+			localStorage.setItem("lat", "41.881360")
+			localStorage.setItem("lng", "12.475004") 
 		}
 
 

@@ -313,15 +313,17 @@ function checkPos() {
 
         localStorage.setItem("lng", ciao1)
 
-        alert('si');
-
         localStorage.setItem("geostory", "SI")
+		
+		 alert('si');
 
     }
 
     function onError(error) {
-        alert('no');
+        
         localStorage.setItem("geostory", "NO")
+		
+		alert('no');
     }
     
 }

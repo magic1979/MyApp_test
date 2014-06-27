@@ -8,7 +8,7 @@
                         <link rel="stylesheet" href="themes/jquery.mobile.structure-1.4.2.min.css" />
                         <link rel="stylesheet" href="themes/ThemeAnswer.css" />
                         <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
-                        <link rel="stylesheet" href="css/demo.css" />
+                        <link rel="stylesheet" href="css/spinner.css" />
                         
                         <meta name="apple-mobile-web-app-capable" content="yes">
                             <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -23,16 +23,18 @@
                        .div2 {
                            background-color: #707070;
                         }
-						
-					  .div3 {
-                         background: rgb(125,126,125); /* Old browsers */
-                         background: -moz-linear-gradient(top, rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%); /* FF3.6+ */
-                         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1))); /* Chrome,Safari4+ */
-                         background: -webkit-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Chrome10+,Safari5.1+ */
-                         background: -o-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Opera 11.10+ */
-                         background: -ms-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* IE10+ */
-                         background: linear-gradient(to bottom, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* W3C */
-                         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */
+                      .div3 {
+                          background: rgb(125,126,125); /* Old browsers */
+                          background: -moz-linear-gradient(top, rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%); /* FF3.6+ */
+                          background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1))); /* Chrome,Safari4+ */
+                          background: -webkit-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Chrome10+,Safari5.1+ */
+                          background: -o-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Opera 11.10+ */
+                          background: -ms-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* IE10+ */
+                          background: linear-gradient(to bottom, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* W3C */
+                          filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */
+                      }
+                      body.iOS7 {
+                          -webkit-transform: translate3d(0, 20px, 0);
                       }
 
                       table.tablesorter {
@@ -44,9 +46,9 @@
                           text-align: left;
                           border: 2px solid #000000;
                           
-                          border-radius: 10px;
-                          -moz-border-radius: 10px; /* firefox */
-                          -webkit-border-radius: 10px; /* safari, chrome */
+                          border-radius: 5px;
+                          -moz-border-radius: 5px; /* firefox */
+                          -webkit-border-radius: 5px; /* safari, chrome */
                           
                       }
                       table.tablesorter thead tr th, table.tablesorter tfoot tr th {
@@ -56,9 +58,9 @@
                           padding: 4px;
                           width: 65%;
                           
-                          border-radius: 10px;
-                          -moz-border-radius: 10px; /* firefox */
-                          -webkit-border-radius: 10px; /* safari, chrome */
+                          border-radius: 5px;
+                          -moz-border-radius: 5px; /* firefox */
+                          -webkit-border-radius: 5px; /* safari, chrome */
                           
                       }
                       table.tablesorter thead tr .header {
@@ -95,18 +97,29 @@
         <div data-role="page" class="div2">
             
             <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
-                <a href="javascript:cambiap();" data-transition="none" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Answer</a>
-                <span class="ui-title"> <img src="images/finder.png" width="18px">&nbsp;Radar</span>
+                <!--<a href="javascript:cambiap();" data-transition="none" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Back</a>-->
+                <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
             </div><!-- /header -->
             
             <div data-role="content" class="div2">
                 <script type="text/javascript" src="phonegap.js"></script>
                 <script type="text/javascript" src="js/Finder.js"></script>
             </div>
-            
-                <div class="spinner" id="spinner"></div>
-                
-                <div id="tabella" align="center"></div>
+            <center>
+                <div class="spinner" id="spinner">
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                    <div class="bar4"></div>
+                    <div class="bar5"></div>
+                    <div class="bar6"></div>
+                    <div class="bar7"></div>
+                    <div class="bar8"></div>
+                    <div class="bar9"></div>
+                    <div class="bar10"></div>
+                    <div class="bar11"></div>
+                    <div class="bar12"></div>
+                </div>
                 
                 <select id="mySelect" data-theme="b">
                     <option value="Lazio" selected>Regione</option>
@@ -132,12 +145,13 @@
                     <option value="Veneto">Veneto</option>
                 </select>
                 
-                <center>
+                <div id="tabella" align="center"></div>
+                
                 <div id="classifica" align="center"></div>
 
-            
             <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
-                <a href="javascript:apri()" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>
+                <a href="map.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Mappa</a>
+                <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Home</a>
             </div><!-- /footer -->
             
         </div>

@@ -38,7 +38,60 @@
                  <script src="js/jquery.mobile-1.4.2.min.js"></script>
                  
                  <script type="text/javascript" src="jquery.tablesorter.js"></script>
+                 
+                  <script type="text/javascript" src="js/iscroll.js"></script>
                   
+                  <script type="text/javascript">
+                      
+                      var myScroll,
+                      pullDownEl, pullDownOffset,
+                      generatedCount = 0;
+                      
+                      function pullDownAction () {
+                                onDeviceReady();
+                                     
+                                myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+                      }
+                  
+                  
+                  function loaded() {
+                      pullDownEl = document.getElementById('pullDown');
+                      pullDownOffset = pullDownEl.offsetHeight;
+
+                      
+                      myScroll = new iScroll('wrapper', {
+                                             useTransition: true,
+                                             topOffset: pullDownOffset,
+                                             onRefresh: function () {
+                                             if (pullDownEl.className.match('loading')) {
+                                             pullDownEl.className = '';
+                                             pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+                                             }                                              },
+                                             onScrollMove: function () {
+                                             if (this.y > 5 && !pullDownEl.className.match('flip')) {
+                                             pullDownEl.className = 'flip';
+                                             pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Release to refresh...';
+                                             this.minScrollY = 0;
+                                             } else if (this.y < 5 && pullDownEl.className.match('flip')) {
+                                             pullDownEl.className = '';
+                                             pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+                                             this.minScrollY = -pullDownOffset;
+                                             }                                              },
+                                             onScrollEnd: function () {
+                                             if (pullDownEl.className.match('flip')) {
+                                             pullDownEl.className = 'loading';
+                                             pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';
+                                             pullDownAction();	// Execute custom function (ajax call?)
+                                             }                                              }
+                                             });
+                                             
+                                             setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
+                  }
+                  
+                  document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+                  
+                  document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+         </script>
                   
                   <style type="text/css" media="all">
                       body,ul,li {
@@ -310,13 +363,13 @@
                    }
                    .note {
                        font-family:arial;
-                       background-color: #f0f0f0;
+                       background-color: trasparent;
                        margin:7px 2pt 10px;
                        font-size: 9pt;
-                       width: 95%;
-                       height:70px;
+                       width: 90%;
+                       height:50px;
                        text-align: left;
-                       border: 2px solid #000000;
+                       color: #FFF;
                        
                        border-radius: 5px; 
                        -moz-border-radius: 5px; /* firefox */
@@ -328,24 +381,37 @@
         <div data-role="page" class="div2">
             
             <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
-                <span class="ui-title"> <img src="images/live.png" width="18px">&nbsp;Cerca Player</span>
+                <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
             </div><!-- /header -->
             
-            <div class="spinner" id="spinner"></div>
+            <div class="spinner" id="spinner">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+                <div class="bar4"></div>
+                <div class="bar5"></div>
+                <div class="bar6"></div>
+                <div class="bar7"></div>
+                <div class="bar8"></div>
+                <div class="bar9"></div>
+                <div class="bar10"></div>
+                <div class="bar11"></div>
+                <div class="bar12"></div>
+            </div>
 
             <div data-role="content" class="div2">
                 <script type="text/javascript" src="phonegap.js"></script>
                 <script type="text/javascript" src="js/FinderPlayer.js"></script>
             </div>
             <center>
-                
-                <table width="310px"><tr><td>
+                <img src="panel.png" width="130px"><br>
+                <table width="300px"><tr><td>
                     
                     <form name="formia" action="entra.asp" method="post">
                         
-                        <table><tr><td width="60%">
+                        <table><tr><td width="200px">
                             <input type="search" name="Player" id="Player" value="" placeholder="NickName..."></td>
-                        <td width="40%">
+                        <td width="100px">
                             
                             <select id="mySelect" name="mySelect" data-theme="b">
                                 <option value="01" selected=true>Room</option>
@@ -361,13 +427,20 @@
                 
                 </form>
                 <!--<img src="img/OnLine/2.png" width="180px" class="circolare">-->
+                
+                <table align="center" width="300px" border=0 style="background-image: url(img/WSOP9.png);background-repeat:no-repeat;background-position: 50% 50%;background-size: 300px; width: 300px; height:200px; margin-left:auto; margin-right:auto">
+                    <tr>
+                        <td width="80px">
+                            <div id="imgplayer" align="center" style="display:none;"></div>
+                        </td>
+                        <td width="220px">
+                            <div id="descrizione" align="center" class="note" style="display:none">
+                        </td>
+                    </tr>
+                </table>
+                
                 <div id="classifica" align="center"></div>
                 <div id="informazioni" align="center" style="display:none"  class="note"></div>
-                
-                <table width="310px"><tr>
-                    <td width="80px"><div id="imgplayer" align="center"></div></td><td width="230px"><div id="descrizione" align="center" class="note" style="display:none"></td>
-                </tr>
-                </table>
                 
         <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
             <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>

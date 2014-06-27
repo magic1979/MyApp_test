@@ -1,6 +1,14 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
+    if (window.device && parseFloat(window.device.version) >= 7.0) {
+        $('body').addClass('iOS7');
+    }
+    
+    var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
+    
+    $.mobile.defaultPageTransition = 'none';
+    $.mobile.defaultDialogTransition = 'none';
     
     $('body').on('touchmove', function (e) {
       e.preventDefault();
@@ -17,12 +25,13 @@ function onDeviceReady() {
     var mialat;
     var mialng;
     var via;
-	var geoloc;
+    var geoloc;
     
     mialat = localStorage.getItem("lat");
 	mialng = localStorage.getItem("lng");
     via = localStorage.getItem("Via");
-	geoloc = localStorage.getItem("geoloc");
+    geoloc = localStorage.getItem("geoloc");
+    //alert(geoloc);
     
     if (!via) {
         via = "Non posso determinare il tuo indirizzo";
@@ -32,7 +41,7 @@ function onDeviceReady() {
 	test = 1
         
         var tabella = '<table align="center" border="0" width="310px" height="60px">';
-        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/mark.png" width="32px"></td><td align="left"><font color="white" size="2">'+ via +'</font></td></tr>';
+        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/pin.png" width="32px"></td><td align="left"><font color="white" size="2">'+ via +'</font></td></tr>';
         tabella = tabella + '</table>';
         
         $('#tabella').html(tabella);
@@ -62,21 +71,21 @@ function onDeviceReady() {
                              
                              $.each(result, function(i,item){
                                     if (item.lat == 0){
-                                    distanza = "0";
+                                        distanza = "0";
                                     }
                                     else{
                                         distanza = getDistance(mialat,mialng,item.lat,item.lng).toFixed(1);
                                         test = (parseInt(test)+1)
                                     }
                                     
-                                    
-									if (geoloc == 'SI'){
-									landmark = landmark + '<tr><td><font size="2"><img src="images/mark.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="http://maps.google.com/maps?saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="16px"></a></font></td></tr>';
-									}
-									else{
-									landmark = landmark + '<tr><td><font size="2"><img src="images/mark.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="http://maps.google.com/maps?daddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="16px"></a></font></td></tr>';
-									}
-									
+                                    //alert(geoloc);
+                                    if (geoloc == 'SI'){
+                                    landmark = landmark + '<tr><td><font size="2"><img src="images/marketer.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="maps:saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="20px"></a></font></td></tr>';
+                                    }
+                                    else{
+                                    landmark = landmark + '<tr><td><font size="2"><img src="images/marketer.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">-- <a href="maps:q='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="20px"></a></font></td></tr>';
+                                    }
+
                                     
                                     });
                              
@@ -106,7 +115,7 @@ function onDeviceReady() {
     else{
         
         navigator.notification.alert(
-           'Stato Connessione: ' + connectionStatus,  // message
+           'Hai bisogno di una connessione ad internet',  // message
            alertDismissed,         // callback
            'Attenzione',            // title
            'Done'                  // buttonName
@@ -149,11 +158,10 @@ function deg2rad(deg) {
 }
 
 function apri() {
-    
-    //var mapLocationUrl = 'maps.apple.com/ll=51.84,-8.30';
-    //var ref = window.open(encodeURI(mapLocationUrl), '_system', 'location=no');
-    
-    var ref = window.open('http://maps.google.com/maps?saddr=Via Ostiense,38,roma&daddr=via stamira,7,roma', '_blank', 'location=yes');
+    var ref = window.open('http://maps.apple.com/?daddr=via ostiense,38,roma&saddr=via stamira,7 roma', '_blank', 'location=yes');
 }
 
+function alertDismissed() {
+    // do something
+}
 

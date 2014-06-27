@@ -8,20 +8,15 @@ function onDeviceReady() {
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
     
-    $.mobile.defaultPageTransition = 'none';
-    $.mobile.defaultDialogTransition = 'none';
         
         $(".spinner").show();
-        $('body').on('touchmove', function (e) {
-            e.preventDefault();
-        });
         
         var connectionStatus = false;
         connectionStatus = navigator.onLine ? 'online' : 'offline';
         
         if(connectionStatus=='online'){
                                       
-            live();
+            online();
         }
         else{
             
@@ -54,7 +49,7 @@ function dataok(deg) {
 	var day=deg.substr(6,2);
 	var month=deg.substr(4,2);
 	
-	var d = day + "/" + month + "/" + year
+	var d = day + "/" + month //+ "/" + year
 	
     return d
 }
@@ -68,9 +63,26 @@ function oraok(deg) {
     return o
 }
 
+function getorario() {
+	var oggi = new Date();
+    
+	var O = oggi.getHours();
+	var M = oggi.getMinutes();
+	
+	if(M< 10)M="0"+M;
+	if(O< 10)O="0"+O;
+	
+	var ora = O + "" + M;
+    
+	return ora;
+}
+
 function live(){
 	
-	$('#online').show();
+	
+    $('#classifica').html('');$('#online').show();
+    $(".spinner").show();
+    
 	$('#live').hide();
 	$('#filtroTB').hide();
 	
@@ -94,7 +106,7 @@ function live(){
                   var newdata = dataok(item.DataStart);
                   }
                   
-                  landmark = landmark + '<tr><td><font size="2">'+ item.Nome +'</font><br> Euro '+ item.Buy +', '+ item.Descrizione +'</br></td><td><font size="2"><img src="images/mark.png" width="16px">'+ item.Luogo +'</font></td><td><font size="2">'+ newdata +'</font></td><td><a href="InfoLive.html?nome='+ item.Nome +'" rel="external"><img src="images/destra.png" width="20px"></a></td></tr>';
+                  landmark = landmark + '<tr><td><font size="2">'+ item.Nome +'</font><br> Euro '+ item.Buy +', '+ item.Descrizione +'</br></td><td><font size="2"><img src="images/pin.png" width="16px">'+ item.Luogo +'</font></td><td><font size="2">'+ newdata +'</font></td><td><a href="InfoLive.html?nome='+ item.Nome +'" rel="external"><img src="images/destra.png" width="30px"></a></td></tr>';
                   
                   });
            
@@ -113,13 +125,18 @@ function live(){
 
 function online(){
 	
+    $('#classifica').html('');
+    $(".spinner").show();
+    
     $('#live').show();
     $('#online').hide();
     $('#filtroTB').show();
+    var orario = getorario();
+    //alert(orario);
 	
-    var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Torneo</font></th><th><font color="white" size="2">Room</font></th><th><font color="white" size="2">Ora</font></th></tr></thead><tbody id="classifica">';
+    var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Torneo</font></th><th><font color="white" size="2">Room</font></th><th><font color="white" size="2">Orario</font></th></tr></thead><tbody id="classifica">';
     
-    var filtro = '<table id="filtroTB" width="310px" align="center"><tr><td width="33%"><select id="buin" data-theme="b"><option value="All" selected>Buy-In</option><option value="small">Piccolo</option><option value="medio">Medio</option><option value="Alto">Alto</option></select></td><td width="33%"><select id="grt" data-theme="b"><option value="All" selected>GRT</option><option value="small">50-300</option><option value="Med">500-2000</option><option value="Alto">>2000</option></select></td><td width="33%" align="center"><a href="javascript:cerca()"><img src="images/destra.png" width="24px"></a></td></tr></table>';
+    var filtro = '<table id="filtroTB" width="310px" align="center"><tr><td width="33%"><select id="buin" data-theme="b"><option value="All" selected>Buy-In</option><option value="small">Piccolo</option><option value="medio">Medio</option><option value="Alto">Alto</option></select></td><td width="33%"><select id="grt" data-theme="b"><option value="All" selected>GRT</option><option value="small">50-300</option><option value="Med">500-2000</option><option value="Alto">>2000</option></select></td><td width="33%" align="center"><a href="javascript:cerca()"><img src="images/destra.png" width="40px"></a></td></tr></table>';
     
     $('#selezione').html(filtro);
     
@@ -136,10 +153,20 @@ function online(){
            $.each(result, function(i,item){
                   if (item.Torneo == 0){
                   Torneo = "Nessun Torneo";
+                  img = "";
+                  newora = "";
+                  Buy= "";
+                  img="grey";
                   
                   }
                   else{
+                  var sveglia = "sveglia";
+                  var noimage;
+                  Torneo = item.Torneo;
+                  Buy = item.Buy;
                   var newora = oraok(item.Ora);
+                  //alert(orario + "," + newora);
+                  
                   var img;
                   if (item.Room=="LTM"){
                   img = "verde";
@@ -150,14 +177,28 @@ function online(){
                   else if (item.Room=="GD"){
                   img = "giallo";
                   }
-                  else if (item.Room=="SIS"){
+                  else if (item.Room=="PYT"){
                   img = "rosso";
                   }
                   else{
                   }
+                  
+                  if (parseInt(item.Ora) < parseInt(orario)){
+                    sveglia = "svegliarossa";
+                    noimage = '<div id="pulsar"><font size="2"><img src="images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
+                  
+                    pulse($('#pulsar'), 1000, 'swing', {opacity:0}, {opacity:1}, function() { return false; });
+                  
+                  }
+                  else{
+                    noimage = '<font size="2">'+ newora +'</font>';
+                  }
+
+                  
+                  
                   }
                   
-                  landmark = landmark + '<tr><td><font size="2">'+ item.Torneo +'</font>&nbsp;<font size="1">('+ item.Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="img/OnLine/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td><font size="2">'+ newora +'</font></td></tr>';
+                  landmark = landmark + '<tr><td><font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="img/OnLine/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td>'+ noimage +'</td></tr>';
                   
                   });
            
@@ -165,6 +206,8 @@ function online(){
            $('#classifica').html(landmark); 
            $("#myTable").tablesorter( {sortList: [[2,0]]} );
            $(".spinner").hide();
+           
+           pulse($('#pulsar'), 1000, 'swing', {opacity:0}, {opacity:1}, function() { return false; });
            
            },
            error: function(){
@@ -175,6 +218,8 @@ function online(){
 
 function cerca() {
 	$('#classifica').html('');
+    $(".spinner").show();
+    
 	var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Torneo</font></th><th><font color="white" size="2">Room</font></th><th><font color="white" size="2">Ora</font></th></tr></thead><tbody id="classifica">';
 	
 	//alert(self.document.formia.buin.value);
@@ -212,7 +257,7 @@ function cerca() {
                   else if (item.Room=="GD"){
                   img = "giallo";
                   }
-                  else if (item.Room=="SIS"){
+                  else if (item.Room=="PYT"){
                   img = "rosso";
                   }
                   else{
@@ -234,6 +279,17 @@ function cerca() {
            alert('There was an error loading the data.');
            },
            dataType:"jsonp"});
+}
+
+
+function pulse(elem, duration, easing, props_to, props_from, until) {
+    elem.animate( props_to, duration, easing,
+                 function() {
+                 if ( until() == false )
+                 {
+                 pulse(elem, duration, easing, props_from, props_to, until);
+                 }
+                 });
 }
 
 

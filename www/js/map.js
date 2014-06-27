@@ -11,7 +11,7 @@ function onDeviceReady() {
 	
 	geostory = localStorage.getItem("geostory");
 	
-	alert(geostory + "Two");
+	//alert(geostory + "Two");
 	
 	if (geostory == 'NO'){
 		navigator.geolocation.getCurrentPosition(onSuccess1, onError1, { maximumAge:600000, timeout:80000, enableHighAccuracy: true });
@@ -20,11 +20,11 @@ function onDeviceReady() {
 				var ciao = position.coords.latitude;
 				var ciao1 = position.coords.longitude;
 				
-				localStorage.setItem("lat", ciao)
+				localStorage.setItem("lat", ciao);
 	
-				localStorage.setItem("lng", ciao1)
+				localStorage.setItem("lng", ciao1);
 				
-				localStorage.setItem("geoloc", "SI")
+				localStorage.setItem("geoloc", "SI");
 			}
 			
 			
@@ -47,9 +47,11 @@ function onDeviceReady() {
 						$('#classifica').html('Errore Generico');
 					}
 					
-					localStorage.setItem("geoloc", "NO")
-					localStorage.setItem("lat", "41.881360")
-					localStorage.setItem("lng", "12.475004")
+					localStorage.setItem("geoloc", "NO");
+					localStorage.setItem("lat", "41.881360");
+					localStorage.setItem("lng", "12.475004");
+					$('#classifica').html('Non posso determinare la tua posizione, ti viene assegnata una posizione generica a Roma');
+					$(".spinner").hide();
 				}
 			}
 			
@@ -68,23 +70,30 @@ function onDeviceReady() {
 						$('#classifica').html('Errore Generico');
 					}
 					
-					localStorage.setItem("geoloc", "NO")
-					localStorage.setItem("lat", "41.881360")
-					localStorage.setItem("lng", "12.475004") 
+					localStorage.setItem("geoloc", "NO");
+					localStorage.setItem("lat", "41.881360");
+					localStorage.setItem("lng", "12.475004");
+					$('#classifica').html('Non posso determinare la tua posizione, ti viene assegnata una posizione generica a Roma');
+					$(".spinner").hide();
 			}
 		}
 		else{
-			alert('ha letto SI');
+			//alert('ha letto SI');	
+			var latitudine = localStorage.getItem("lat");
+			var longitudine = localStorage.getItem("lng");
+			
+			
+			codeLatLng(latitudine,longitudine);
+			$(".spinner").hide();
 		}
 			
 		
-
 
 		  var lat = localStorage.getItem("lat");
 
 		  var lng = localStorage.getItem("lng");
 		  
-		  alert(lat + "--" + lng);                            
+		  //alert(lat + "--" + lng);                            
 
           var destIcon = new google.maps.MarkerImage("images/mark.png", null, null, null, new google.maps.Size(28,40));
 
@@ -193,10 +202,6 @@ function onDeviceReady() {
 
 
 		  //var distanza = getDistanceFromLatLonInKm(lat,lng,41.913010,12.442009).toFixed(1);
-
-		  codeLatLng(lat,lng);
-
-		  
 
 		  //var dist = distanza;
 

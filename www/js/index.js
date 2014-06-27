@@ -309,21 +309,18 @@ function checkPos() {
 
         var ciao1 = position.coords.longitude;
 
-        localStorage.setItem("lat", ciao)
+        localStorage.setItem("lat", ciao);
 
-        localStorage.setItem("lng", ciao1)
+        localStorage.setItem("lng", ciao1);
 
-        localStorage.setItem("geostory", "SI")
+        localStorage.setItem("geostory", "SI");
 		
-		 alert(ciao + "--" + ciao1 + "One");
-
+		 //alert(ciao + "--" + ciao1 + "One");
     }
 
     function onError(error) {
         
-        localStorage.setItem("geostory", "NO")
-		
-		alert('no');
+        localStorage.setItem("geostory", "NO");
     }
     
 }

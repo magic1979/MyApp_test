@@ -1,13 +1,9 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
-    if (window.device && parseFloat(window.device.version) >= 7.0) {
-        $('body').addClass('iOS7');
-    }
     
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
-    
         
         $(".spinner").show();
         

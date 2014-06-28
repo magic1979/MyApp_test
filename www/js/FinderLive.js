@@ -178,6 +178,7 @@ function online(){
                   img = "rosso";
                   }
                   else{
+					  img="grey";
                   }
                   
                   if (parseInt(item.Ora) < parseInt(orario)){
@@ -195,7 +196,7 @@ function online(){
                   
                   }
                   
-                  landmark = landmark + '<tr><td><font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="./img/OnLine/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td>'+ noimage +'</td></tr>';
+                  landmark = landmark + '<tr><td><font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="./room/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td>'+ noimage +'</td></tr>';
                   
                   });
            
@@ -262,7 +263,7 @@ function cerca() {
                   }
                   }
                   
-                  landmark = landmark + '<tr><td><font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="./img/OnLine/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td><font size="2">'+ newora +'</font></td></tr>';
+                  landmark = landmark + '<tr><td><font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="./room/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td><font size="2">'+ newora +'</font></td></tr>';
                   
                   });
            

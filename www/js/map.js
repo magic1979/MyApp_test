@@ -503,4 +503,15 @@ function again() {
 	
 }
 
+function cambiap() {
 
+    $.mobile.changePage ($("#home"));
+}
+
+
+
+function cambiah() {
+
+    window.location.href = "index.html";
+
+}

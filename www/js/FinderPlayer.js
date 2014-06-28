@@ -230,7 +230,7 @@ function onDeviceReady() {
                                           imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/fish.png" width="70px"></td></tr></table>'
                                           }
                                           else{
-                                          alert(parseInt(item.Roi));
+                                          //alert(parseInt(item.Roi));
                                           $('#descrizione').html('Potrebbe Migliorare, periodo non favorevole');
                                           imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/donkey.png" width="70px"></td></tr></table>'
                                           }

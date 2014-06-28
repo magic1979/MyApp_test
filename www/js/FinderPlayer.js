@@ -38,10 +38,8 @@ function onDeviceReady() {
                     }
                     else{
                      //$('#btn').show();
-                    $("#btn").click();
-                    $("#mySelect").val("01");
-                    $("#mySelect").selectmenu("refresh");
-                    $('#imgplayer').fadeOut();
+                        $('#imgplayer').fadeOut();
+                        $("#btn").click();
                     }
                 }
                 else{
@@ -98,7 +96,7 @@ function onDeviceReady() {
                                           $('#descrizione').html('Nessuna informazione trovata');
                                           $('#descrizione').show();
                                           $('#informazioni').hide();
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="img/player/Ghost.png" width="70px"></td></tr></table>'
+                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./img/player/Ghost.png" width="70px"></td></tr></table>'
                                           }
                                           else{
                                           if (parseInt(item.ROI)>0){
@@ -110,11 +108,11 @@ function onDeviceReady() {
                                           
                                           if (parseInt(item.ROI)>30){
                                           $('#descrizione').html('Top Player');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="img/player/shark.png" width="70px"></td></tr></table>'
+                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./img/player/shark.png" width="70px"></td></tr></table>'
                                           }
                                           else{
                                           $('#descrizione').html('Buon Giocatore');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="img/player/tiger.png" width="70px"></td></tr></table>'
+                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./img/player/tiger.png" width="70px"></td></tr></table>'
                                           }
                                           }
                                           else if(parseInt(item.ROI)<0){
@@ -129,17 +127,17 @@ function onDeviceReady() {
                                           
                                           //alert(confronto + "," + roitter);
                                           
-                                          if (roitter < confronto){
+                                          if (roitter > confronto){
                                           $('#descrizione').html('Deve studiare molto, Tilt');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="img/player/fish.png" width="70px"></td></tr></table>'
+                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./img/player/fish.png" width="70px"></td></tr></table>'
                                           }
                                           else{
                                           $('#descrizione').html('Potrebbe Migliorare, periodo non favorevole');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="img/player/donkey.png" width="70px"></td></tr></table>'
+                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./img/player/donkey.png" width="70px"></td></tr></table>'
                                           }
                                           }
                                           else{
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="img/player/Ghost.png" width="70px"></td></tr></table>'
+                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./img/player/Ghost.png" width="70px"></td></tr></table>'
                                           freccia = 'grey.png';
                                           Roi = '0';
                                           $('#descrizione').html('Nessuna informazione trovata');
@@ -159,6 +157,9 @@ function onDeviceReady() {
                                    
                                    $('#classifica').html(landmark); 
                                    $("#myTable").tablesorter( {sortList: [[1,0]]} );
+                                   
+                                   $("#mySelect").val("01");
+                                   $("#mySelect").selectmenu("refresh");
                                    
                                    $(".spinner").hide();
                                    
@@ -192,7 +193,7 @@ function onDeviceReady() {
                                           Roi = 'Nessun Dato';
                                           $("#avatar").attr("src", "img/player/Ghost.png");
                                           
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="img/player/Ghost.png" width="70px"></td></tr></table>'
+                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./img/player/Ghost.png" width="70px"></td></tr></table>'
                                           }
                                           else{
                                           
@@ -205,11 +206,11 @@ function onDeviceReady() {
                                           
                                           if (parseInt(item.ROI)>30){
                                           $('#descrizione').html('Top Player');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="img/player/shark.png" width="70px"></td></tr></table>'
+                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./img/player/shark.png" width="70px"></td></tr></table>'
                                           }
                                           else{
                                           $('#descrizione').html('Buon Giocatore');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="img/player/tiger.png" width="70px"></td></tr></table>'
+                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./img/player/tiger.png" width="70px"></td></tr></table>'
                                           }
                                           }
                                           else if(parseInt(item.Roi)<0){
@@ -224,18 +225,18 @@ function onDeviceReady() {
                                           
                                           //alert(confronto + "," + roitter);
                                           
-                                          if (roitter < confronto){
+                                          if (roitter > confronto){
                                           $('#descrizione').html('Deve studiare molto, Tilt');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="img/player/fish.png" width="70px"></td></tr></table>'
+                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./img/player/fish.png" width="70px"></td></tr></table>'
                                           }
                                           else{
                                           alert(parseInt(item.Roi));
                                           $('#descrizione').html('Potrebbe Migliorare, periodo non favorevole');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="img/player/donkey.png" width="70px"></td></tr></table>'
+                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./img/player/donkey.png" width="70px"></td></tr></table>'
                                           }
                                           }
                                           else{
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="img/player/Ghost.png" width="70px"></td></tr></table>'
+                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./img/player/Ghost.png" width="70px"></td></tr></table>'
                                           freccia = 'grey.png';
                                           Roi = '0';
                                           $('#descrizione').html('Nessuna informazione trovata');
@@ -255,6 +256,9 @@ function onDeviceReady() {
                                    
                                    $('#classifica').html(landmark); 
                                    $("#myTable").tablesorter( {sortList: [[1,0]]} );
+                                   
+                                   $("#mySelect").val("01");
+                                   $("#mySelect").selectmenu("refresh");
                                    
                                    $(".spinner").hide();
                                    

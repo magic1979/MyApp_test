@@ -4,6 +4,7 @@ function onDeviceReady() {
     
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
+    
         
         $(".spinner").show();
         
@@ -102,7 +103,7 @@ function live(){
                   var newdata = dataok(item.DataStart);
                   }
                   
-                  landmark = landmark + '<tr><td><font size="2">'+ item.Nome +'</font><br> Euro '+ item.Buy +', '+ item.Descrizione +'</br></td><td><font size="2"><img src="images/pin.png" width="16px">'+ item.Luogo +'</font></td><td><font size="2">'+ newdata +'</font></td><td><a href="InfoLive.html?nome='+ item.Nome +'" rel="external"><img src="images/destra.png" width="30px"></a></td></tr>';
+                  landmark = landmark + '<tr><td><font size="2">'+ item.Nome +'</font><br> Euro '+ item.Buy +', '+ item.Descrizione +'</br></td><td><font size="2"><img src="images/pin.png" width="16px">'+ item.Luogo +'</font></td><td><font size="2">'+ newdata +'</font></td><td><a href="InfoLive.html?nome='+ item.Nome +'" rel="external"><img src="./images/destra.png" width="30px"></a></td></tr>';
                   
                   });
            
@@ -132,7 +133,7 @@ function online(){
 	
     var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Torneo</font></th><th><font color="white" size="2">Room</font></th><th><font color="white" size="2">Orario</font></th></tr></thead><tbody id="classifica">';
     
-    var filtro = '<table id="filtroTB" width="310px" align="center"><tr><td width="33%"><select id="buin" data-theme="b"><option value="All" selected>Buy-In</option><option value="small">Piccolo</option><option value="medio">Medio</option><option value="Alto">Alto</option></select></td><td width="33%"><select id="grt" data-theme="b"><option value="All" selected>GRT</option><option value="small">50-300</option><option value="Med">500-2000</option><option value="Alto">>2000</option></select></td><td width="33%" align="center"><a href="javascript:cerca()"><img src="images/destra.png" width="40px"></a></td></tr></table>';
+    var filtro = '<table id="filtroTB" width="310px" align="center"><tr><td width="33%"><select id="buin" data-theme="b"><option value="All" selected>Buy-In</option><option value="small">Piccolo</option><option value="medio">Medio</option><option value="Alto">Alto</option></select></td><td width="33%"><select id="grt" data-theme="b"><option value="All" selected>GRT</option><option value="small">50-300</option><option value="Med">500-2000</option><option value="Alto">>2000</option></select></td><td width="33%" align="center"><a href="javascript:cerca()"><img src="./images/destra.png" width="40px"></a></td></tr></table>';
     
     $('#selezione').html(filtro);
     
@@ -181,7 +182,7 @@ function online(){
                   
                   if (parseInt(item.Ora) < parseInt(orario)){
                     sveglia = "svegliarossa";
-                    noimage = '<div id="pulsar"><font size="2"><img src="images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
+                    noimage = '<div id="pulsar"><font size="2"><img src="./images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
                   
                     pulse($('#pulsar'), 1000, 'swing', {opacity:0}, {opacity:1}, function() { return false; });
                   
@@ -194,7 +195,7 @@ function online(){
                   
                   }
                   
-                  landmark = landmark + '<tr><td><font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="img/OnLine/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td>'+ noimage +'</td></tr>';
+                  landmark = landmark + '<tr><td><font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="./img/OnLine/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td>'+ noimage +'</td></tr>';
                   
                   });
            
@@ -261,7 +262,7 @@ function cerca() {
                   }
                   }
                   
-                  landmark = landmark + '<tr><td><font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="img/OnLine/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td><font size="2">'+ newora +'</font></td></tr>';
+                  landmark = landmark + '<tr><td><font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="./img/OnLine/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td><font size="2">'+ newora +'</font></td></tr>';
                   
                   });
            

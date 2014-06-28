@@ -82,6 +82,7 @@ function onDeviceReady() {
 			var latitudine = localStorage.getItem("lat");
 			var longitudine = localStorage.getItem("lng");
 			
+			localStorage.setItem("geoloc", "SI");
 			
 			codeLatLng(latitudine,longitudine);
 			$(".spinner").hide();
@@ -95,7 +96,7 @@ function onDeviceReady() {
 		  
 		  //alert(lat + "--" + lng);                            
 
-          var destIcon = new google.maps.MarkerImage("images/mark.png", null, null, null, new google.maps.Size(28,40));
+          var destIcon = new google.maps.MarkerImage("./images/pin.png", null, null, null, new google.maps.Size(28,40));
 
                                               
 
@@ -198,7 +199,7 @@ function onDeviceReady() {
 
 		  
 
-		  var img = new google.maps.MarkerImage("images/gps.png", null, null, null, new google.maps.Size(22,22));
+		  var img = new google.maps.MarkerImage("./images/gps.png", null, null, null, new google.maps.Size(22,22));
 
 
 		  //var distanza = getDistanceFromLatLonInKm(lat,lng,41.913010,12.442009).toFixed(1);

@@ -38,60 +38,6 @@
                  <script src="js/jquery.mobile-1.4.2.min.js"></script>
                  
                  <script type="text/javascript" src="jquery.tablesorter.js"></script>
-                 
-                  <script type="text/javascript" src="js/iscroll.js"></script>
-                  
-                  <script type="text/javascript">
-                      
-                      var myScroll,
-                      pullDownEl, pullDownOffset,
-                      generatedCount = 0;
-                      
-                      function pullDownAction () {
-                                onDeviceReady();
-                                     
-                                myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-                      }
-                  
-                  
-                  function loaded() {
-                      pullDownEl = document.getElementById('pullDown');
-                      pullDownOffset = pullDownEl.offsetHeight;
-
-                      
-                      myScroll = new iScroll('wrapper', {
-                                             useTransition: true,
-                                             topOffset: pullDownOffset,
-                                             onRefresh: function () {
-                                             if (pullDownEl.className.match('loading')) {
-                                             pullDownEl.className = '';
-                                             pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
-                                             }                                              },
-                                             onScrollMove: function () {
-                                             if (this.y > 5 && !pullDownEl.className.match('flip')) {
-                                             pullDownEl.className = 'flip';
-                                             pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Release to refresh...';
-                                             this.minScrollY = 0;
-                                             } else if (this.y < 5 && pullDownEl.className.match('flip')) {
-                                             pullDownEl.className = '';
-                                             pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
-                                             this.minScrollY = -pullDownOffset;
-                                             }                                              },
-                                             onScrollEnd: function () {
-                                             if (pullDownEl.className.match('flip')) {
-                                             pullDownEl.className = 'loading';
-                                             pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';
-                                             pullDownAction();	// Execute custom function (ajax call?)
-                                             }                                              }
-                                             });
-                                             
-                                             setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
-                  }
-                  
-                  document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-                  
-                  document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
-         </script>
                   
                   <style type="text/css" media="all">
                       body,ul,li {
@@ -381,7 +327,7 @@
         <div data-role="page" class="div2">
             
             <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
-                <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
+                <span class="ui-title"> <img src="./barra.png" width="100px" height="26px"></span>
             </div><!-- /header -->
             
             <div class="spinner" id="spinner">
@@ -404,7 +350,7 @@
                 <script type="text/javascript" src="js/FinderPlayer.js"></script>
             </div>
             <center>
-                <img src="panel.png" width="130px"><br>
+                <img src="./panel.png" width="130px"><br>
                 <table width="300px"><tr><td>
                     
                     <form name="formia" action="entra.asp" method="post">
@@ -428,7 +374,7 @@
                 </form>
                 <!--<img src="img/OnLine/2.png" width="180px" class="circolare">-->
                 
-                <table align="center" width="300px" border=0 style="background-image: url(img/WSOP9.png);background-repeat:no-repeat;background-position: 50% 50%;background-size: 300px; width: 300px; height:200px; margin-left:auto; margin-right:auto">
+                <table align="center" width="300px" border=0 style="background-image: url(./img/WSOP9.png);background-repeat:no-repeat;background-position: 50% 50%;background-size: 300px; width: 300px; height:200px; margin-left:auto; margin-right:auto">
                     <tr>
                         <td width="80px">
                             <div id="imgplayer" align="center" style="display:none;"></div>

@@ -1,6 +1,9 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
+    if (window.device && parseFloat(window.device.version) >= 7.0) {
+        $('body').addClass('iOS7');
+    }
     
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     
@@ -77,10 +80,10 @@ function onDeviceReady() {
                                     
                                     //alert(geoloc);
                                     if (geoloc == 'SI'){
-                                    landmark = landmark + '<tr><td><font size="2"><img src="images/marketer.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="maps:saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="20px"></a></font></td></tr>';
+                                    landmark = landmark + '<tr><td><font size="2"><img src="./images/pin.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="maps:saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="20px"></a></font></td></tr>';
                                     }
                                     else{
-                                    landmark = landmark + '<tr><td><font size="2"><img src="images/marketer.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">-- <a href="maps:q='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="20px"></a></font></td></tr>';
+                                    landmark = landmark + '<tr><td><font size="2"><img src="./images/marketer.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">-- <a href="maps:q='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="20px"></a></font></td></tr>';
                                     }
 
                                     

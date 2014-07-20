@@ -51,7 +51,7 @@ function onDeviceReady() {
                      'Dati non presenti al momento, riprova tra qualche instante',  // message
                       alertDismissed,         // callback
                      'Attenzione',            // title
-                     'Done'                  // buttonName
+                     'Done'                  
                      );
                    
                    },

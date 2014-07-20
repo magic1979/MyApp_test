@@ -572,7 +572,7 @@ function cerca() {
                               'Nessuna connessione ad internet rilevata',  // message
                                alertDismissed,         // callback
                                'Attenzione',            // title
-                               'OK'                  // buttonName
+                               'OK'                  
                              );
                              }
                              

@@ -92,7 +92,7 @@ function vai() {
         'password non completa',  // message
          alertDismissed,         // callback
          'Attenzione',            // title
-         'Done'                  // buttonName
+         'Done'                  
          );
         return;
     }

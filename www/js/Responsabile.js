@@ -9,7 +9,6 @@ function onDeviceReady() {
     
     $.mobile.defaultPageTransition = 'none';
     $.mobile.defaultDialogTransition = 'none';
-    
 
 }
 

@@ -62,7 +62,7 @@ function onDeviceReady() {
                     'Devi inserire un nickname corretto',  // message
                     alertDismissed,         // callback
                     'Attenzione',            // title
-                    'OK'                  // buttonName
+                    'OK'                  
                     );
 
                     $("#mySelect").val("01");

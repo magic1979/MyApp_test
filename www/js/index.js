@@ -75,8 +75,7 @@
 
 function init() {
     document.addEventListener("deviceready", initPushwoosh, true);
- 
-    //rest of the code
+
 }
  
  

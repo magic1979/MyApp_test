@@ -37,6 +37,8 @@
                  <script src="jquery-1.10.2.min.js"></script>
                  <script src="js/jquery.mobile-1.4.2.min.js"></script>
                  
+                 <script type="text/javascript" src="jquery.tablesorter.js"></script>
+                 
                   <script type="text/javascript" src="js/iscroll.js"></script>
                   
                   <script type="text/javascript">
@@ -46,9 +48,9 @@
                       generatedCount = 0;
                       
                       function pullDownAction () {
-                            app.initialize();
+                                onDeviceReady();
                                      
-                            myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+                                myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
                       }
                   
                   
@@ -99,10 +101,8 @@
                       }
                   
                   body {
-                      font-size:12px;
                       -webkit-user-select:none;
                       -webkit-text-size-adjust:none;
-                      font-family:helvetica;
                   }
                   
                   #header {
@@ -229,24 +229,66 @@
                   
               </style>
 
+
                    <style>
-				     .div1 {
-                           background-color: #707070;
-                           -webkit-filter: blur(8px);
-                       }
                      .div2 {
                        background-color: #707070;
                      }
+                   .div3 {
+                       background: rgb(125,126,125); /* Old browsers */
+                       background: -moz-linear-gradient(top, rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%); /* FF3.6+ */
+                       background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1))); /* Chrome,Safari4+ */
+                       background: -webkit-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Chrome10+,Safari5.1+ */
+                       background: -o-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Opera 11.10+ */
+                       background: -ms-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* IE10+ */
+                       background: linear-gradient(to bottom, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* W3C */
+                       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */
+                   }
+                   .push_button{
+                       position:relative;
+                       width:60px;
+                       height:60px;
+                       color:#FFF;
+                       display:block;
+                       text-decoration:none;
+                       margin:0 auto;
+                       border-radius:999em;
+                       border:solid 1px #D94E3B;
+                       
+                       background: rgba(239,197,202,1);
+                       background: -moz-linear-gradient(-45deg, rgba(239,197,202,1) 0%, rgba(210,75,90,1) 94%, rgba(186,39,55,1) 99%, rgba(241,142,153,1) 100%);
+                       background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(239,197,202,1)), color-stop(94%, rgba(210,75,90,1)), color-stop(99%, rgba(186,39,55,1)), color-stop(100%, rgba(241,142,153,1)));
+                       background: -webkit-linear-gradient(-45deg, rgba(239,197,202,1) 0%, rgba(210,75,90,1) 94%, rgba(186,39,55,1) 99%, rgba(241,142,153,1) 100%);
+                       background: -o-linear-gradient(-45deg, rgba(239,197,202,1) 0%, rgba(210,75,90,1) 94%, rgba(186,39,55,1) 99%, rgba(241,142,153,1) 100%);
+                       background: -ms-linear-gradient(-45deg, rgba(239,197,202,1) 0%, rgba(210,75,90,1) 94%, rgba(186,39,55,1) 99%, rgba(241,142,153,1) 100%);
+                       background: linear-gradient(135deg, rgba(239,197,202,1) 0%, rgba(210,75,90,1) 94%, rgba(186,39,55,1) 99%, rgba(241,142,153,1) 100%);
+                       filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#efc5ca', endColorstr='#f18e99', GradientType=1 );
+                       
+                       text-align:center;
+                       padding:30px 30px;
+                       
+                       -webkit-transition: all 0.1s;
+                       -moz-transition: all 0.1s;
+                       transition: all 0.1s;
+                       
+                       -webkit-box-shadow: 0px 9px 0px #84261a;
+                       -moz-box-shadow: 0px 9px 0px #84261a;
+                       box-shadow: 0px 9px 0px #84261a;
+                   }
+                   .push_button:active{
+                       text-decoration: none;
+                       -webkit-box-shadow: 0px 2px 0px #84261a;
+                       -moz-box-shadow: 0px 2px 0px #84261a;
+                       box-shadow: 0px 2px 0px #84261a;
+                       position:relative;
+                       top:7px;
+                   }
                      .div3 {
-                         background: rgb(125,126,125); /* Old browsers */
-                         background: -moz-linear-gradient(top, rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%); /* FF3.6+ */
-                         background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1))); /* Chrome,Safari4+ */
-                         background: -webkit-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Chrome10+,Safari5.1+ */
-                         background: -o-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Opera 11.10+ */
-                         background: -ms-linear-gradient(top, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* IE10+ */
-                         background: linear-gradient(to bottom, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* W3C */
-                         filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */
+                       background-color: black;
                       }
+                   body.iOS7 {
+                       -webkit-transform: translate3d(0, 20px, 0);
+                   }
 
                        .circolare {
                          width: 77px;
@@ -266,157 +308,105 @@
                          background-color: white;
                          opacity:0.5;
                          }
-						 .conn {
-                            font-size: 9pt;
-                            color:#FFF;
-                            background-color: #9d3434;
-                         }
                    
-                   .home {
-                       background-color: #9d3434;
-                       background-image: url(images/enter.png);
-                       background-size: 20px 20px;
+                   table.tablesorter {
+                       font-family:arial;
+                       background-color: #f0f0f0;
+                       margin:10px 0pt 15px;
+                       font-size: 8pt;
+                       width: 95%;
+                       text-align: left;
+                       border: 2px solid #000000;
+                       
+                       border-radius: 10px;
+                       -moz-border-radius: 10px; /* firefox */
+                       -webkit-border-radius: 10px; /* safari, chrome */
+                       
+                   }
+                   table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+                       background-color: grey;
+                       border: 1px solid #FFF;
+                       font-size: 8pt;
+                       padding: 4px;
+                       width: 65%;
+                       
+                       border-radius: 10px;
+                       -moz-border-radius: 10px; /* firefox */
+                       -webkit-border-radius: 10px; /* safari, chrome */
+                       
+                   }
+                   table.tablesorter thead tr .header {
+                       background-image: url(bg.gif);
                        background-repeat: no-repeat;
-                       background-position:center;
-                       
-                       height:40px;
-                       width:40px;
-                       border-radius:999em;
-                       -moz-border-radius:999em;
-                       -webkit-border-radius:999em;
-                       -o-border-radius: 999em;
-                       
-                       -webkit-box-shadow: 0px 0px 0.5px 1px #FFF;
-                       -moz-box-shadow: 0px 0px 0.5px 1px #FFF;
-                       box-shadow: 0px 0px 0.5px 1px #FFF;
+                       background-position: center right;
+                       cursor: pointer;
                    }
-                   
-                   .home:active {
-                       background-color: #000000;
-                       border-radius:999em;
-                       -moz-border-radius:999em;
-                       -webkit-border-radius:999em;
-                       -o-border-radius: 999em;
-                       
-                       -webkit-box-shadow: 0px 0px 0.5px 1px #000;
-                       -moz-box-shadow: 0px 0px 0.5px 1px #000;
-                       box-shadow: 0px 0px 0.5px 1px #000;
-                   }
-                   
-                   .buttonFB:active {
-                       border:1px solid #FFFFFF;
-                   }
-                   .buttonTW:active {
-                       border:1px solid #FFFFFF;
-                   }
-                   
-                   .badge1 {
-                       position:relative;
-                   }
-                   .badge1[data-badge]:after {
-                       content:attr(data-badge);
-                       position:absolute;
-                       top:-10px;
-                       right:-10px;
-                       font-size:.7em;
-                       background:green;
-                       color:white;
-                       width:18px;height:18px;
-                       text-align:center;
-                       line-height:18px;
-                       border-radius:50%;
-                       box-shadow:0 0 1px #333;
-                       border: 1px solid #fff;
-                   }
-                   .badge2 {
+                   table.tablesorter tbody td {
+                       color: #0f0f0f;
+                       padding: 4px;
+                       background-color: #FFF;
+                       vertical-align: top;
                        
                    }
-                   .badge2[data-badge]:after {
+                   table.tablesorter tbody tr.odd td {
+                       background-color:#000000;
+                   }
+                   table.tablesorter thead tr .headerSortUp {
+                       background-image: url(asc.gif);
+                   }
+                   table.tablesorter thead tr .headerSortDown {
+                       background-image: url(desc.gif);
+                   }
+                   table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+                       background-color: #9d3434;
                        
                    }
-
                   </style>
     </head>
-    <body onload="init();">
-        <div data-role="page" class="div2" >
-        
-        	<div data-role="panel" id="mypanel" data-display="overlay" data-theme="b" data-position-fixed="true" class="div2">
-                 <center>
-                        <!--<img src="http://www.pokeranswer.it/IMG/AnswerB.png" width="130px" data-rel="external">-->
-                        <img src="barra.png" width="100px" height="26px">
-                        <br>
-                        <br>
-                        <ul data-role="listview" data-inset="true">
-                            <li id="badde2" class="badge1" data-badge="1"><a href="Strategy.html" rel="external">Strategy</a></li>
-                            <li><a href="javascript:send();">Contattaci</a></li>
-                            <li><a href="javascript:friend();">Invita Amici</a></li>
-                            <li><a href="#">Info/Faq</a></li>
-                            <li><a href="Privacy.html" rel="external">Privacy</a></li>
-                            <li><a href="Responsabile.html" rel="external">Gioco Responsabile</a></li>
-                            <li><a href="Note.html" rel="external">Note Legali</a></li>
-                            <li><a href="Minori.html" rel="external">Minori</a></li>
-                        </ul>
-                        </center>
-                <br>
-                <a href="#my-header" onclick="javascript:chiudipanel();" class="ui-btn ui-corner-all ui-btn-inline ui-icon-delete ui-btn-icon-left" data-rel="close">Close</a><br><br>
-                <a href="#" onclick="window.plugins.socialsharing.shareViaFacebook('On Air in September!', null, null, function() {console.log('share ok')}, function(errormsg){alert(errormsg)})"> <img src="img/facebook.png" width="80px" data-rel="external" class="buttonFB"></a><br>
-                 <a href="#" onclick="window.plugins.socialsharing.shareViaTwitter('Che Semifinali...')"> <img src="img/twitter.png" width="80px" data-rel="external" class="buttonTW"></a><br>
-            </div><!-- /panel -->
+    <body>
+        <div data-role="page" class="div2">
             
-            <div data-role="header" align="center" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
-                <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
+            <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
+                <span class="ui-title"> <img src="images/live.png" width="18px">&nbsp;Cerca Player</span>
             </div><!-- /header -->
             
-            <div class="spinner" id="spinner"></div>
+            <div class="spinner" id="spinner">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+                <div class="bar4"></div>
+                <div class="bar5"></div>
+                <div class="bar6"></div>
+                <div class="bar7"></div>
+                <div class="bar8"></div>
+                <div class="bar9"></div>
+                <div class="bar10"></div>
+                <div class="bar11"></div>
+                <div class="bar12"></div>
+            </div>
             
             <div id="wrapper">
                 <div id="scroller">
                     <div id="pullDown">
                         <span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
                     </div>
-                    
-            <div id="noconn" align="center" style="display:none"></div>
+            
+            
             <div data-role="content" class="div2">
-                <div class="div2"><table align="right" width="120px"><tr><td valign="center" align="right"><font  color="white" size="2"><div id="fiches"></div></font></td></tr></table></div>
+                <script type="text/javascript" src="phonegap.js"></script>
+                <script type="text/javascript" src="js/FinderPlayer.js"></script>
             </div>
+            <center>
             
             <div id="classifica" align="center"></div>
-            
-            <br>
 
-        <div>
-            <ul data-role="listview"  data-theme="b" data-inset="true">
-                <li><a href="javascript:cambiap();" rel="external"><img src="img/italia.png" >
-                    <h2><img src="images/finder.png" width="16px">&nbsp;Radar-Room</h2>
-                    <p>Strutture sportive intorno a te</p></a>
-                </li>
-                <li><a href="FindPlayer.html" rel="external"><img src="img/Full4.png">
-                    <h2><img src="images/chip.png" width="16px">&nbsp;Cerca Player</h2>
-                    <p>Avatar, Andamanto, R.o.i</p></a>
-                </li>
-                <li><a href="FinderLive.html" rel="external"><img src="img/palinsesti.png" height="70">
-                    <h2><img src="images/live.png" width="16px">&nbsp;Cosa Giocare</h2>
-                    <p>Tornei Live, Tornei On-Line</p></a>
-                </li>
-            </ul>
         </div>
-
           </div>
-     </div>
-            
-        <div data-role="footer" align="center" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div4">
-            <table><tr><td width="200px">
-            <a href="#mypanel" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-grid">Altro</a>
-            <a href="Token.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-check">+ Chips</a>&nbsp;&nbsp;</td>
-            <td width="120px"><a href="javascript:apri();"><img src="images/aams_logo.png" width="32px"><img src="images/giocosicuro.png" width="38px"><img src="images/18a.png" width="22px"></a></td>
-            </tr></table>
+        
+        <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
+            <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>
         </div><!-- /footer -->
-
         
     </div><!-- /page -->
     </body>
 </html>
-
-
-
-

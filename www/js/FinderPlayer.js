@@ -2,6 +2,9 @@ document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
     
+    StatusBar.overlaysWebView(false);
+    StatusBar.backgroundColorByHexString("#RRGGBB");
+    
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
     
@@ -15,16 +18,31 @@ function onDeviceReady() {
         
         var connectionStatus = false;
         connectionStatus = navigator.onLine ? 'online' : 'offline';
-        
+    
+        $(document).keydown(function (eventObj){
+            getKey(eventObj);
+        });
+    
+        var chip = localStorage.getItem("chip");
+        $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+        $('#fiches').show();
+        var giorni = localStorage.getItem("Day");
+    
         if(connectionStatus=='online'){
             
-            $('#informazioni').html('&nbsp;*Vengono considerati solo gli ultimi mesi di gioco.');
+            $('#descrizione').html('&nbsp;*Vengono considerati solo gli ultimi mesi di gioco.');
+            $('#descrizione').show();
+            
+            $('#informazioni').html('&nbsp;*I dati sono da considerarsi puramente indicativi, e sono calcolati sugli ultimi mesi di gioco.');
             $('#informazioni').show();
+            
+            $('#noconn').hide();
             $(".spinner").hide();
+            
             
             $('#mySelect').on('change', function(){
                 if (self.document.formia.Player.value != "")
-                  {
+                {
                      if(self.document.formia.Player.value.length<3){
                           navigator.notification.alert(
                           'Devi inserire un nickname corretto',  // message
@@ -67,23 +85,38 @@ function onDeviceReady() {
                                 'Seleziona una Poker Room',  // message
                                 alertDismissed,         // callback
                                 'Attenzione',            // title
-                                'Done'                  // buttonName
-                            );
+                                'OK'                  // buttonName
+                                );
                             return;
                             }
+                            
+                            if (chip < 5) {
+                                 navigator.notification.alert(
+                                 'Hai terminato le Chips, torna domani :)',  // message
+                                 alertDismissed,         // callback
+                                 'Attenzione',            // title
+                                 'OK'                  // buttonName
+                                 );
+                            
+                                $('#classifica').hide();
+                                $('#descrizione').hide();
+                                $('#imgplayer').hide();
+                            return;
+                            }
+                            
+                            $('#informazioni').hide();
+                            $('#classifica').show();
                             
                             $(".spinner").show();
                             
                             if (self.document.formia.mySelect.value=="PokerClub") {
                             
-                            var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Player</font></th><th><font color="white" size="2">R.O.I.</font></th><th><font color="white" size="2">And.</font></th></tr></thead><tbody id="classifica">';
                             
                             $.ajax({
                                    type:"GET",
                                    url:"http://www.pokeranswer.it/www/Check_Player.asp",
                                    contentType: "application/json",
                                    data: {Player: self.document.formia.Player.value, Room: "pc"},
-                                   //data: {ID: $value},
                                    jsonp: 'callback',
                                    crossDomain: true,
                                    success:function(result){
@@ -91,72 +124,76 @@ function onDeviceReady() {
                                    $.each(result, function(i,item){
                                           
                                           if(!item.ROI){
-                                          freccia = 'grey.png';
-                                          Roi = '0';
-                                          $('#descrizione').html('Nessuna informazione trovata');
-                                          $('#descrizione').show();
-                                          $('#informazioni').hide();
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/Ghost.png" alt="fanfasma" width="70px"></td></tr></table>'
+                                            freccia = 'grey.png';
+                                            Roi = '0';
+                                            $('#descrizione').html('Nessuna informazione trovata');
+                                            $('#descrizione').show();
+                                            $('#informazioni').hide();
+                                            imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/Ghost.png" width="70px"></td></tr></table>'
                                           }
                                           else{
+                                          
+                                          grafico(item.ROI,item.evticket,item.Twins);
+                                          
                                           if (parseInt(item.ROI)>0){
-                                          $('#descrizione').show();
-                                          $('#informazioni').hide();
+                                                $('#descrizione').show();
+                                                $('#informazioni').hide();
                                           
-                                          freccia = 'green.png';
-                                          Roi = parseInt(item.ROI);
+                                                freccia = 'green.png';
+                                                Roi = parseInt(item.ROI);
                                           
-                                          if (parseInt(item.ROI)>30){
-                                          $('#descrizione').html('Top Player');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/shark.png" alt="squalo" width="70px"></td></tr></table>'
-                                          }
-                                          else{
-                                          $('#descrizione').html('Buon Giocatore');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/tiger.png" alt="tigre" width="70px"></td></tr></table>'
-                                          }
+                                                if (parseInt(item.ROI)>30){
+                                                    $('#descrizione').html('Top Player');
+                                                    imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/shark.png" width="70px"></td></tr></table>'
+                                                }
+                                                else{
+                                                    $('#descrizione').html('Buon Giocatore');
+                                                    imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/tiger.png" width="70px"></td></tr></table>'
+                                                }
                                           }
                                           else if(parseInt(item.ROI)<0){
-                                          $('#descrizione').show();
-                                          $('#informazioni').hide();
+                                            $('#descrizione').show();
+                                            $('#informazioni').hide();
                                           
-                                          freccia = 'red.png';
-                                          Roi = parseInt(item.ROI);
+                                            freccia = 'red.png';
+                                            Roi = parseInt(item.ROI);
                                           
-                                          var confronto = 15;
-                                          var roitter = (Roi*-1);
+                                            var confronto = 15;
+                                            var roitter = (Roi*-1);
                                           
-                                          //alert(confronto + "," + roitter);
-                                          
-                                          if (roitter > confronto){
-                                          $('#descrizione').html('Deve studiare molto, Tilt');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/fish.png" alt="pesciolino" width="70px"></td></tr></table>'
+                                            if (roitter > confronto){
+                                                $('#descrizione').html('Deve studiare molto, Tilt');
+                                                imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/fish.png" width="70px"></td></tr></table>'
+                                            }
+                                            else{
+                                                $('#descrizione').html('Potrebbe Migliorare, periodo non favorevole');
+                                                imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/donkey.png" width="70px"></td></tr></table>'
+                                            }
                                           }
                                           else{
-                                          $('#descrizione').html('Potrebbe Migliorare, periodo non favorevole');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/donkey.png" alt="asinello" width="70px"></td></tr></table>'
-                                          }
-                                          }
-                                          else{
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/Ghost.png" alt="fantasma" width="70px"></td></tr></table>'
-                                          freccia = 'grey.png';
-                                          Roi = '0';
-                                          $('#descrizione').html('Nessuna informazione trovata');
-                                          $('#descrizione').show();
-                                          $('#informazioni').hide();
+                                            imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/Ghost.png" width="70px"></td></tr></table>'
+                                            freccia = 'grey.png';
+                                            Roi = '0';
+                                            $('#descrizione').html('Nessuna informazione trovata');
+                                            $('#descrizione').show();
+                                            $('#informazioni').hide();
                                           }
                                           
-                                          }
-                                          });
+                                       }
+                                   });
                                    
-                                   landmark = landmark + '<tr><td><font size="2">'+ self.document.formia.Player.value +'</font></td><td><font size="2">'+ Roi +'</font></td><td><font size="2"><img src="images/'+ freccia +'" height="18"></font></td></tr>';
                                    
-                                   landmark = landmark + '</tbody></table>';
+                                   chip = parseInt(chip)-5;
+                                   localStorage.setItem("chip", chip);
+                                   $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+                                   
+                                   if (parseInt(chip==0)){
+                                     $('#mySelect').hide();
+                                     token();
+                                   }
                                    
                                    $('#imgplayer').html(imgaply);
-                                   $('#imgplayer').show();
-                                   
-                                   $('#classifica').html(landmark); 
-                                   $("#myTable").tablesorter( {sortList: [[1,0]]} );
+                                   $('#imgplayer').fadeIn();
                                    
                                    $("#mySelect").val("01");
                                    $("#mySelect").selectmenu("refresh");
@@ -165,13 +202,19 @@ function onDeviceReady() {
                                    
                                    },
                                    error: function(){
-                                   alert('There was an error loading the data.');
+                                   
+                                        navigator.notification.alert(
+                                        'Dati non disponibili al momento, riprova tra qualche instante',  // message
+                                         alertDismissed,         // callback
+                                        'Attenzione',            // title
+                                        'OK'                  // buttonName
+                                         );
+                                   
                                    },
                                    dataType:"jsonp"});
                             }
                             else
                             {
-                            var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Player</font></th><th><font color="white" size="2">R.O.I.</font></th><th><font color="white" size="2">And.</font></th></tr></thead><tbody id="classifica">';
                             
                             $.ajax({
                                    type:"GET",
@@ -185,107 +228,131 @@ function onDeviceReady() {
                                    $.each(result, function(i,item){
                                           
                                           if(!item.Roi){
-                                          $('#descrizione').html('Nessuna informazione trovata');
-                                          $('#descrizione').show();
-                                          $('#informazioni').hide();
+                                            $('#descrizione').html('Nessuna informazione trovata');
+                                            $('#descrizione').show();
+                                            $('#informazioni').hide();
                                           
-                                          freccia = 'grey.png';
-                                          Roi = 'Nessun Dato';
-                                          $("#avatar").attr("src", "img/player/Ghost.png");
+                                            freccia = 'grey.png';
+                                            Roi = 'Nessun Dato';
+                                            $("#avatar").attr("src", "img/player/Ghost.png");
                                           
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/Ghost.png" width="70px"></td></tr></table>'
+                                            imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/Ghost.png" width="70px"></td></tr></table>'
                                           }
                                           else{
                                           
-                                          if (parseInt(item.Roi)>0){
-                                          $('#descrizione').show();
-                                          $('#informazioni').hide();
+                                            grafico(item.Roi,item.AvStake,item.Twins);
                                           
-                                          freccia = 'green.png';
-                                          Roi = parseInt(item.Roi);
+                                            if (parseInt(item.Roi)>0){
+                                                $('#descrizione').show();
+                                                $('#informazioni').hide();
                                           
-                                          if (parseInt(item.ROI)>30){
-                                          $('#descrizione').html('Top Player');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/shark.png" width="70px"></td></tr></table>'
-                                          }
-                                          else{
-                                          $('#descrizione').html('Buon Giocatore');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/tiger.png" width="70px"></td></tr></table>'
-                                          }
+                                                freccia = 'green.png';
+                                                Roi = parseInt(item.Roi);
+                                          
+                                            if (parseInt(item.ROI)>30){
+                                                $('#descrizione').html('Top Player');
+                                                imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/shark.png" width="70px"></td></tr></table>'
+                                            }
+                                            else{
+                                                $('#descrizione').html('Buon Giocatore');
+                                                imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/tiger.png" width="70px"></td></tr></table>'
+                                            }
                                           }
                                           else if(parseInt(item.Roi)<0){
-                                          $('#descrizione').show();
-                                          $('#informazioni').hide();
+                                            $('#descrizione').show();
+                                            $('#informazioni').hide();
                                           
-                                          freccia = 'red.png';
-                                          Roi = parseInt(item.Roi);
+                                            freccia = 'red.png';
+                                            Roi = parseInt(item.Roi);
                                           
-                                          var confronto = 15;
-                                          var roitter = (Roi*-1);
+                                            var confronto = 15;
+                                            var roitter = (Roi*-1);
                                           
-                                          //alert(confronto + "," + roitter);
-                                          
-                                          if (roitter > confronto){
-                                          $('#descrizione').html('Deve studiare molto, Tilt');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/fish.png" width="70px"></td></tr></table>'
+                                            if (roitter > confronto){
+                                                $('#descrizione').html('Deve studiare molto, Tilt');
+                                                imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/fish.png" width="70px"></td></tr></table>'
+                                            }
+                                            else{
+                                                $('#descrizione').html('Potrebbe Migliorare, periodo non favorevole');
+                                                imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/donkey.png" width="70px"></td></tr></table>'
+                                            }
                                           }
                                           else{
-                                          //alert(parseInt(item.Roi));
-                                          $('#descrizione').html('Potrebbe Migliorare, periodo non favorevole');
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/donkey.png" width="70px"></td></tr></table>'
-                                          }
-                                          }
-                                          else{
-                                          imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/Ghost.png" width="70px"></td></tr></table>'
-                                          freccia = 'grey.png';
-                                          Roi = '0';
-                                          $('#descrizione').html('Nessuna informazione trovata');
-                                          $('#descrizione').show();
-                                          $('#informazioni').hide();
+                                            imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/Ghost.png" width="70px"></td></tr></table>'
+                                            freccia = 'grey.png';
+                                            Roi = '0';
+                                            $('#descrizione').html('Nessuna informazione trovata');
+                                            $('#descrizione').show();
+                                            $('#informazioni').hide();
                                           }
                                           
-                                          }	
-                                          });
+                                       }
+                                    });
                                    
-                                   landmark = landmark + '<tr><td><font size="2">'+ self.document.formia.Player.value +'</font></td><td><font size="2">'+ Roi +'</font></td><td><img src="images/'+ freccia +'" height="18"></td></tr>';
-                                   
-                                   landmark = landmark + '</tbody></table>';
+                                   chip = parseInt(chip)-5;
+                                   localStorage.setItem("chip", chip);
+                                   $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
                                    
                                    $('#imgplayer').html(imgaply);
-                                   $('#imgplayer').show();
-                                   
-                                   $('#classifica').html(landmark); 
-                                   $("#myTable").tablesorter( {sortList: [[1,0]]} );
+                                   $('#imgplayer').fadeIn();
                                    
                                    $("#mySelect").val("01");
                                    $("#mySelect").selectmenu("refresh");
+                                   
+                                   if (parseInt(chip==0)){
+                                     $('#mySelect').hide();
+                                     token();
+                                   }
                                    
                                    $(".spinner").hide();
                                    
                                    },
                                    error: function(){
-                                   alert('There was an error loading the data.');
+                                   
+                                   navigator.notification.alert(
+                                   'Dati non disponibili al momento, riprova tra qualche instante',  // message
+                                    alertDismissed,         // callback
+                                    'Attenzione',            // title
+                                    'OK'                  // buttonName
+                                    );
+                                   
                                    },
                                    dataType:"jsonp"});
                             }
                             
-                            });
+             });
             
         }
         else{
+            $('#noconn').show();
             
-            navigator.notification.alert(
-                'Hai bisogno di una connessione ad internet',  // message
-                 alertDismissed,         // callback
-                 'Attenzione',            // title
-                 'Done'                  // buttonName
-            );
-            
-            var tabella = '<table align="center" border="0" width="310px" height="60px">';
-            tabella = tabella + '<tr><td align="center" width="50px"><img src="images/noconn.png" width="32px"></td><td align="left"><font color="white" size="2">Per leggere le news hai bisogno di una connessione attiva</font></td></tr>';
+            var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
+            tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
             tabella = tabella + '</table>';
             
-			$('#classifica').html(tabella);
+            $('#noconn').html(tabella);
+            
+            $("#verifica").bind ("click", function (event)
+                                 {
+                                 var connectionStatus = false;
+                                 connectionStatus = navigator.onLine ? 'online' : 'offline';
+                                 
+                                 if(connectionStatus=='online'){
+                                 onDeviceReady();
+                                 }
+                                 else{
+                                 navigator.notification.alert(
+                                   'Nessuna connessione ad internet rilevata',  // message
+                                   alertDismissed,         // callback
+                                   'Attenzione',            // title
+                                   'OK'                  // buttonName
+                                                              );
+                                 }
+                                 
+                                 
+                                 });
+
+            
             $(".spinner").hide();
 
         }
@@ -323,5 +390,77 @@ function getParameterByName(name) {
     results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+                          
+function getKey(key){
+         if ( key == null ) {
+             keycode = event.keyCode;
 
+         } else {
+             keycode = key.keyCode;
+         }
+
+         if (keycode ==13){
+
+            $("#btn").click();
+            $("#mySelect").val("01");
+            $("#mySelect").selectmenu("refresh");
+            $('#imgplayer').fadeOut();
+         return false;
+         }
+
+}
+                          
+                          
+         function grafico(roi,avstacke,Twins){
+                          
+                          var roi = parseFloat(roi);
+                          var avstake = parseFloat(avstacke);
+                          var vittorie = parseFloat(Twins);
+                          
+                          var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
+                          
+                          var lineChartData = lineChartData = {
+                          labels : ["Game Win (" + Twins + ")","R.O.I ("+ roi +")","Ev.Ticket (" + avstacke + ")"],
+                          datasets : [
+                                      {
+                                      label: "My First dataset",
+                                      fillColor : "rgba(220,220,220,0.2)",
+                                      strokeColor : "rgba(220,220,220,1)",
+                                      pointColor : "rgba(220,220,220,1)",
+                                      pointStrokeColor : "#fff",
+                                      pointHighlightFill : "#fff",
+                                      pointHighlightStroke : "rgba(220,220,220,1)",
+                                      data : [vittorie,roi,avstake]
+                                      },
+                                      //{
+                                      //label: "My Second dataset",
+                                      //fillColor : "rgba(151,187,205,0.2)",
+                                      //strokeColor : "rgba(151,187,205,1)",
+                                      //pointColor : "rgba(151,187,205,1)",
+                                      //pointStrokeColor : "#fff",
+                                      //pointHighlightFill : "#fff",
+                                      //pointHighlightStroke : "rgba(151,187,205,1)",
+                                      //data : [randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor(),randomScalingFactor()]
+                                      //}
+                                      ]
+                          
+                          }
+                          
+                          var ctx = document.getElementById("canvas").getContext("2d");
+                          window.myLine = new Chart(ctx).Line(lineChartData, {
+                                                              responsive: true
+                                                              });
+           }
+function token(){
+   navigator.notification.alert(
+   'buttone disattivato',  // message
+    alertDismissed,         // callback
+    'Attenzione',            // title
+    'OK'                  // buttonName
+    );
+}
+                          
+function verificawifi(){
+    $("#verifica").click();
+}
 

@@ -37,7 +37,7 @@
                  <script src="jquery-1.10.2.min.js"></script>
                  <script src="js/jquery.mobile-1.4.2.min.js"></script>
                  
-                 <script type="text/javascript" src="jquery.tablesorter.js"></script>
+                 <script src="js/Chart.js"></script>
                   
                   <style type="text/css" media="all">
                       body,ul,li {
@@ -314,19 +314,55 @@
                        font-size: 9pt;
                        width: 90%;
                        height:50px;
-                       text-align: left;
+                       text-align: center;
                        color: #FFF;
                        
                        border-radius: 5px; 
                        -moz-border-radius: 5px; /* firefox */
                        -webkit-border-radius: 5px; /* safari, chrome */
                    }
+                   .conn {
+                       font-size: 9pt;
+                       color:#FFF;
+                       background-color: #9d3434;
+                   }
+                   .home {
+                       background-color: #9d3434;
+                       background-image: url(images/right.png);
+                       background-size: 20px 20px;
+                       background-repeat: no-repeat;
+                       background-position:center;
+                       
+                       height:40px;
+                       width:40px;
+                       border-radius:999em;
+                       -moz-border-radius:999em;
+                       -webkit-border-radius:999em;
+                       -o-border-radius: 999em;
+                       
+                       -webkit-box-shadow: 0px 0px 0.5px 1px #FFF;
+                       -moz-box-shadow: 0px 0px 0.5px 1px #FFF;
+                       box-shadow: 0px 0px 0.5px 1px #FFF;
+                   }
+                   
+                   .home:active {
+                       background-color: #000000;
+                       border-radius:999em;
+                       -moz-border-radius:999em;
+                       -webkit-border-radius:999em;
+                       -o-border-radius: 999em;
+                       
+                       -webkit-box-shadow: 0px 0px 0.5px 1px #000;
+                       -moz-box-shadow: 0px 0px 0.5px 1px #000;
+                       box-shadow: 0px 0px 0.5px 1px #000;
+                   }
+
                   </style>
     </head>
     <body>
         <div data-role="page" class="div2">
             
-            <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
+            <div data-role="header" align="center" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
                 <span class="ui-title"> <img src="./barra.png" width="100px" height="26px"></span>
             </div><!-- /header -->
             
@@ -344,49 +380,61 @@
                 <div class="bar11"></div>
                 <div class="bar12"></div>
             </div>
+            <div id="noconn" align="center" style="display:none"></div>
+            <a data-role=button id=verifica data-theme="b" style="display:none">Verifica Connessione</a>
 
             <div data-role="content" class="div2">
                 <script type="text/javascript" src="phonegap.js"></script>
                 <script type="text/javascript" src="js/FinderPlayer.js"></script>
-            </div>
-            <center>
-                <img src="./panel.png" width="130px"><br>
-                <table width="300px"><tr><td>
+                <div class="div2"><table align="right" width="80px"><tr><td valign="center" align="right"><font  color="white" size="2"><div id="fiches"></div></font></td></tr></table></div>
+                
+                <br><br>
+                <form name="formia" action="entra.asp" method="post">
                     
-                    <form name="formia" action="entra.asp" method="post">
-                        
-                        <table><tr><td width="200px">
-                            <input type="search" name="Player" id="Player" value="" placeholder="NickName..."></td>
-                        <td width="100px">
-                            
-                            <select id="mySelect" name="mySelect" data-theme="b">
-                                <option value="01" selected=true>Room</option>
-                                <option value="PokerClub">P. Club</option>
-                                <option value="PokerStars.it">P. Stars</option>
-                                <option value="Ongame.it">GD</option>
-                            </select>
-                            
-                        </td>
-                </td></tr></table>
-                
-                <a data-role="button" id="btn" data-theme="b" style="display:none" >Mostra Avatar</a>
-                
+                    <table align="center" width="300px" border=0 style="margin-left:auto; margin-right:auto">
+                        <tr>
+                            <td>
+                                <table align="center" width="300px">
+                                    <tr>
+                                        <td align="center" width="200px">
+                                            <input type="search" name="Player" id="Player" value="" placeholder="NickName...">
+                                                </td>
+                                        <td align="center" width="100px">
+                                            <div id="select">
+                                            <select id="mySelect" name="mySelect" data-theme="b">
+                                                <option value="01" selected=true>Room</option>
+                                                <option value="PokerClub">P. Club</option>
+                                                <option value="PokerStars.it">P. Stars</option>
+                                                <option value="Ongame.it">GD</option>
+                                            </select>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <table align="center" width="300px" border=0 style="background-image: url(img/WSOP9.png);background-repeat:no-repeat;background-position: 50% 50%;background-size: 250px; width: 300px; height:150px; margin-left:auto; margin-right:auto; margin-top:0;">
+                        <tr>
+                            <td width="80px">
+                                <div id="imgplayer" align="center" style="display:none;"></div>
+                            </td>
+                            <td width="180px">
+                                <div id="descrizione" align="center" class="note" style="display:none">
+                                    </td>
+                        </tr>
+                    </table>
+                    
+                    <a data-role="button" id="btn" data-theme="b" style="display:none" >Mostra Avatar</a>
                 </form>
-                <!--<img src="img/OnLine/2.png" width="180px" class="circolare">-->
                 
-                <table align="center" width="300px" border=0 style="background-image: url(./img/WSOP9.png);background-repeat:no-repeat;background-position: 50% 50%;background-size: 300px; width: 300px; height:200px; margin-left:auto; margin-right:auto">
-                    <tr>
-                        <td width="80px">
-                            <div id="imgplayer" align="center" style="display:none;"></div>
-                        </td>
-                        <td width="220px">
-                            <div id="descrizione" align="center" class="note" style="display:none">
-                        </td>
-                    </tr>
-                </table>
+            </div>
+            
+            <center>
                 
-                <div id="classifica" align="center"></div>
-                <div id="informazioni" align="center" style="display:none"  class="note"></div>
+            <div id="classifica" align="center" style="display:none"><canvas id="canvas" height="90px" width="300px"></canvas></div>
+            <div id="informazioni" align="center" class="note"></div>
                 
         <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
             <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>

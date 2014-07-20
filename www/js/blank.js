@@ -1,6 +1,9 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
+    if (window.device && parseFloat(window.device.version) >= 7.0) {
+        $('body').addClass('iOS7');
+    }
     
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
@@ -18,13 +21,7 @@ function onDeviceReady() {
         
         if(connectionStatus=='online'){
             
-            //QuaryString
-            var tech = getParameterByName('nome');
-            //alert(tech);
-            
-            $('#torneo').html('<h1>' + tech + '</h1>');
-            
-            $(".spinner").hide();
+            $('#classifica').html(tabella);
             
         }
         else{

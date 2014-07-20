@@ -2,33 +2,74 @@ document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
     
+    StatusBar.overlaysWebView(false);
+    StatusBar.backgroundColorByHexString("#RRGGBB");
+    
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
     
-        
+    var chip = localStorage.getItem("chip");
+    $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+    var giorni = localStorage.getItem("Day");
+    
         $(".spinner").show();
         
         var connectionStatus = false;
         connectionStatus = navigator.onLine ? 'online' : 'offline';
         
         if(connectionStatus=='online'){
-                                      
-            online();
+            $('#noconn').hide();
+            $('#verifica').hide();
+            
+            $('#live').show();
+            $('#online').show();
+            $('#selezione').show();
+            
+            var filtro = '<table id="filtroTB" width="310px" align="center"><tr><td width="33%"><select id="buin" data-theme="b"><option value="All" selected>Buy-In</option><option value="small">Piccolo</option><option value="medio">Medio</option><option value="Alto">Alto</option></select></td><td width="33%"><select id="grt" data-theme="b"><option value="All" selected>GRT</option><option value="small">50-300</option><option value="Med">500-2000</option><option value="Alto">>2000</option></select></td><td width="33%" align="center"><a id="search" href="javascript:cerca()"><div width="40px" class="home"></div></a></td></tr></table>';
+            
+            $('#selezione').html(filtro);
+            
+            if (parseInt(chip==0)){
+                $("#search").attr("href", "javascript:token();");
+                $("#inter").attr("href", "javascript:token();");
+                $("#dalvivo").attr("href", "javascript:token();");
+            }
+            
+            $(".spinner").hide();
+            
         }
         else{
+            $('#live').hide();
+            $('#online').hide();
+            $('#selezione').hide();
+            $('#noconn').show();
             
-            navigator.notification.alert(
-                'Hai bisogno di una connessione ad internet',  // message
-                 alertDismissed,         // callback
-                 'Attenzione',            // title
-                 'Done'                  // buttonName
-            );
-            
-            var tabella = '<table align="center" border="0" width="310px" height="60px">';
-            tabella = tabella + '<tr><td align="center" width="50px"><img src="images/noconn.png" width="32px"></td><td align="left"><font color="white" size="2">Per leggere le news hai bisogno di una connessione attiva</font></td></tr>';
+            var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
+            tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
             tabella = tabella + '</table>';
             
-			$('#classifica').html(tabella);
+            $('#noconn').html(tabella);
+            
+            $("#verifica").bind ("click", function (event)
+            {
+                var connectionStatus = false;
+                connectionStatus = navigator.onLine ? 'online' : 'offline';
+                                 
+                if(connectionStatus=='online'){
+                    onDeviceReady();
+                }
+                else{
+                    navigator.notification.alert(
+                    'Nessuna connessione ad internet rilevata',  // message
+                    alertDismissed,         // callback
+                    'Attenzione',            // title
+                    'OK'                  // buttonName
+                    );
+                }
+
+
+            });
+            
             $(".spinner").hide();
 
         }
@@ -75,22 +116,41 @@ function getorario() {
 }
 
 function live(){
-	
-	
-    $('#classifica').html('');$('#online').show();
+    var connectionStatus = false;
+    connectionStatus = navigator.onLine ? 'online' : 'offline';
+    
+    if(connectionStatus=='online'){
+
+    
+    var chip = localStorage.getItem("chip");
+    var giorni = localStorage.getItem("Day");
+    
+    if (chip < 1) {
+        navigator.notification.alert(
+        'Hai terminato le Chips, torna domani :)',  // message
+         alertDismissed,         // callback
+         'Attenzione',            // title
+         'OK'                  // buttonName
+        );
+        
+        return;
+    }
+
+    
+    $('#classifica').html('');
+    $('#online').show();
     $(".spinner").show();
     
 	$('#live').hide();
 	$('#filtroTB').hide();
 	
-	var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Nome</font></th><th><font color="white" size="2">Location</font></th><th><font color="white" size="2">Data</font></th><th>Info</th></tr></thead><tbody id="classifica">';
+	var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Nome</font></th><th><font color="white" size="2">Location</font></th><th><font color="white" size="2">Data</font></th><th><font color="white" size="2">Info</font></th></tr></thead><tbody id="classifica">';
     
     $.ajax({
            type:"GET",
            url:"http://www.pokeranswer.it/www/Check_Live.asp",
            contentType: "application/json",
            //data: {ID: "1", ID2: "4"},
-           //data: {ID: $value},
            jsonp: 'callback',
            crossDomain: true,
            success:function(result){
@@ -103,24 +163,97 @@ function live(){
                   var newdata = dataok(item.DataStart);
                   }
                   
-                  landmark = landmark + '<tr><td><font size="2">'+ item.Nome +'</font><br> Euro '+ item.Buy +', '+ item.Descrizione +'</br></td><td><font size="2"><img src="images/pin.png" width="16px">'+ item.Luogo +'</font></td><td><font size="2">'+ newdata +'</font></td><td><a href="InfoLive.html?nome='+ item.Nome +'" rel="external"><img src="./images/destra.png" width="30px"></a></td></tr>';
+                  landmark = landmark + '<tr><td><font size="2">'+ item.Nome +'</font><br> Euro '+ item.Buy +', '+ item.Descrizione +'</br></td><td><font size="2"><img src="images/pin.png" width="16px">'+ item.Luogo +'</font></td><td><font size="2">'+ newdata +'</font></td><td><a href="InfoLive.html?nome='+ item.Nome +'" rel="external"><div width="40px" class="home"></div></a></td></tr>';
                   
                   });
            
            landmark = landmark + '</tbody></table>';
-           $('#classifica').html(landmark); 
+           $('#classifica').html(landmark);
+           
+           chip = parseInt(chip)-1;
+           localStorage.setItem("chip", chip);
+           $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+           
+           if (parseInt(chip==0)){
+           $("#inter").attr("href", "javascript:token();");
+           $("#dalvivo").attr("href", "javascript:token();");
+           }
+           
            $("#myTable").tablesorter( {sortList: [[2,0]]} );
            $(".spinner").hide();
            
            },
            error: function(){
-		   alert('There was an error loading the data.');
+           
+                navigator.notification.alert(
+                'Dati non disponibili al momento, riprova tra qualche instante',  // message
+                alertDismissed,         // callback
+                'Attenzione',            // title
+                'OK'                  // buttonName
+                 );
+           
            },
            dataType:"jsonp"});
-	
+	}
+    else{
+        $('#live').hide();
+        $('#online').hide();
+        $('#selezione').hide();
+        $('#noconn').show();
+        //$('#verifica').show();
+        
+        var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
+        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
+        tabella = tabella + '</table>';
+        
+        $('#noconn').html(tabella);
+        
+        $("#verifica").bind ("click", function (event)
+                             {
+                             var connectionStatus = false;
+                             connectionStatus = navigator.onLine ? 'online' : 'offline';
+                             
+                             if(connectionStatus=='online'){
+                             onDeviceReady();
+                             }
+                             else{
+                             navigator.notification.alert(
+                                                          'Nessuna connessione ad internet rilevata',  // message
+                                                          alertDismissed,         // callback
+                                                          'Attenzione',            // title
+                                                          'OK'                  // buttonName
+                                                          );
+                             }
+                             
+                             
+                             });
+        
+        $(".spinner").hide();
+        
+    }
+
 }
 
 function online(){
+    
+    var connectionStatus = false;
+    connectionStatus = navigator.onLine ? 'online' : 'offline';
+    
+    if(connectionStatus=='online'){
+    
+    var chip = localStorage.getItem("chip");
+    var giorni = localStorage.getItem("Day");
+    
+    if (chip < 1) {
+        navigator.notification.alert(
+        'Hai terminato le Chips, torna domani :)',  // message
+         alertDismissed,         // callback
+         'Attenzione',            // title
+          'OK'                  // buttonName
+     );
+    
+    return;
+    }
 	
     $('#classifica').html('');
     $(".spinner").show();
@@ -129,17 +262,18 @@ function online(){
     $('#online').hide();
     $('#filtroTB').show();
     var orario = getorario();
-    //alert(orario);
+    var level="";
+    var levelimg="";
 	
     var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Torneo</font></th><th><font color="white" size="2">Room</font></th><th><font color="white" size="2">Orario</font></th></tr></thead><tbody id="classifica">';
     
-    var filtro = '<table id="filtroTB" width="310px" align="center"><tr><td width="33%"><select id="buin" data-theme="b"><option value="All" selected>Buy-In</option><option value="small">Piccolo</option><option value="medio">Medio</option><option value="Alto">Alto</option></select></td><td width="33%"><select id="grt" data-theme="b"><option value="All" selected>GRT</option><option value="small">50-300</option><option value="Med">500-2000</option><option value="Alto">>2000</option></select></td><td width="33%" align="center"><a href="javascript:cerca()"><img src="./images/destra.png" width="40px"></a></td></tr></table>';
+    var filtro = '<table id="filtroTB" width="310px" align="center"><tr><td width="33%"><select id="buin" data-theme="b"><option value="All" selected>Buy-In</option><option value="small">Piccolo</option><option value="medio">Medio</option><option value="Alto">Alto</option></select></td><td width="33%"><select id="grt" data-theme="b"><option value="All" selected>GRT</option><option value="small">50-300</option><option value="Med">500-2000</option><option value="Alto">>2000</option></select></td><td width="33%" align="center"><a id="search" href="javascript:cerca()"><div width="40px" class="home"></div></a></td></tr></table>';
     
     $('#selezione').html(filtro);
     
     $.ajax({
            type:"GET",
-           url:"http://www.pokeranswer.it/www/Check_OnLineV2.asp",
+           url:"http://www.pokeranswer.it/www/Check_OnLineV3.asp",
            contentType: "application/json",
            data: {buin: "All", grt: "All"},
            //data: {ID: $value},
@@ -154,6 +288,7 @@ function online(){
                   newora = "";
                   Buy= "";
                   img="grey";
+                  level="";
                   
                   }
                   else{
@@ -162,7 +297,7 @@ function online(){
                   Torneo = item.Torneo;
                   Buy = item.Buy;
                   var newora = oraok(item.Ora);
-                  //alert(orario + "," + newora);
+                  level = item.Level;
                   
                   var img;
                   if (item.Room=="LTM"){
@@ -174,11 +309,13 @@ function online(){
                   else if (item.Room=="GD"){
                   img = "giallo";
                   }
-                  else if (item.Room=="PYT"){
+                  else if (item.Room=="PT"){
                   img = "rosso";
                   }
+                  else if (item.Room=="PP"){
+                  img = "blue";
+                  }
                   else{
-					  img="grey";
                   }
                   
                   if (parseInt(item.Ora) < parseInt(orario)){
@@ -192,43 +329,129 @@ function online(){
                     noimage = '<font size="2">'+ newora +'</font>';
                   }
 
-                  
+                  if (level==1){
+                  levelimg = '<img src="./images/status_green.png" width="10px">';
+                  }
+                  else if (level==2){
+                  levelimg = '<img src="./images/status_red.png" width="10px">';
+                  }
+                  else {
+                  levelimg = '<img src="./images/status_yellow.png" width="10px">';
+                  }
                   
                   }
                   
-                  landmark = landmark + '<tr><td><font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="./room/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td>'+ noimage +'</td></tr>';
+                  landmark = landmark + '<tr><td>'+ levelimg +'<font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="./room/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td>'+ noimage +'</td></tr>';
                   
                   });
            
            landmark = landmark + '</tbody></table>';
            $('#classifica').html(landmark); 
            $("#myTable").tablesorter( {sortList: [[2,0]]} );
+           
+           chip = parseInt(chip)-1;
+           localStorage.setItem("chip", chip);
+           $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+           
+           if (parseInt(chip==0)){
+           $("#search").attr("href", "javascript:token();");
+           $("#inter").attr("href", "javascript:token();");
+           $("#dalvivo").attr("href", "javascript:token();");
+           }
+           
            $(".spinner").hide();
            
            pulse($('#pulsar'), 1000, 'swing', {opacity:0}, {opacity:1}, function() { return false; });
            
            },
            error: function(){
-           alert('There was an error loading the data.');
+           
+           navigator.notification.alert(
+           'Dati non disponibili al momento, riprova tra qualche instante',  // message
+           alertDismissed,         // callback
+           'Attenzione',            // title
+            'OK'                  // buttonName
+            );
+           
            },
            dataType:"jsonp"});
+    }
+    else{
+        $('#live').hide();
+        $('#online').hide();
+        $('#selezione').hide();
+        $('#noconn').show();
+        //$('#verifica').show();
+        
+        var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
+        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
+        tabella = tabella + '</table>';
+        
+        $('#noconn').html(tabella);
+        
+        $("#verifica").bind ("click", function (event)
+                             {
+                             var connectionStatus = false;
+                             connectionStatus = navigator.onLine ? 'online' : 'offline';
+                             
+                             if(connectionStatus=='online'){
+                             onDeviceReady();
+                             }
+                             else{
+                             navigator.notification.alert(
+                               'Nessuna connessione ad internet rilevata',  // message
+                                alertDismissed,         // callback
+                                'Attenzione',            // title
+                                 'OK'                  // buttonName
+                               );
+                             }
+                             
+                             
+                             });
+        
+        $(".spinner").hide();
+        
+    }
+
 }
 
 function cerca() {
+    
+    var connectionStatus = false;
+    connectionStatus = navigator.onLine ? 'online' : 'offline';
+    
+    if(connectionStatus=='online'){
+    
+    var chip = localStorage.getItem("chip");
+    var giorni = localStorage.getItem("Day");
+    
+    if (chip < 1) {
+        navigator.notification.alert(
+        'Hai terminato le Chips, torna domani :)',  // message
+         alertDismissed,         // callback
+         'Attenzione',            // title
+         'OK'                  // buttonName
+     );
+        
+    return;
+    }
+    
+    var orario = getorario();
 	$('#classifica').html('');
+    var level="";
+    var levelimg="";
+        
     $(".spinner").show();
     
-	var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Torneo</font></th><th><font color="white" size="2">Room</font></th><th><font color="white" size="2">Ora</font></th></tr></thead><tbody id="classifica">';
+	var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Torneo</font></th><th><font color="white" size="2">Room</font></th><th><font color="white" size="2">Orario</font></th></tr></thead><tbody id="classifica">';
 	
-	//alert(self.document.formia.buin.value);
-	//alert(self.document.formia.grt.value);
+    $('#online').hide();
     
 	$.ajax({
            type:"GET",
-           url:"http://www.pokeranswer.it/www/Check_OnLineV2.asp",
+           url:"http://www.pokeranswer.it/www/Check_OnLineV3.asp",
            contentType: "application/json",
            data: {buin: self.document.formia.buin.value, grt: self.document.formia.grt.value},
-           //data: {ID: $value},
            jsonp: 'callback',
            crossDomain: true,
            success:function(result){
@@ -240,12 +463,16 @@ function cerca() {
                   newora = "";
                   Buy= "";
                   img="grey";
+                  level = "";
                   }
                   else{
+                  var sveglia = "sveglia";
+                  var noimage;
                   Torneo = item.Torneo;
                   Buy = item.Buy;
                   var newora = oraok(item.Ora);
-                  var img;
+                  level = item.Level;
+                  
                   if (item.Room=="LTM"){
                   img = "verde";
                   }
@@ -255,28 +482,110 @@ function cerca() {
                   else if (item.Room=="GD"){
                   img = "giallo";
                   }
-                  else if (item.Room=="PYT"){
+                  else if (item.Room=="PT"){
                   img = "rosso";
+                  }
+                  else if (item.Room=="PP"){
+                  img = "blue";
                   }
                   else{
                   img="grey";
                   }
+                  
+                  if (parseInt(item.Ora) < parseInt(orario)){
+                  sveglia = "svegliarossa";
+                  noimage = '<div id="pulsar"><font size="2"><img src="./images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
+                  
+                  pulse($('#pulsar'), 1000, 'swing', {opacity:0}, {opacity:1}, function() { return false; });
+                  
+                  }
+                  else{
+                  noimage = '<font size="2">'+ newora +'</font>';
                   }
                   
-                  landmark = landmark + '<tr><td><font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="./room/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td><font size="2">'+ newora +'</font></td></tr>';
+                  if (level==1){
+                  levelimg = '<img src="./images/status_green.png" width="10px">';
+                  }
+                  else if (level==2){
+                  levelimg = '<img src="./images/status_red.png" width="10px">';
+                  }
+                  else {
+                  levelimg = '<img src="./images/status_yellow.png" width="10px">';
+                  }
+                  
+                  }
+                  
+                  landmark = landmark + '<tr><td>'+ levelimg +'<font size="2">'+ Torneo +'</font>&nbsp;<font size="1">('+ Buy +'&euro;)</font><br> GRT:'+ item.GRT +', Player: '+ item.Player +'</br></td><td><font size="2"><img src="./room/'+ img +'.png" width="16px"> '+ item.Room +'</font></td><td>'+ noimage +'</td></tr>';
                   
                   });
            
            landmark = landmark + '</tbody></table>';
            $('#classifica').html(landmark); 
            $("#myTable").tablesorter( {sortList: [[2,0]]} );
+           
+           chip = parseInt(chip)-1;
+           localStorage.setItem("chip", chip);
+           $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+           
+           if (parseInt(chip==0)){
+           $("#search").attr("href", "javascript:token();");
+           $("#inter").attr("href", "javascript:token();");
+           $("#dalvivo").attr("href", "javascript:token();");
+           }
+           
+           pulse($('#pulsar'), 1000, 'swing', {opacity:0}, {opacity:1}, function() { return false; });
            $(".spinner").hide();
            
            },
            error: function(){
-           alert('There was an error loading the data.');
+           
+           navigator.notification.alert(
+           'Dati non disponibili al momento, riprova tra qualche instante',  // message
+            alertDismissed,         // callback
+           'Attenzione',            // title
+            'OK'                  // buttonName
+            );
+           
            },
            dataType:"jsonp"});
+    }
+    else{
+        $('#live').hide();
+        $('#online').hide();
+        $('#selezione').hide();
+        $('#noconn').show();
+        //$('#verifica').show();
+        
+        var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
+        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
+        tabella = tabella + '</table>';
+        
+        $('#noconn').html(tabella);
+        
+        $("#verifica").bind ("click", function (event)
+                             {
+                             var connectionStatus = false;
+                             connectionStatus = navigator.onLine ? 'online' : 'offline';
+                             
+                             if(connectionStatus=='online'){
+                             onDeviceReady();
+                             }
+                             else{
+                             navigator.notification.alert(
+                              'Nessuna connessione ad internet rilevata',  // message
+                               alertDismissed,         // callback
+                               'Attenzione',            // title
+                               'OK'                  // buttonName
+                             );
+                             }
+                             
+                             
+                             });
+        
+        $(".spinner").hide();
+        
+    }
+
 }
 
 
@@ -290,5 +599,17 @@ function pulse(elem, duration, easing, props_to, props_from, until) {
                  });
 }
 
+function token(){
+    navigator.notification.alert(
+    'buttone disattivato',  // message
+    alertDismissed,         // callback
+    'Attenzione',            // title
+    'OK'                  // buttonName
+     );
+}
+
+function verificawifi(){
+    $("#verifica").click();
+}
 
 

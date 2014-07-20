@@ -6,9 +6,13 @@ function onDeviceReady() {
 	$(".spinner").show();
     var connectionStatus = false;
     connectionStatus = navigator.onLine ? 'online' : 'offline';
+	
+	var chip = localStorage.getItem("chip");
+    $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
     
     if(connectionStatus=='online'){
-	
+		
+	$('#noconn').hide();
 	geostory = localStorage.getItem("geostory");
 	
 	//alert(geostory + "Two");
@@ -378,23 +382,83 @@ function onDeviceReady() {
                                                               
 
                   });
+				  
+    $("#gps2").bind ("click", function (event){
+
+        window.location.href = "Finder.html";
+
+    });
     
 }
     
     else{
         
-        navigator.notification.alert(
-               'Stato Connessione: ' + connectionStatus,  // message
-                alertDismissed,         // callback
-                'Attenzione',            // title
-                'Done'                  // buttonName
-        );
+      $('#noconn').show();
+
         
-        var tabella = '<table align="center" border="0" width="310px" height="60px">';
-        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/noconn.png" width="32px"></td><td align="left"><font color="white" size="2">Per leggere le news hai bisogno di una connessione attiva</font></td></tr>';
+
+        
+
+        var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
+
+        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
+
         tabella = tabella + '</table>';
+
         
-        $('#classifica').html(tabella);
+
+        $('#noconn').html(tabella);
+
+        
+
+        $("#verifica").bind ("click", function (event)
+
+                             {
+
+                             var connectionStatus = false;
+
+                             connectionStatus = navigator.onLine ? 'online' : 'offline';
+
+                             
+
+                             if(connectionStatus=='online'){
+
+                             onDeviceReady();
+
+                             }
+
+                             else{
+
+                             navigator.notification.alert(
+
+                                                          'Nessuna connessione ad internet rilevata',  // message
+
+                                                          alertDismissed,         // callback
+
+                                                          'Attenzione',            // title
+
+                                                          'OK'                  // buttonName
+
+                                                          );
+
+                             }
+
+                             
+
+                             
+
+                             });
+
+
+
+        
+
+        $("#mappa5").attr("href", "");
+
+        $("#gps5").attr("href", "");
+
+        
+
         $(".spinner").hide();
         
     }
@@ -513,5 +577,27 @@ function cambiap() {
 function cambiah() {
 
     window.location.href = "index.html";
+
+}
+
+function mappatura() {
+
+    $("#btn").click();
+
+}
+
+
+
+function gps() {
+
+    $("#gps2").click();
+
+}
+
+
+
+function verificawifi(){
+
+    $("#verifica").click();
 
 }

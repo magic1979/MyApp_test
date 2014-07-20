@@ -375,6 +375,42 @@
                        -moz-border-radius: 5px; /* firefox */
                        -webkit-border-radius: 5px; /* safari, chrome */
                    }
+                   .conn {
+                       font-size: 9pt;
+                       color:#FFF;
+                       background-color: #9d3434;
+                   }
+                   .home {
+                       background-color: #9d3434;
+                       background-image: url(images/right.png);
+                       background-size: 20px 20px;
+                       background-repeat: no-repeat;
+                       background-position:center;
+                       
+                       height:40px;
+                       width:40px;
+                       border-radius:999em;
+                       -moz-border-radius:999em;
+                       -webkit-border-radius:999em;
+                       -o-border-radius: 999em;
+                       
+                       -webkit-box-shadow: 0px 0px 0.5px 1px #FFF;
+                       -moz-box-shadow: 0px 0px 0.5px 1px #FFF;
+                       box-shadow: 0px 0px 0.5px 1px #FFF;
+                   }
+                   
+                   .home:active {
+                       background-color: #000000;
+                       border-radius:999em;
+                       -moz-border-radius:999em;
+                       -webkit-border-radius:999em;
+                       -o-border-radius: 999em;
+                       
+                       -webkit-box-shadow: 0px 0px 0.5px 1px #000;
+                       -moz-box-shadow: 0px 0px 0.5px 1px #000;
+                       box-shadow: 0px 0px 0.5px 1px #000;
+                   }
+
                   </style>
     </head>
     <body>
@@ -383,6 +419,9 @@
             <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
                 <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
             </div><!-- /header -->
+
+            <div id="noconn" align="center" style="display:none"></div>
+            <a data-role=button id=verifica data-theme="b" style="display:none">Verifica Connessione</a>
             
             <div class="spinner" id="spinner"></div>
             
@@ -391,22 +430,20 @@
                     <div id="pullDown">
                         <span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
                     </div>
-            
-            
-            <div data-role="content" class="div2">
-                <script type="text/javascript" src="phonegap.js"></script>
-                <script type="text/javascript" src="js/FindInfoLive.js"></script>
-            </div>
-            <center>
+                    
+                    <div data-role="content" class="div2">
+                        <script type="text/javascript" src="phonegap.js"></script>
+                        <script type="text/javascript" src="js/FindInfoLive.js"></script>
+                    </div>
+                    <center>
+
             
             <table width="310px" class="note">
                 <tr>
                     <td>
                         <div id="torneo"></div>
-                        <p>Nessuna informazioni disponibile al momento.</p>
-                    </td></tr>
-                
-                
+                    </td>
+                </tr>
             </table>
 
         </div>

@@ -37,8 +37,6 @@
                  <script src="jquery-1.10.2.min.js"></script>
                  <script src="js/jquery.mobile-1.4.2.min.js"></script>
                  
-                 <script type="text/javascript" src="jquery.tablesorter.js"></script>
-                  
                   
                   <style type="text/css" media="all">
                       body,ul,li {
@@ -265,9 +263,9 @@
                        text-align: left;
                        border: 2px solid #000000;
                        
-                       border-radius: 5px;
-                       -moz-border-radius: 5px; /* firefox */
-                       -webkit-border-radius: 5px; /* safari, chrome */
+                       border-radius: 10px;
+                       -moz-border-radius: 10px; /* firefox */
+                       -webkit-border-radius: 10px; /* safari, chrome */
                        
                    }
                    table.tablesorter thead tr th, table.tablesorter tfoot tr th {
@@ -275,11 +273,11 @@
                        border: 1px solid #FFF;
                        font-size: 8pt;
                        padding: 4px;
-                       width: 40%,60%;
+                       width: 65%;
                        
-                       border-radius: 5px;
-                       -moz-border-radius: 5px; /* firefox */
-                       -webkit-border-radius: 5px; /* safari, chrome */
+                       border-radius: 10px;
+                       -moz-border-radius: 10px; /* firefox */
+                       -webkit-border-radius: 10px; /* safari, chrome */
                        
                    }
                    table.tablesorter thead tr .header {
@@ -308,14 +306,30 @@
                        background-color: #9d3434;
                        
                    }
-                   
+                   .note {
+                       font-family:arial;
+                       background-color: #f0f0f0;
+                       margin:7px 0pt 10px;
+                       font-size: 8pt;
+                       width: 95%;
+                       text-align: left;
+                       border: 2px solid #000000;
+                       
+                       border-radius: 5px;
+                       -moz-border-radius: 5px; /* firefox */
+                       -webkit-border-radius: 5px; /* safari, chrome */
+                   }
+                   .conn {
+                       font-size: 9pt;
+                       color:#FFF;
+                       background-color: #9d3434;
+                   }
                    .home {
                        background-color: #9d3434;
                        background-image: url(images/right.png);
-                       background-size: 18px 18px;
+                       background-size: 20px 20px;
                        background-repeat: no-repeat;
                        background-position:center;
-                       
                        
                        height:40px;
                        width:40px;
@@ -340,59 +354,43 @@
                        -moz-box-shadow: 0px 0px 0.5px 1px #000;
                        box-shadow: 0px 0px 0.5px 1px #000;
                    }
-                   
-                   .conn {
-                       font-size: 9pt;
-                       color:#FFF;
-                       background-color: #9d3434;
-                   }
+
                   </style>
     </head>
     <body>
         <div data-role="page" class="div2">
             
-            <div data-role="header" align="center" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
+            <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
                 <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
             </div><!-- /header -->
             
-            <div class="spinner" id="spinner"></div>
+            
             <div id="noconn" align="center" style="display:none"></div>
             <a data-role=button id=verifica data-theme="b" style="display:none">Verifica Connessione</a>
             
-            <div data-role="content" class="div2">
-                <script type="text/javascript" src="phonegap.js"></script>
-                <script type="text/javascript" src="js/FinderLive.js"></script>
-                <div class="div2"><table align="right" width="80px"><tr><td valign="center" align="right"><font  color="white" size="2"><div id="fiches"></div></font></td></tr></table></div>
+            <div class="spinner" id="spinner">
+                <div class="bar1"></div>
+                <div class="bar2"></div>
+                <div class="bar3"></div>
+                <div class="bar4"></div>
+                <div class="bar5"></div>
+                <div class="bar6"></div>
+                <div class="bar7"></div>
+                <div class="bar8"></div>
+                <div class="bar9"></div>
+                <div class="bar10"></div>
+                <div class="bar11"></div>
+                <div class="bar12"></div>
             </div>
-            <center>
-                
-                <ul id="online" data-role="listview" data-inset="true" data-theme="b" style="display:none">
-                    <li><a id="inter" href="javascript:online()" rel="external"><img src="img/full.png">
-                        <h2><img src="images/chip.png" width="16px">&nbsp;On-Line</h2>
-                        <p>Tornei On-Line</p></a>
-                    </li>
-                </ul>
-                
-                <ul id="live" data-role="listview" data-inset="true" data-theme="b" style="display:none">
-                    <li><a id="dalvivo" href="javascript:live()" rel="external"><img src="img/MTT.png">
-                        <h2><img src="images/live.png" width="16px">&nbsp;Live</h2>
-                        <p>Tornei Live</p></a>
-                    </li>
-                </ul>
-                
-                <!--<a href="#" class="push_button" style="color:white;">
-                    Live
-                </a>-->
-                
-                <br>
-                
-                <form name="formia" action="entra.asp" method="post">
-                    <div id="selezione" align="center" style="display:none"></div>
-                </form>
-
-
-            <div id="classifica" align="center"></div>
-
+                    
+                    <div data-role="content" class="div2">
+                        <script type="text/javascript" src="phonegap.js"></script>
+                        <script type="text/javascript" src="js/InfoLive.js"></script>
+                    </div>
+                    <center>
+                        
+            <div id="descrizione" align="center"></div>
+            <div id="torneo"></div>
         
         <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
             <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>

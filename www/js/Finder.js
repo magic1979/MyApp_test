@@ -1,9 +1,9 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
-    if (window.device && parseFloat(window.device.version) >= 7.0) {
-        $('body').addClass('iOS7');
-    }
+    
+    StatusBar.overlaysWebView(false);
+    StatusBar.backgroundColorByHexString("#RRGGBB");
     
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     
@@ -14,6 +14,10 @@ function onDeviceReady() {
       e.preventDefault();
     });
     
+    var chip = localStorage.getItem("chip");
+    $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+    $('#fiches').show();
+    var giorni = localStorage.getItem("Day");
     
     $(".spinner").show();
     var connectionStatus = false;
@@ -21,17 +25,17 @@ function onDeviceReady() {
     
     if(connectionStatus=='online'){
     
-    
+    $('#noconn').hide();
     var mialat;
     var mialng;
     var via;
     var geoloc;
     
+    
     mialat = localStorage.getItem("lat");
 	mialng = localStorage.getItem("lng");
     via = localStorage.getItem("Via");
     geoloc = localStorage.getItem("geoloc");
-    //alert(geoloc);
     
     if (!via) {
         via = "Non posso determinare il tuo indirizzo";
@@ -48,16 +52,33 @@ function onDeviceReady() {
     
     $(".spinner").hide();
     
+    
     $('#mySelect').on('change', function(){
-        $(".spinner").show();
         var $this = $(this),
         $value = $this.val();
                       
-        //alert($value);
+         if (chip == 0) {
+            navigator.notification.alert(
+            'Hai terminato le Chips, torna domani :)',  // message
+             alertDismissed,         // callback
+             'Attenzione',            // title
+             'OK'                  // buttonName
+         );
+                      
+              return;
+         }
+         
+        connectionStatus = navigator.onLine ? 'online' : 'offline';
+                      
+        if(connectionStatus!='online'){
+            return;
+        }
+        
+        $(".spinner").show();
                       
         var distanza;
                       
-        var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Poker Room</font></th><th><font color="white" size="2"><img src="images/giu.png" width="16px">(Km)</font></th></tr></thead><tbody id="classifica">';
+        var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Poker Room</font></th><th><font color="white" size="2">Distanza <img src="images/freccia.png" width="10px"></font></th><th><font color="white" size="2">GPS</font></th><th><font color="white" size="2">Info</font></th></tr></thead><tbody id="classifica">';
                       
                       $.ajax({
                              type:"GET",
@@ -72,20 +93,21 @@ function onDeviceReady() {
                              $.each(result, function(i,item){
                                     if (item.lat == 0){
                                         distanza = "0";
+                                    
+                                        landmark = landmark + '<tr><td><font size="2">Nessun Risultato</font></td><td><font size="2">-- </font></td><td>--</td><td>--</td></tr>';
                                     }
                                     else{
                                         distanza = getDistance(mialat,mialng,item.lat,item.lng).toFixed(1);
                                         test = (parseInt(test)+1)
-                                    }
                                     
-                                    //alert(geoloc);
-                                    if (geoloc == 'SI'){
-                                    landmark = landmark + '<tr><td><font size="2"><img src="./images/pin.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">'+ distanza +' <a href="http://maps.google.com/maps?saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="20px"></a></font></td></tr>';
+                                        //alert(geoloc);
+                                        if (geoloc == 'SI'){
+                                            landmark = landmark + '<tr><td><font size="2"><img src="images/pin.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">(Km) '+ distanza +'</font></td><td> <a href="maps:saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><div width="40px" class="home"></div></a></td><td><a href="InfoRoom.html?nome=' + item.Room + '" rel="external"><div width="40px" class="home1"></div></a></td></tr>';
+                                        }
+                                        else{
+                                            landmark = landmark + '<tr><td><font size="2"><img src="images/pin.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">-- </font></td><td><a href="maps:q='+ item.Indirizzo +','+ item.Citta +'"><div width="40px" class="home"></div></a></td><td><a href="InfoRoom.html?nome=' + item.Room + '" rel="external"><div width="40px" class="home1"></div></a></td></tr>';
+                                        }
                                     }
-                                    else{
-                                    landmark = landmark + '<tr><td><font size="2"><img src="./images/pin.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">-- <a href="http://maps.google.com/maps?q='+ item.Indirizzo +','+ item.Citta +'"><img src="images/Maps.png" width="20px"></a></font></td></tr>';
-                                    }
-
                                     
                                     });
                              
@@ -93,12 +115,22 @@ function onDeviceReady() {
                              $('#classifica').html(landmark); 
                              $("#myTable").tablesorter( {sortList: [[1,0]]} );
                              
+                             chip = parseInt(chip)-1;
+                             localStorage.setItem("chip", chip);
+                             $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+                             
+                             if (parseInt(chip==0)){
+                                $('#mySelect').hide();
+                                token();
+                             }
+
+                             
                              $(".spinner").hide();
                              
                              },
                                 error: function(){
                                     navigator.notification.alert(
-                                    'Dati non presenti al momento, riprova tra qualche momento.',  // message
+                                    'Dati non presenti al momento, riprova tra qualche minuto.',  // message
                                      alertDismissed,         // callback
                                      'Attenzione',           // title
                                      'Done'                  // buttonName
@@ -113,23 +145,38 @@ function onDeviceReady() {
     }
     
     else{
+        $('#noconn').show();
         
-        navigator.notification.alert(
-           'Hai bisogno di una connessione ad internet',  // message
-           alertDismissed,         // callback
-           'Attenzione',            // title
-           'Done'                  // buttonName
-        );
-        
-        var tabella = '<table align="center" border="0" width="310px" height="60px">';
-        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/noconn.png" width="32px"></td><td align="left"><font color="white" size="2">Per leggere le news hai bisogno di una connessione attiva</font></td></tr>';
+        var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
+        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
         tabella = tabella + '</table>';
         
-        $('#classifica').html(tabella);
+        $('#noconn').html(tabella);
+        
+        $("#verifica").bind ("click", function (event)
+             {
+               var connectionStatus = false;
+               connectionStatus = navigator.onLine ? 'online' : 'offline';
+                             
+              if(connectionStatus=='online'){
+                 onDeviceReady();
+              }
+              else{
+                   navigator.notification.alert(
+                   'Nessuna connessione ad internet rilevata',  // message
+                   alertDismissed,         // callback
+                   'Attenzione',            // title
+                   'OK'                  // buttonName
+                 );
+             }
+                             
+                             
+       });
+
+        
         $(".spinner").hide();
         
     }
-
 
 }
 
@@ -164,4 +211,15 @@ function apri() {
 function alertDismissed() {
     // do something
 }
+function token(){
+  navigator.notification.alert(
+  'buttone disattivato',  // message
+  alertDismissed,         // callback
+  'Attenzione',            // title
+  'OK'                  // buttonName
+ );
+}
 
+function verificawifi(){
+    $("#verifica").click();
+}

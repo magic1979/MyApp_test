@@ -41,6 +41,55 @@
 								  bottom : 45px !important;  
 								  left : 0 !important;-->
                       			}
+								
+								.circolare {
+								  width: 150px;
+								  height: 150px;
+								  border-radius:999em;
+								  -moz-border-radius:999em;
+								  -webkit-border-radius:999em;
+								  -o-border-radius: 999em;
+								  
+								  -webkit-box-shadow: 0px 0px 0.5px 1px #000;
+								  -moz-box-shadow: 0px 0px 0.5px 1px #000;
+								  box-shadow: 0px 0px 0.5px 1px #000;
+                      			}
+								.conn {
+                          font-size: 9pt;
+                          color:#FFF;
+                          background-color: #9d3434;
+                      }
+                      .home {
+                          background-color: #9d3434;
+                          background-image: url(images/right.png);
+                          background-size: 20px 20px;
+                          background-repeat: no-repeat;
+                          background-position:center;
+                          
+                          height:40px;
+                          width:40px;
+                          border-radius:999em;
+                          -moz-border-radius:999em;
+                          -webkit-border-radius:999em;
+                          -o-border-radius: 999em;
+                          
+                          -webkit-box-shadow: 0px 0px 0.5px 1px #FFF;
+                          -moz-box-shadow: 0px 0px 0.5px 1px #FFF;
+                          box-shadow: 0px 0px 0.5px 1px #FFF;
+                      }
+                      
+                      .home:active {
+                          background-color: #000000;
+                          border-radius:999em;
+                          -moz-border-radius:999em;
+                          -webkit-border-radius:999em;
+                          -o-border-radius: 999em;
+                          
+                          -webkit-box-shadow: 0px 0px 0.5px 1px #000;
+                          -moz-box-shadow: 0px 0px 0.5px 1px #000;
+                          box-shadow: 0px 0px 0.5px 1px #000;
+                      }
+
 
                      </style>
                             
@@ -57,17 +106,48 @@
                 <a href="javascript:cambiah();" data-transition="none" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Home</a>
                 <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
             </div><!-- /header -->
+            <div id="noconn" align="center" style="display:none"></div>
+            <a data-role=button id=verifica data-theme="b" style="display:none">Verifica Connessione</a>
+            
             
             <div data-role=content class="div2">
-                <div class="spinner" id="spinner"></div>
+            <div class="div2"><table align="right" width="80px"><tr><td valign="center" align="right"><font  color="white" size="2"><div id="fiches"></div></font></td></tr></table></div>
                 
-                <center>
-                <img src="panel.png" width="130px"><br><br>
-                <img src="img/map.png" align="center" class="circolare" ><br><br>
-                <a data-role=button id=btn data-theme="b">Display map</a>
-                <a data-role=button id=gps2 data-theme="b">Gps E Dintorni</a><br>
-                <div id="classifica"></div>
+                <a data-role=button id=btn data-theme="b" style="display:none">Display map</a><br>
+                <a data-role=button id=gps2 data-theme="b" style="display:none">Gps E Dintorni</a><br>
+
+                <!--<div id="radar" align="center">
+                    <div id="rad"></div>
+                    <div class="obj" data-x="60" data-y="35"></div>
+                    <div class="obj" data-x="70" data-y="70"></div>
+                    <div class="obj" data-x="75" data-y="30"></div>
+                    <div class="obj" data-x="60" data-y="55"></div>
+                </div>-->
+
             </div>
+            <div class="spinner" id="spinner"></div>
+            
+            <ul id="online" data-role="listview" data-inset="true" data-theme="b">
+                <li><a id="mappa5" href="javascript:mappatura()" rel="external"><img src="img/Mappa.png">
+                    <h2><img src="images/finder.png" width="16px">&nbsp;Display Mappa</h2>
+                    <p>Mappa completa Italia</p></a>
+                </li>
+            </ul>
+            
+            <ul id="online" data-role="listview" data-inset="true" data-theme="b">
+                <li><a id="gps5" href="javascript:gps()" rel="external"><img src="img/italia.png">
+                    <h2><img src="images/near2.png" width="16px">&nbsp;GPS Regioni</h2>
+                    <p>Dintorni intorno a te</p></a>
+                </li>
+            </ul>
+            <br><br><center>
+            <div id="classifica"></div>
+            <!--<ul data-role="listview" data-theme="b" data-inset="true">
+                <li><a href="Finder.html" rel="external"><img src="img/cerca.png">
+                    <h2><img src="images/finder.png" width="16px">&nbsp;Gps e Distanza</h2>
+                    <p>Cerca la poker room piu vicina</p></a>
+                </li>
+            </ul>-->
             
         </div>
         

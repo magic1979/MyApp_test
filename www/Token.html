@@ -37,8 +37,6 @@
                  <script src="jquery-1.10.2.min.js"></script>
                  <script src="js/jquery.mobile-1.4.2.min.js"></script>
                  
-                 <script type="text/javascript" src="jquery.tablesorter.js"></script>
-                  
                   
                   <style type="text/css" media="all">
                       body,ul,li {
@@ -256,10 +254,10 @@
                          opacity:0.5;
                          }
                    
-                   table.tablesorter {
+                   .note {
                        font-family:arial;
                        background-color: #f0f0f0;
-                       margin:10px 0pt 15px;
+                       margin:7px 0pt 10px;
                        font-size: 8pt;
                        width: 95%;
                        text-align: left;
@@ -268,54 +266,19 @@
                        border-radius: 5px;
                        -moz-border-radius: 5px; /* firefox */
                        -webkit-border-radius: 5px; /* safari, chrome */
-                       
-                   }
-                   table.tablesorter thead tr th, table.tablesorter tfoot tr th {
-                       background-color: grey;
-                       border: 1px solid #FFF;
-                       font-size: 8pt;
-                       padding: 4px;
-                       width: 40%,60%;
-                       
-                       border-radius: 5px;
-                       -moz-border-radius: 5px; /* firefox */
-                       -webkit-border-radius: 5px; /* safari, chrome */
-                       
-                   }
-                   table.tablesorter thead tr .header {
-                       background-image: url(bg.gif);
-                       background-repeat: no-repeat;
-                       background-position: center right;
-                       cursor: pointer;
-                   }
-                   table.tablesorter tbody td {
-                       color: #0f0f0f;
-                       padding: 4px;
-                       background-color: #FFF;
-                       vertical-align: top;
-                       
-                   }
-                   table.tablesorter tbody tr.odd td {
-                       background-color:#000000;
-                   }
-                   table.tablesorter thead tr .headerSortUp {
-                       background-image: url(asc.gif);
-                   }
-                   table.tablesorter thead tr .headerSortDown {
-                       background-image: url(desc.gif);
-                   }
-                   table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
-                       background-color: #9d3434;
-                       
                    }
                    
+                   .conn {
+                       font-size: 9pt;
+                       color:#FFF;
+                       background-color: #9d3434;
+                   }
                    .home {
                        background-color: #9d3434;
                        background-image: url(images/right.png);
-                       background-size: 18px 18px;
+                       background-size: 20px 20px;
                        background-repeat: no-repeat;
                        background-position:center;
-                       
                        
                        height:40px;
                        width:40px;
@@ -340,18 +303,13 @@
                        -moz-box-shadow: 0px 0px 0.5px 1px #000;
                        box-shadow: 0px 0px 0.5px 1px #000;
                    }
-                   
-                   .conn {
-                       font-size: 9pt;
-                       color:#FFF;
-                       background-color: #9d3434;
-                   }
+
                   </style>
     </head>
     <body>
         <div data-role="page" class="div2">
             
-            <div data-role="header" align="center" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
+            <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
                 <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
             </div><!-- /header -->
             
@@ -361,39 +319,62 @@
             
             <div data-role="content" class="div2">
                 <script type="text/javascript" src="phonegap.js"></script>
-                <script type="text/javascript" src="js/FinderLive.js"></script>
-                <div class="div2"><table align="right" width="80px"><tr><td valign="center" align="right"><font  color="white" size="2"><div id="fiches"></div></font></td></tr></table></div>
+                <script type="text/javascript" src="js/Token.js"></script>
             </div>
             <center>
-                
-                <ul id="online" data-role="listview" data-inset="true" data-theme="b" style="display:none">
-                    <li><a id="inter" href="javascript:online()" rel="external"><img src="img/full.png">
-                        <h2><img src="images/chip.png" width="16px">&nbsp;On-Line</h2>
-                        <p>Tornei On-Line</p></a>
-                    </li>
-                </ul>
-                
-                <ul id="live" data-role="listview" data-inset="true" data-theme="b" style="display:none">
-                    <li><a id="dalvivo" href="javascript:live()" rel="external"><img src="img/MTT.png">
-                        <h2><img src="images/live.png" width="16px">&nbsp;Live</h2>
-                        <p>Tornei Live</p></a>
-                    </li>
-                </ul>
-                
-                <!--<a href="#" class="push_button" style="color:white;">
-                    Live
-                </a>-->
-                
-                <br>
-                
-                <form name="formia" action="entra.asp" method="post">
-                    <div id="selezione" align="center" style="display:none"></div>
-                </form>
+            <form name="formia" action="entra.asp" method="post">
+
+            <table width="310px" align="center" >
+                <tr>
+                    <td width="200px" align="center">
+                        <input type="text" data-theme="b" name="email" id="email" value="" placeholder="Email">
+                            </td>
+                </tr>
+                <tr>
+                    <td width="200px" align="center">
+                        <input type="password" data-theme="b" name="password" id="password" value="" autocomplete="off" placeholder="Pin">
+                            </td>
+                </tr>
+                <tr>
+                    <td width="200px" align="center">
+                        <a id="bottone" href="javascript:vai()" data-role="button" data-theme="b" data-icon="check">Token</a>
+                    </td>
+                </tr>
+            </table>
+            </form>
+            
+            <table align="center" width="310px">
+                <tr>
+                    <div id="torneo"></div>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <ul data-role="listview" data-inset="true" data-theme="b">
+                            <li><a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop">
+                                <img src="images/chips2.png">
+                                    <h2>1000 Search Chips</h2>
+                                    <p>1.79€</p></a>
+                            </li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+            
+            <!--<a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-b">Delete page...</a>-->
+            
+            <div data-role="popup" id="popupDialog" data-overlay-theme="b" data-theme="b" data-dismissible="false" style="max-width:400px;">
+                <div data-role="header" data-theme="b">
+                    <h1>1.79€</h1>
+                </div>
+                <div role="main" class="ui-content">
+                    <h3 class="ui-title"><img src="images/chips.png" width="20px"> 1000 Search Chips</h3>
+                    <p>L'accredito delle chip e' immediato</p>
+                    <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancella</a>
+                    <a href="#" onClick="javascript:store();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Compra</a>
+                </div>
+            </div>
 
 
-            <div id="classifica" align="center"></div>
-
-        
         <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
             <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>
         </div><!-- /footer -->

@@ -36,9 +36,6 @@
                             
                  <script src="jquery-1.10.2.min.js"></script>
                  <script src="js/jquery.mobile-1.4.2.min.js"></script>
-                 
-                 <script type="text/javascript" src="jquery.tablesorter.js"></script>
-                  
                   
                   <style type="text/css" media="all">
                       body,ul,li {
@@ -265,9 +262,9 @@
                        text-align: left;
                        border: 2px solid #000000;
                        
-                       border-radius: 5px;
-                       -moz-border-radius: 5px; /* firefox */
-                       -webkit-border-radius: 5px; /* safari, chrome */
+                       border-radius: 10px;
+                       -moz-border-radius: 10px; /* firefox */
+                       -webkit-border-radius: 10px; /* safari, chrome */
                        
                    }
                    table.tablesorter thead tr th, table.tablesorter tfoot tr th {
@@ -275,11 +272,11 @@
                        border: 1px solid #FFF;
                        font-size: 8pt;
                        padding: 4px;
-                       width: 40%,60%;
+                       width: 65%;
                        
-                       border-radius: 5px;
-                       -moz-border-radius: 5px; /* firefox */
-                       -webkit-border-radius: 5px; /* safari, chrome */
+                       border-radius: 10px;
+                       -moz-border-radius: 10px; /* firefox */
+                       -webkit-border-radius: 10px; /* safari, chrome */
                        
                    }
                    table.tablesorter thead tr .header {
@@ -308,90 +305,51 @@
                        background-color: #9d3434;
                        
                    }
-                   
-                   .home {
-                       background-color: #9d3434;
-                       background-image: url(images/right.png);
-                       background-size: 18px 18px;
-                       background-repeat: no-repeat;
-                       background-position:center;
+                   .note {
+                       font-family:arial;
+                       background-color: #f0f0f0;
+                       margin:7px 0pt 10px;
+                       font-size: 8pt;
+                       width: 95%;
+                       text-align: left;
+                       border: 2px solid #000000;
                        
-                       
-                       height:40px;
-                       width:40px;
-                       border-radius:999em;
-                       -moz-border-radius:999em;
-                       -webkit-border-radius:999em;
-                       -o-border-radius: 999em;
-                       
-                       -webkit-box-shadow: 0px 0px 0.5px 1px #FFF;
-                       -moz-box-shadow: 0px 0px 0.5px 1px #FFF;
-                       box-shadow: 0px 0px 0.5px 1px #FFF;
+                       border-radius: 5px;
+                       -moz-border-radius: 5px; /* firefox */
+                       -webkit-border-radius: 5px; /* safari, chrome */
                    }
-                   
-                   .home:active {
-                       background-color: #000000;
-                       border-radius:999em;
-                       -moz-border-radius:999em;
-                       -webkit-border-radius:999em;
-                       -o-border-radius: 999em;
-                       
-                       -webkit-box-shadow: 0px 0px 0.5px 1px #000;
-                       -moz-box-shadow: 0px 0px 0.5px 1px #000;
-                       box-shadow: 0px 0px 0.5px 1px #000;
-                   }
-                   
-                   .conn {
-                       font-size: 9pt;
-                       color:#FFF;
-                       background-color: #9d3434;
-                   }
+
                   </style>
     </head>
     <body>
         <div data-role="page" class="div2">
             
-            <div data-role="header" align="center" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
+            <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
                 <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
             </div><!-- /header -->
-            
-            <div class="spinner" id="spinner"></div>
-            <div id="noconn" align="center" style="display:none"></div>
-            <a data-role=button id=verifica data-theme="b" style="display:none">Verifica Connessione</a>
-            
+
+
             <div data-role="content" class="div2">
                 <script type="text/javascript" src="phonegap.js"></script>
-                <script type="text/javascript" src="js/FinderLive.js"></script>
-                <div class="div2"><table align="right" width="80px"><tr><td valign="center" align="right"><font  color="white" size="2"><div id="fiches"></div></font></td></tr></table></div>
+                <script type="text/javascript" src="js/Responsabile.js"></script>
             </div>
             <center>
+            
+            <table width="310px" class="note">
+                <tr>
+                    <td>
+                        <h1>Informativa sul trattamento dei dati personali del sito pokeranswer.it</h1>
+                        <p>PokerAnswer rispetta la tua privacy. Tutte le informazioni raccolte, saranno ritenute strettamente confidenziali e non saranno vendute, riutilizzate, prestate o diffuse in altri modi. Qualsiasi informazione fornita sara' conservata con cura e non sara' utilizzata in maniera diversa da quella a cui hai dato esplicito consenso.
+                        
+                        PokerAnswer non vende, scambia, presta o affitta informazioni personali raccolte.
+                        
+                        Aggiornamenti e modifiche: PokerAnswer si riserva il diritto di modificare la propria politica relativa alla privacy in qualsiasi momento. Suggeriamo, quindi, di controllare regolarmente questa sezione.
+                        
+                        Per ogni eventuale domanda o chiarimento, e' possibile contattarci.</p>
+                    </td></tr>
                 
-                <ul id="online" data-role="listview" data-inset="true" data-theme="b" style="display:none">
-                    <li><a id="inter" href="javascript:online()" rel="external"><img src="img/full.png">
-                        <h2><img src="images/chip.png" width="16px">&nbsp;On-Line</h2>
-                        <p>Tornei On-Line</p></a>
-                    </li>
-                </ul>
                 
-                <ul id="live" data-role="listview" data-inset="true" data-theme="b" style="display:none">
-                    <li><a id="dalvivo" href="javascript:live()" rel="external"><img src="img/MTT.png">
-                        <h2><img src="images/live.png" width="16px">&nbsp;Live</h2>
-                        <p>Tornei Live</p></a>
-                    </li>
-                </ul>
-                
-                <!--<a href="#" class="push_button" style="color:white;">
-                    Live
-                </a>-->
-                
-                <br>
-                
-                <form name="formia" action="entra.asp" method="post">
-                    <div id="selezione" align="center" style="display:none"></div>
-                </form>
-
-
-            <div id="classifica" align="center"></div>
+            </table>
 
         
         <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">

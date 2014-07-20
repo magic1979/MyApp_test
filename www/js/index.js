@@ -97,12 +97,26 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+		document.addEventListener("resume", onResume, false);
+		var orario1;
         app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         
-        $(".spinner").show();
+        var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
+        var ciao;
+        var ciao1;
+        var dataoggi;
+        var storedata;
+        var chip;
+        var giorni;
+        var NomeNews;
+        var NomeStrat;
+        
+        $.mobile.defaultPageTransition = 'none';
+        $.mobile.defaultDialogTransition = 'none';
+        
         $('body').on('touchmove', function (e) {
             e.preventDefault();
         });
@@ -111,7 +125,14 @@ var app = {
         connectionStatus = navigator.onLine ? 'online' : 'offline';
         
         if(connectionStatus=='online'){
-        
+        	var connessione = checkConnection();
+
+            checkData();
+            
+            $('#noconn').hide();
+            
+            $(".spinner").show();
+            
             var landmark = '<table align="center" border="0" width="310px" height="100px">';
             
             $.ajax({
@@ -119,22 +140,90 @@ var app = {
                    url:"http://www.pokeranswer.it/www/Check_News.asp",
                    contentType: "application/json",
                    //data: {ID: "1", ID2: "4"},
-                   //data: {ID: $value},
                    jsonp: 'callback',
                    crossDomain: true,
                    success:function(result){
                    
                    $.each(result, function(i,item){
-                          if(item.Nome != '0'){
-                          		var newdata = dataok(item.Data);
                           
-                          		landmark = landmark + '<tr><td align="center" width="100px"><img src="logo2.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">'+ item.Nome +'</font></td></tr></table></td><td><a href="FindNews.html" rel="external" ><img src="images/finger.png" width="30px"></a></td></tr>';
+                          if(item.Nome != '0'){
+                            var newdata = dataok(item.Data);
+                            NomeNews = item.Nome;
+                            NomeStrat = item.NomeStrat;
+                          
+                          dataoggi = item.dataoggi;
+                          storedata = localStorage.getItem("storedata");
+                          giorni = localStorage.getItem("Day");
+                          
+                          if (parseInt(dataoggi) != parseInt(storedata)){
+                          giorni = parseInt(giorni)-1;
+                          localStorage.setItem("Day", giorni);
+                          
+                            if (parseInt(giorni)>0){
+                                if(localStorage.getItem("Token")=="SI"){
+                                    chip = 500;
+                                }
+                                else{
+                                    chip = localStorage.getItem("chip");
+                                }
+                            }
+                            else{
+                                chip = parseInt(item.Chip);
+                            }
+                          
+                          localStorage.setItem("chip", chip);
+                          
+                          storedata = dataoggi;
+                          localStorage.setItem("storedata", dataoggi);
+                          }
+                          else{
+                          chip = localStorage.getItem("chip");
+                          storedata = localStorage.getItem("storedata");
+                          }
+                          
+                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><a id="badde" class="badge1" data-badge="1"><font color="white" size="2">'+ item.Nome +'</font></a></td></tr></table></td><td><a href="FindNews.html?nome='+ item.Nome +'" rel="external" ><div width="40px" class="home"></div></a></td></tr>';
+                          
                           }
                           else{
                           
-                          		var newdata = 'PokerAnswer';
+                            var newdata = orario1 + " - PokerAnswer";
+                            dataoggi = item.dataoggi;
+                            NomeNews = "";
+                            NomeStrat = item.NomeStrat;
                           
-                          		landmark = landmark + '<tr><td align="center" width="100px"><img src="logo2.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">La prima applicazione intorno al gioco del poker</font></td></tr></table></td><td><a href="FindNews.html" rel="external" ><img src="images/finger.png" width="30px"></a></td></tr>';
+                          dataoggi = item.dataoggi;
+                          storedata = localStorage.getItem("storedata");
+                          giorni = localStorage.getItem("Day");
+                          
+                          if (parseInt(dataoggi) != parseInt(storedata)){
+                          giorni = parseInt(giorni)-1;
+                          localStorage.setItem("Day", giorni);
+                          
+                            if (parseInt(giorni)>0){
+                                if(localStorage.getItem("Token")=="SI"){
+                                    chip = 500;
+                                }
+                                else{
+                                    chip = localStorage.getItem("chip");
+                                }
+                            }
+                            else{
+                                chip = parseInt(item.Chip);
+                                localStorage.setItem("Token", "NO");
+                            }
+                          
+                          localStorage.setItem("chip", chip);
+                          
+                          storedata = dataoggi;
+                          localStorage.setItem("storedata", dataoggi);
+                          }
+                          else{
+                          chip = localStorage.getItem("chip");
+                          storedata = localStorage.getItem("storedata");
+                          }
+                          
+                          
+                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi Gratuitamente Search Chips.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/info.png" width="40px"></a></td></tr>';
                           }
                           
                           });
@@ -143,39 +232,62 @@ var app = {
                    $('#classifica').html(landmark);
                    
                    
-                   $(".spinner").hide();
-            	   checkPos();
+                   if (localStorage.getItem("Token")=="SI"){
+                      $('#fiches').html(giorni + 'G <img src="images/ticket.png" height="20px"> ' + chip);
+                   }
+                   else{
+                     $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+                   }
+                   
+                   if (NomeNews == localStorage.getItem("StoreNews")){
+                      $('#badde').removeClass('badge1').addClass('badge2');
+                   }
+                   
+                   if (NomeStrat == localStorage.getItem("StoreStrat")){
+                      $('#badde2').removeClass('badge1').addClass('badge2');
+                   }
+                   else{
+                      $('#badde2').removeClass('badge2').addClass('badge1');
+                   }
+
+                   
                    
                    },
                    error: function(){
-                        navigator.notification.alert(
-                            'Dati non presenti al momento, riprova tra qualche momento.',  // message
-                             alertDismissed,         // callback
-                            'Attenzione',           // title
-                            'Done'                  // buttonName
-                        );
-                        $(".spinner").hide();
+                    navigator.notification.alert(
+                    'Dati non presenti al momento',  // message
+                    alertDismissed,         // callback
+                    'Notifiche',            // title
+                    'OK'                  // buttonName
+                    );
                    },
-            dataType:"jsonp"});
+                   dataType:"jsonp"});
+            
+            $(".spinner").hide();
+            checkPos()
             
         }
         else{
             
-            navigator.notification.alert(
-                'Stato Connessione: ' + connectionStatus,  // message
-                 alertDismissed,         // callback
-                 'Attenzione',            // title
-                 'Done'                  // buttonName
-            );
-			
-			var landmark = '<table align="center" border="0" width="310px" height="80px">';
+           checkData();
+
+            $('#noconn').show();
+            $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + localStorage.getItem("chip"));
             
-            var tabella = '<table align="center" border="0" width="310px" height="60px">';
-            tabella = tabella + '<tr><td align="center" width="50px"><img src="images/noconn.png" width="32px"></td><td align="left"><font color="white" size="2">Per leggere le news hai bisogno di una connessione attiva</font></td></tr>';
+            var newdata = orario1 + " - PokerAnswer";
+            var landmark = '<table align="center" border="0" width="310px" height="100px">';
+            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi Gratuitamente Search Chips.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/info.png" width="40px"></a></td></tr>';
+            landmark = landmark + '</table>';
+            $('#classifica').html(landmark);
+            
+            var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
+            tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left">Per leggere le news e ricevere le notifiche push, hai bisogno di una connessione attiva</td></tr>';
             tabella = tabella + '</table>';
+
+            $('#noconn').html(tabella);
             
-			$('#classifica').html(tabella);
             $(".spinner").hide();
+
 
         }
         
@@ -187,6 +299,33 @@ var app = {
 
 };
 
+function checkData() {
+    navigator.globalization.dateToString(
+    new Date(),
+    function (date) { convertTo24Hour(date.value); },
+    function () { alert('Error getting dateString\n'); },
+    { selector: 'time' }
+
+);
+
+}
+
+
+function convertTo24Hour(time) {
+    
+    var hours = parseInt(time.substr(0, 2));
+    
+    if(time.indexOf('AM') != -1 && hours < 12) {
+        time = time.replace(hours, '0' + "" + hours); //time.replace('12', '00');
+    }
+    
+    if(time.indexOf('PM')  != -1 && hours < 12) {
+        time = time.replace(hours, (hours + 12));
+    }
+    
+    orario1 = time.replace(/(AM|PM)/, '');
+
+}
 
 
 
@@ -284,9 +423,6 @@ function onConfirm(button) {
 }
 
 function apri() {
-    
-    //var mapLocationUrl = 'maps.apple.com/ll=51.84,-8.30';
-    //var ref = window.open(encodeURI(mapLocationUrl), '_system', 'location=no');
     
     var ref = window.open('http://www.google.it', '_blank', 'location=yes');
 }

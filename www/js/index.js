@@ -96,14 +96,12 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-		document.addEventListener("resume", onResume, false);
-		var orario1;
+		//document.addEventListener("resume", onResume, false);
         app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         
-        var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
         var ciao;
         var ciao1;
         var dataoggi;
@@ -112,9 +110,7 @@ var app = {
         var giorni;
         var NomeNews;
         var NomeStrat;
-        
-        $.mobile.defaultPageTransition = 'none';
-        $.mobile.defaultDialogTransition = 'none';
+		var orario1="00:00";
         
         $('body').on('touchmove', function (e) {
             e.preventDefault();

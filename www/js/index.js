@@ -96,13 +96,17 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-		//document.addEventListener("resume", onResume, false);
+		document.addEventListener("resume", onResume, false);
+		
+		var orario1;
+		
         app.receivedEvent('deviceready');
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        
-        var ciao;
+		
+        var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
+		var ciao;
         var ciao1;
         var dataoggi;
         var storedata;
@@ -110,19 +114,27 @@ var app = {
         var giorni;
         var NomeNews;
         var NomeStrat;
-		var orario1="00:00";
+		
+		$.mobile.defaultPageTransition = 'none';
+        $.mobile.defaultDialogTransition = 'none';
         
         $('body').on('touchmove', function (e) {
             e.preventDefault();
         });
+		
+		checkData();
+		
+		var inizio = '<table align="center" border="0" width="310px" height="100px">';
+            inizio = inizio + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">PokerAnswer</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi Gratuitamente Search Chips.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/news.png" width="40px"></a></td></tr>';
+        inizio = inizio + '</table>';
+        $('#classifica').html(inizio);
         
         var connectionStatus = false;
         connectionStatus = navigator.onLine ? 'online' : 'offline';
         
         if(connectionStatus=='online'){
-        	var connessione = checkConnection();
-
-            checkData();
+        	//var connessione = checkConnection();
+			checkPos();
             
             $('#noconn').hide();
             
@@ -218,7 +230,7 @@ var app = {
                           }
                           
                           
-                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi Gratuitamente Search Chips.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/info.png" width="40px"></a></td></tr>';
+                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi Gratuitamente Search Chips.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/news.png" width="40px"></a></td></tr>';
                           }
                           
                           });
@@ -259,7 +271,6 @@ var app = {
                    dataType:"jsonp"});
             
             $(".spinner").hide();
-            checkPos()
             
         }
         else{
@@ -270,8 +281,9 @@ var app = {
             $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + localStorage.getItem("chip"));
             
             var newdata = orario1 + " - PokerAnswer";
+			
             var landmark = '<table align="center" border="0" width="310px" height="100px">';
-            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi Gratuitamente Search Chips.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/info.png" width="40px"></a></td></tr>';
+            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi Gratuitamente Search Chips.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/news.png" width="40px"></a></td></tr>';
             landmark = landmark + '</table>';
             $('#classifica').html(landmark);
             
@@ -456,4 +468,14 @@ function checkPos() {
     
 }
 
+function friend() {
+    window.plugin.email.open({
+    to:      [''],
+    subject: 'Nuova App PokerAnswer',
+    body:    'Vieni a scoprire tutte le fantastiche funzioni della nuova App sul poker, troverai quello che vuoi sapere.'
+    });
+}
 
+function onResume() {
+    app.initialize();
+}

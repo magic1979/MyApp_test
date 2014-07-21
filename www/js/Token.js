@@ -27,8 +27,7 @@ function onDeviceReady() {
             
             //localStorage.setItem("Day", 1);
             //localStorage.setItem("chip", 200);
-            
-            verificastore();
+            //verificastore();
             
             $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/ticket.png" width="64px"></td><td width="160px"><font color="white" size="2">Inserisci delle credenzili corrette</font><br></td></tr></table>');
             $(".spinner").hide();

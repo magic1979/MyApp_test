@@ -142,7 +142,7 @@ function onDeviceReady() {
 
 						
 
-						beaches.push([item.Room,item.lat,item.lng,posizione])
+						beaches.push(["<h2>"+item.Room+"</h2>,<br>"+item.Indirizzo,item.lat,item.lng,posizione])
 
 
 
@@ -345,7 +345,7 @@ function onDeviceReady() {
 
 								  position : myLatLng,
 
-								  content:'<div class="infowindow">'+ beach[0] +'</div>',
+								  content:'<div class="popup">'+ beach[0] +'</div>',
 
 								  shape: shape,
 
@@ -518,11 +518,11 @@ function codeLatLng(lati,lngi) {
                      
                      } else {
 						 var string = "<a href='javascript:again()'>RIPROVA</a>";
-                        $('#classifica').html('Non posso determinare la tua posizione, ti viene assegnata una posizione generica a Roma');
+                        $('#classifica').html('Non posso determinare la tua posizione, ti viene assegnata una posizione generica');
                         $(".spinner").hide();
                      }
                      } else {
-                        $('#classifica').html('Non posso determinare la tua posizione, ti viene assegnata una posizione generica a Roma');
+                        $('#classifica').html('Non posso determinare la tua posizione, ti viene assegnata una posizione generica');
                         $(".spinner").hide();
                      }
                      });

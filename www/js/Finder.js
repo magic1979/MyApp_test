@@ -7,10 +7,6 @@ function onDeviceReady() {
     $.mobile.defaultPageTransition = 'none';
     $.mobile.defaultDialogTransition = 'none';
     
-    $('body').on('touchmove', function (e) {
-      e.preventDefault();
-    });
-    
     var chip = localStorage.getItem("chip");
     $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
     $('#fiches').show();
@@ -20,6 +16,19 @@ function onDeviceReady() {
     var connectionStatus = false;
     connectionStatus = navigator.onLine ? 'online' : 'offline';
     
+    // Workaround for buggy header/footer fixed position when virtual keyboard is on/off
+    $('input, select')
+    .on('focus', function (e) {
+        $('header, footer').css('position', 'absolute');
+        })
+    .on('blur', function (e) {
+        $('header, footer').css('position', 'fixed');
+        //force page redraw to fix incorrectly positioned fixed elements
+    setTimeout( function() {
+        window.scrollTo( $.mobile.window.scrollLeft(), $.mobile.window.scrollTop() );
+    }, 20 );
+    });
+    
     if(connectionStatus=='online'){
     
     $('#noconn').hide();
@@ -27,6 +36,7 @@ function onDeviceReady() {
     var mialng;
     var via;
     var geoloc;
+    var pinno;
     
     
     mialat = localStorage.getItem("lat");
@@ -42,10 +52,12 @@ function onDeviceReady() {
 	test = 1
         
         var tabella = '<table align="center" border="0" width="310px" height="60px">';
-        tabella = tabella + '<tr><td align="center" width="50px"><img src="images/pin.png" width="32px"></td><td align="left"><font color="white" size="2">'+ via +'</font></td></tr>';
+        tabella = tabella + '<tr><td align="center" width="50px"><img src="img/sportivo.png" width="60px"></td><td align="left"><font color="white" size="2">'+ via +'</font></td></tr>';
         tabella = tabella + '</table>';
         
         $('#tabella').html(tabella);
+        
+        $('#classifica').html('<img src="http://www.pokeranswer.it/www/img/logo_FIGP.png" width="180px" data-rel="external">');
     
     $(".spinner").hide();
     
@@ -71,6 +83,8 @@ function onDeviceReady() {
             return;
         }
         
+        $('#classifica').html('');
+        $('#tabella').html('');
         $(".spinner").show();
                       
         var distanza;
@@ -96,12 +110,20 @@ function onDeviceReady() {
                                     else{
                                         distanza = getDistance(mialat,mialng,item.lat,item.lng).toFixed(1);
                                         test = (parseInt(test)+1)
-                                    
-                                        if (geoloc == 'SI'){
-                                            landmark = landmark + '<tr><td><font size="2"><img src="images/pin.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">(Km) '+ distanza +'</font></td><td> <a href="maps:saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><div width="40px" class="home"></div></a></td><td><a href="InfoRoom.html?nome=' + item.Room + '" rel="external"><div width="40px" class="home1"></div></a></td></tr>';
+                                        
+                                        if (item.figp==1){
+                                            pinno = '<img src="images/pin_figp.png" width="20px">';
                                         }
                                         else{
-                                            landmark = landmark + '<tr><td><font size="2"><img src="images/pin.png" width="16px">'+ item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">-- </font></td><td><a href="maps:q='+ item.Indirizzo +','+ item.Citta +'"><div width="40px" class="home"></div></a></td><td><a href="InfoRoom.html?nome=' + item.Room + '" rel="external"><div width="40px" class="home1"></div></a></td></tr>';
+                                            pinno = '<img src="images/pin.png" width="12px">';
+                                        }
+                                    
+                                        //alert(geoloc);
+                                        if (geoloc == 'SI'){
+                                            landmark = landmark + '<tr><td><font size="2">'+ pinno + item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="1">(Km)</font><font size="2"> '+ distanza +'</font></td><td> <a href="maps:saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><div width="40px" class="home"></div></a></td><td><a href="InfoRoom.html?nome=' + item.Room + '" rel="external"><div width="40px" class="home1"></div></a></td></tr>';
+                                        }
+                                        else{
+                                            landmark = landmark + '<tr><td><font size="2">'+ pinno + item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">-- </font></td><td><a href="maps:q='+ item.Indirizzo +','+ item.Citta +'"><div width="40px" class="home"></div></a></td><td><a href="InfoRoom.html?nome=' + item.Room + '" rel="external"><div width="40px" class="home1"></div></a></td></tr>';
                                         }
                                     }
                                     

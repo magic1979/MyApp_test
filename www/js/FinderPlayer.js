@@ -9,12 +9,22 @@ function onDeviceReady() {
     $.mobile.defaultDialogTransition = 'none';
         
         $(".spinner").show();
-        $('body').on('touchmove', function (e) {
-            e.preventDefault();
-        });
         
         var connectionStatus = false;
         connectionStatus = navigator.onLine ? 'online' : 'offline';
+    
+        // Workaround for buggy header/footer fixed position when virtual keyboard is on/off
+        $('input, select')
+        .on('focus', function (e) {
+        $('header, footer').css('position', 'absolute');
+        })
+        .on('blur', function (e) {
+        $('header, footer').css('position', 'fixed');
+        //force page redraw to fix incorrectly positioned fixed elements
+        setTimeout( function() {
+        window.scrollTo( $.mobile.window.scrollLeft(), $.mobile.window.scrollTop() );
+        }, 20 );
+        });
     
         $(document).keydown(function (eventObj){
             getKey(eventObj);
@@ -32,6 +42,10 @@ function onDeviceReady() {
             
             $('#informazioni').html('&nbsp;*I dati sono da considerarsi puramente indicativi, e sono calcolati sugli ultimi mesi di gioco.');
             $('#informazioni').show();
+            
+            imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/rooster.png" width="70px"></td></tr></table>'
+            $('#imgplayer').html(imgaply);
+            $('#imgplayer').fadeIn();
             
             $('#noconn').hide();
             $(".spinner").hide();
@@ -62,7 +76,7 @@ function onDeviceReady() {
                     'Devi inserire un nickname corretto',  // message
                     alertDismissed,         // callback
                     'Attenzione',            // title
-                    'OK'                  
+                    'OK'                  // buttonName
                     );
 
                     $("#mySelect").val("01");

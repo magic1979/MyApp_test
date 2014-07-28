@@ -40,7 +40,16 @@ function onDeviceReady() {
                           informazioni = item.Luogo + ', Casino: ' + item.Casino + '<br><br><br> <b>DATE: </b>' + dataok(item.DataStart) + ' - ' + dataok(item.DataFine) + '<br><br><b> MAIN EVENT(buy-in): </b>' + item.Buy + ' &euro;<br><br><b>DESCRIZIONE: </b>' + item.Descrizione +'<br><br><b>SATELLITI: </b>' + item.Sat;
                           }
                           
+                          if (item.IMG=="img"){
+                          $('#immagine').html('');
+                          }
+                          else{
+                          $('#immagine').html('<img src="http://www.pokeranswer.it/www/img/'+ item.IMG +'.png" width="300px" data-rel="external" class="banner">');
+                          }
+                          
                           });
+                   
+
                    
                    $('#torneo').html('<h1>' + tech + '</h1><p>' + informazioni + '</p>');
                    
@@ -51,7 +60,7 @@ function onDeviceReady() {
                      'Dati non presenti al momento, riprova tra qualche instante',  // message
                       alertDismissed,         // callback
                      'Attenzione',            // title
-                     'Done'                  
+                     'Done'                  // buttonName
                      );
                    
                    },

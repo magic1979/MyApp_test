@@ -24,7 +24,7 @@
         <meta property="og:locale" content="en_US" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
             
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi" />
                 
                 <link rel="stylesheet" href="themes/jquery.mobile.structure-1.4.2.min.css" />
                 <link rel="stylesheet" href="themes/ThemeAnswer.css" />
@@ -347,17 +347,19 @@
                 <tr>
                     <div id="torneo"></div>
                 </tr>
-                <tr>
+                <!--<tr>
                     <td align="center">
-                        <ul data-role="listview" data-inset="true" data-theme="b">
-                            <li><a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop">
+                        <ul id="negozio" data-role="listview" data-inset="true" data-theme="b">
+                            <li>
+                             <a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop">
                                 <img src="images/chips2.png">
-                                    <h2>1000 Search Chips</h2>
-                                    <p>1.79€</p></a>
-                            </li>
+                                <h2>1000 AnswerChips</h2>
+                                <p>1.79€</p>
+                            </a>
+                        </li>
                         </ul>
                     </td>
-                </tr>
+                </tr>-->
             </table>
             
             <!--<a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-b">Delete page...</a>
@@ -367,10 +369,10 @@
                     <h1>1.79€</h1>
                 </div>
                 <div role="main" class="ui-content">
-                    <h3 class="ui-title"><img src="images/chips.png" width="20px"> 1000 Search Chips</h3>
+                    <h3 class="ui-title"><img src="images/chips.png" width="20px"> 1000 AnswerChips</h3>
                     <p>L'accredito delle chip e' immediato</p>
                     <a href="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back">Cancella</a>
-                    <a href="#" onClick="#" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Compra</a>
+                    <a href="#" onClick="javascript:store();" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-btn-b" data-rel="back" data-transition="flow">Compra</a>
                 </div>
             </div>-->
 

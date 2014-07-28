@@ -8,12 +8,23 @@ function onDeviceReady() {
     var informazioni;
         
         $(".spinner").show();
-        $('body').on('touchmove', function (e) {
-            e.preventDefault();
-        });
+
     
         document.addEventListener("showkeyboard", function(){ $("[data-role=footer]").hide();}, false);
         document.addEventListener("hidekeyboard", function(){ $("[data-role=footer]").show();}, false);
+    
+        // Workaround for buggy header/footer fixed position when virtual keyboard is on/off
+        $('input, textarea')
+        .on('focus', function (e) {
+        $('header, footer').css('position', 'absolute');
+        })
+        .on('blur', function (e) {
+        $('header, footer').css('position', 'fixed');
+        //force page redraw to fix incorrectly positioned fixed elements
+        setTimeout( function() {
+          window.scrollTo( $.mobile.window.scrollLeft(), $.mobile.window.scrollTop() );
+        }, 20 );
+        });
     
         $(document).keydown(function (eventObj){
           getKey(eventObj);
@@ -24,18 +35,22 @@ function onDeviceReady() {
         
         if(connectionStatus=='online'){
             $('#noconn').hide();
+            $('#negozio').show();
             
             //localStorage.setItem("Day", 1);
             //localStorage.setItem("chip", 200);
+            //localStorage.setItem("Token", "NO");
+            
             //verificastore();
             
-            $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/ticket.png" width="64px"></td><td width="160px"><font color="white" size="2">Inserisci delle credenzili corrette</font><br></td></tr></table>');
+            $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/ticket.png" width="64px"></td><td width="160px"><font color="white" size="2">Con un Token puoi avere, per 30 giorni, molte AnswerChips in +</font><br></td></tr></table>');
             $(".spinner").hide();
             
         }
         else{
             
             $('#noconn').show();
+            $('#negozio').hide();
             
             var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
             tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
@@ -72,8 +87,7 @@ function onDeviceReady() {
     }
 
 function vai() {
-    //alert(self.document.formia.email.value);
-    //alert(self.document.formia.password.value);
+
     var indirizzo = self.document.formia.email.value;
     var pin = self.document.formia.password.value;
     
@@ -82,7 +96,7 @@ function vai() {
           'email non completa',  // message
            alertDismissed,         // callback
            'Attenzione',            // title
-           'Done'                  // buttonName
+           'OK'                  // buttonName
          );
         return;
     }
@@ -91,7 +105,7 @@ function vai() {
         'password non completa',  // message
          alertDismissed,         // callback
          'Attenzione',            // title
-         'Done'                  
+         'OK'                  // buttonName
          );
         return;
     }
@@ -106,7 +120,7 @@ function vai() {
         'email non corretta',  // message
          alertDismissed,         // callback
         'Attenzione',            // title
-        'Done'                  // buttonName
+        'OK'                  // buttonName
         );
         return;
     }
@@ -131,7 +145,6 @@ function vai() {
             newdata = item.Day;
             informazioni = item.Token;
                   
-            //alert(newdata);
             });
            
            if (newdata==0){
@@ -145,16 +158,16 @@ function vai() {
            );
            
            setTimeout(function() {
-             $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/ticket.png" width="64px"></td><td width="160px"><font color="white" size="2">Inserisci delle credenzili corrette</font><br></td></tr></table>');
+             $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/ticket.png" width="64px"></td><td width="160px"><font color="white" size="2">Con un Token puoi avere, per 30 giorni, molte AnswerChips in +</font><br></td></tr></table>');
            }, 9000);
 
            }
            else{
            localStorage.setItem("Token", "SI");
-           localStorage.setItem("Day", newdata);
+           localStorage.setItem("Day", 30);
            localStorage.setItem("chip", 500);
            
-           $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/ticketverde128.png" width="64px"></td><td width="160px"><font color="white" size="2">Inserisci delle credenzili corrette</font><br></td></tr></table>');
+           $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/ticketverde128.png" width="64px"></td><td width="160px"><font color="white" size="2">Token accreditato.</font><br></td></tr></table>');
            
            navigator.notification.alert(
            'Il tuo Tocket è valido: ' + newdata + 'giorni.',  // message
@@ -192,6 +205,7 @@ function vai() {
     else{
         
         $('#noconn').show();
+        $('#negozio').hide();
         
         var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
         tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
@@ -259,18 +273,18 @@ function getParameterByName(name) {
 function getKey(key){
   if ( key == null ) {
      keycode = event.keyCode;
-     // To Mozilla
+
      } else {
      keycode = key.keyCode;
   }
-     // Return the key in lower case form
+
   if (keycode ==13){
-      //alert(keycode);
+
       vai();
 
       return false;
   }
-//return String.fromCharCode(keycode).toLowerCase();
+
 }
                           
 function verificastore(){
@@ -283,9 +297,10 @@ function verificastore(){
                                                
                 if (productId === 'it.pokeranswer.answer.coins1000') {
                               
-                   localStorage.setItem("chip", 170);
-                   localStorage.setItem("Day", 1);
-                   $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/coins.png" width="64px"></td><td width="160px"><font color="white" size="2">1000 Search Chips Accreditate</font><br></td></tr></table>');
+                   localStorage.setItem("chip", 1000);
+                   localStorage.setItem("Day", 360);
+                   localStorage.setItem("Token", "NO");
+                   $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/coins.png" width="64px"></td><td width="160px"><font color="white" size="2">1000 AnswerChips Accreditate</font><br></td></tr></table>');
 
                 }
 
@@ -307,7 +322,7 @@ function verificastore(){
                 error: function (errno, errtext) {
                     console.log('error failed:');
                     
-                    $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/error.png" width="64px"></td><td width="160px"><font color="white" size="2">Errore, riprova tra qualche instante.</font><br></td></tr></table>');
+                    $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/error.png" width="64px"></td><td width="160px"><font color="white" size="2">Riprova tra qualche instante.</font><br></td></tr></table>');
                               
                     
                 },
@@ -332,7 +347,7 @@ function verificastore(){
 function store(){
   window.storekit.purchase("it.pokeranswer.answer.coins1000", 1);
 
-  $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/ticketverde128.png" width="64px"></td><td width="160px"><font color="white" size="2">Waiting...</font><br></td></tr></table>');
+  $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/waiting.png" width="64px"></td><td width="160px"><font color="white" size="2">Waiting...</font><br></td></tr></table>');
 }
                           
 

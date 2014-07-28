@@ -1,7 +1,7 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
-
+    
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
     
@@ -39,9 +39,18 @@ function onDeviceReady() {
                           informazioni = 'Via: ' + item.Indirizzo + ', ' + item.Citta + '<br><br><br> <b>TORNEI: </b>' + item.Torneo + '<br><br><b> PROMOZIONI: </b>' + item.Promo + '<br><br><b>LINK: </b>' + item.Link;
                           }
                           
+                          if (item.IMG=="0"){
+                          $('#immagine').html('');
+                          }
+                          else{
+                          $('#immagine').html('<img src="http://www.pokeranswer.it/www/img/'+ item.IMG +'.png" width="300px" data-rel="external" class="banner">');
+                          }
+                          
                           });
                    
+                   
                    $('#torneo').html('<h1>' + tech + '</h1><p>' + informazioni + '</p>');
+                   
                    $(".spinner").hide();
                    
                    },
@@ -51,7 +60,7 @@ function onDeviceReady() {
                     'Dati non presenti al momento, riprova tra qualche instante',  // message
                      alertDismissed,         // callback
                      'Attenzione',            // title
-                     'Done'                  
+                     'Done'                  // buttonName
                      );
                    
                    },

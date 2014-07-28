@@ -59,7 +59,7 @@ function onDeviceReady() {
                    'Dati non presenti al momento.',  // message
                     alertDismissed,         // callback
                     'Attenzione',            // title
-                    'Done'                  
+                    'Done'                  // buttonName
                     );
                    
                    },

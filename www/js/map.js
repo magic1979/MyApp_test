@@ -98,10 +98,10 @@ function onDeviceReady() {
 
 		  var lng = localStorage.getItem("lng");
 		  
-		  //alert(lat + "--" + lng);                            
+		  $('#immagine').html('<img src="http://www.pokeranswer.it/www/img/Federazione.png" width="310px" data-rel="external" class="banner">');                            
 
           var destIcon = new google.maps.MarkerImage("./images/pin.png", null, null, null, new google.maps.Size(28,40));
-
+		  var figpIcon = new google.maps.MarkerImage("images/pin_figp.png", null, null, null, new google.maps.Size(36,32));
                                               
 
 		  var beaches = [];
@@ -142,7 +142,7 @@ function onDeviceReady() {
 
 						
 
-						beaches.push(["<h2>"+item.Room+"</h2>,<br>"+item.Indirizzo,item.lat,item.lng,posizione])
+						beaches.push(["<h2>"+item.Room+"</h2>,<br>"+item.Indirizzo,item.lat,item.lng,posizione,item.figp])
 
 
 
@@ -327,7 +327,17 @@ function onDeviceReady() {
 
 						  else {
 
-						  icon = destIcon;
+						  	if (beach[4]==1){
+
+                               icon = figpIcon;
+
+                             }
+
+                             else{
+
+                               icon = destIcon;
+
+                            }
 
 						  }
 

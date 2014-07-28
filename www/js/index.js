@@ -176,6 +176,7 @@ var app = {
                             }
                             else{
                                 chip = parseInt(item.Chip);
+								localStorage.setItem("Token", "NO");
                             }
                           
                           localStorage.setItem("chip", chip);
@@ -249,6 +250,9 @@ var app = {
                    if (NomeNews == localStorage.getItem("StoreNews")){
                       $('#badde').removeClass('badge1').addClass('badge2');
                    }
+				   else{
+                      navigator.notification.beep();
+                   }
                    
                    if (NomeStrat == localStorage.getItem("StoreStrat")){
                       $('#badde2').removeClass('badge1').addClass('badge2');
@@ -261,7 +265,9 @@ var app = {
                    
                    },
                    error: function(){
-                    navigator.notification.alert(
+                    $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + localStorage.getItem("chip"));
+					
+					navigator.notification.alert(
                     'Dati non presenti al momento',  // message
                     alertDismissed,         // callback
                     'Notifiche',            // title
@@ -275,15 +281,15 @@ var app = {
         }
         else{
             
-           checkData();
+           $(".spinner").hide();
 
             $('#noconn').show();
             $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + localStorage.getItem("chip"));
             
-            var newdata = orario1 + " - PokerAnswer";
+            var newdata = "PokerAnswer";
 			
             var landmark = '<table align="center" border="0" width="310px" height="100px">';
-            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi Gratuitamente Search Chips.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/news.png" width="40px"></a></td></tr>';
+            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi Gratuitamente Search Chips.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/noconn.png" width="40px"></a></td></tr>';
             landmark = landmark + '</table>';
             $('#classifica').html(landmark);
             
@@ -292,9 +298,6 @@ var app = {
             tabella = tabella + '</table>';
 
             $('#noconn').html(tabella);
-            
-            $(".spinner").hide();
-
 
         }
         

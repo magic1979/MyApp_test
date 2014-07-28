@@ -22,9 +22,24 @@ function onDeviceReady() {
             $('#online').show();
             $('#selezione').show();
             
+            $('#classifica').html('<br><img src="http://www.pokeranswer.it/www/img/live.png" width="300px" data-rel="external" class="banner">');
+            
             var filtro = '<table id="filtroTB" width="310px" align="center"><tr><td width="33%"><select id="buin" data-theme="b"><option value="All" selected>Buy-In</option><option value="small">Piccolo</option><option value="medio">Medio</option><option value="Alto">Alto</option></select></td><td width="33%"><select id="grt" data-theme="b"><option value="All" selected>GRT</option><option value="small">50-300</option><option value="Med">500-2000</option><option value="Alto">>2000</option></select></td><td width="33%" align="center"><a id="search" href="javascript:cerca()"><div width="40px" class="home"></div></a></td></tr></table>';
             
             $('#selezione').html(filtro);
+            
+            // Workaround for buggy header/footer fixed position when virtual keyboard is on/off
+            $('input, select')
+            .on('focus', function (e) {
+                $('header, footer').css('position', 'absolute');
+                })
+            .on('blur', function (e) {
+                $('header, footer').css('position', 'fixed');
+                //force page redraw to fix incorrectly positioned fixed elements
+                setTimeout( function() {
+                           window.scrollTo( $.mobile.window.scrollLeft(), $.mobile.window.scrollTop() );
+                           }, 20 );
+                });
             
             if (parseInt(chip==0)){
                 $("#search").attr("href", "javascript:token();");
@@ -317,7 +332,26 @@ function online(){
                   
                   if (parseInt(item.Ora) < parseInt(orario)){
                     sveglia = "svegliarossa";
-                    noimage = '<div id="pulsar"><font size="2"><img src="./images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
+                  
+                    if (newora.slice(0,1) != "0") {
+                  
+                        noimage = '<div id="pulsar"><font size="2"><img src="./images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
+                  
+                    }
+                    else{
+                  
+                        if(orario.slice(0,1) == "0"){
+                            if(newora.slice(0,1) == "0"){
+                                noimage = '<div id="pulsar"><font size="2"><img src="./images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
+                            }
+                            else{
+                                noimage = '<font size="2">'+ newora +'</font>';
+                            }
+                        }
+                        else{
+                            noimage = '<font size="2">'+ newora +'</font>';
+                        }
+                    }
                   
                     pulse($('#pulsar'), 1000, 'swing', {opacity:0}, {opacity:1}, function() { return false; });
                   
@@ -344,7 +378,7 @@ function online(){
            
            landmark = landmark + '</tbody></table>';
            $('#classifica').html(landmark); 
-           $("#myTable").tablesorter( {sortList: [[2,0]]} );
+           //$("#myTable").tablesorter( {sortList: [[2,0]]} );
            
            chip = parseInt(chip)-1;
            localStorage.setItem("chip", chip);
@@ -355,6 +389,19 @@ function online(){
            $("#inter").attr("href", "javascript:token();");
            $("#dalvivo").attr("href", "javascript:token();");
            }
+           
+           // Workaround for buggy header/footer fixed position when virtual keyboard is on/off
+           $('input, select')
+           .on('focus', function (e) {
+               $('header, footer').css('position', 'absolute');
+               })
+           .on('blur', function (e) {
+               $('header, footer').css('position', 'fixed');
+               //force page redraw to fix incorrectly positioned fixed elements
+               setTimeout( function() {
+                          window.scrollTo( $.mobile.window.scrollLeft(), $.mobile.window.scrollTop() );
+                          }, 20 );
+               });
            
            $(".spinner").hide();
            
@@ -490,14 +537,32 @@ function cerca() {
                   }
                   
                   if (parseInt(item.Ora) < parseInt(orario)){
-                  sveglia = "svegliarossa";
-                  noimage = '<div id="pulsar"><font size="2"><img src="./images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
+                    sveglia = "svegliarossa";
                   
-                  pulse($('#pulsar'), 1000, 'swing', {opacity:0}, {opacity:1}, function() { return false; });
+                    if (newora.slice(0,1) != "0") {
                   
+                        noimage = '<div id="pulsar"><font size="2"><img src="./images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
+                  
+                    }
+                    else{
+                  
+                        if(orario.slice(0,1) == "0"){
+                            if(newora.slice(0,1) == "0"){
+                                noimage = '<div id="pulsar"><font size="2"><img src="./images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
+                            }
+                            else{
+                                noimage = '<font size="2">'+ newora +'</font>';
+                            }
+                        }
+                        else{
+                            noimage = '<font size="2">'+ newora +'</font>';
+                        }
+                    }
+                  
+                    pulse($('#pulsar'), 1000, 'swing', {opacity:0}, {opacity:1}, function() { return false; });
                   }
                   else{
-                  noimage = '<font size="2">'+ newora +'</font>';
+                    noimage = '<font size="2">'+ newora +'</font>';
                   }
                   
                   if (level==1){
@@ -517,8 +582,9 @@ function cerca() {
                   });
            
            landmark = landmark + '</tbody></table>';
-           $('#classifica').html(landmark); 
-           $("#myTable").tablesorter( {sortList: [[2,0]]} );
+           $('#classifica').html(landmark);
+           
+           //$("#myTable").tablesorter( {sortList: [[2,0]]} );
            
            chip = parseInt(chip)-1;
            localStorage.setItem("chip", chip);
@@ -531,6 +597,20 @@ function cerca() {
            }
            
            pulse($('#pulsar'), 1000, 'swing', {opacity:0}, {opacity:1}, function() { return false; });
+           
+           // Workaround for buggy header/footer fixed position when virtual keyboard is on/off
+           $('input, select')
+           .on('focus', function (e) {
+               $('header, footer').css('position', 'absolute');
+               })
+           .on('blur', function (e) {
+               $('header, footer').css('position', 'fixed');
+               //force page redraw to fix incorrectly positioned fixed elements
+               setTimeout( function() {
+                          window.scrollTo( $.mobile.window.scrollLeft(), $.mobile.window.scrollTop() );
+                          }, 20 );
+               });
+           
            $(".spinner").hide();
            
            },
@@ -572,7 +652,7 @@ function cerca() {
                               'Nessuna connessione ad internet rilevata',  // message
                                alertDismissed,         // callback
                                'Attenzione',            // title
-                               'OK'                  
+                               'OK'                  // buttonName
                              );
                              }
                              

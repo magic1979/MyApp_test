@@ -28,12 +28,13 @@ function onDeviceReady() {
                    url:"http://www.pokeranswer.it/www/Check_News.asp",
                    contentType: "application/json",
                    //data: {ID: "1", ID2: "4"},
+                   timeout: 7000,
                    jsonp: 'callback',
                    crossDomain: true,
                    success:function(result){
                    
                    $.each(result, function(i,item){
-                          newdata = dataok(item.Data);
+                          newdata = dataok(item.Data) + " - " + oraok(item.Ora);
                           informazioni = item.News;
                           IMG = item.IMG;
                           localStorage.setItem("StoreNews", item.Nome);
@@ -50,9 +51,10 @@ function onDeviceReady() {
                    
                    },
                    error: function(){
+                   $(".spinner").hide();
                    
                    navigator.notification.alert(
-                   'Dati non presenti al momento.',  // message
+                   'Possibile errore di rete, riprova tra qualche minuto.',  // message
                     alertDismissed,         // callback
                     'Attenzione',            // title
                     'Done'                  // buttonName
@@ -82,7 +84,8 @@ function onDeviceReady() {
                                  onDeviceReady();
                                  }
                                  else{
-                                 navigator.notification.alert(
+                                 $(".spinner").hide();
+                                    navigator.notification.alert(
                                     'Nessuna connessione ad internet rilevata',  // message
                                     alertDismissed,         // callback
                                     'Attenzione',            // title
@@ -102,7 +105,7 @@ function onDeviceReady() {
 
 
 function alertDismissed() {
-    // do something
+    $(".spinner").hide();
 }
 
 function dataok(deg) {

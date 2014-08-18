@@ -38,60 +38,6 @@
                  <script src="js/jquery.mobile-1.4.2.min.js"></script>
                  
                  <script type="text/javascript" src="jquery.tablesorter.js"></script>
-                 
-                  <script type="text/javascript" src="js/iscroll.js"></script>
-                  
-                  <script type="text/javascript">
-                      
-                      var myScroll,
-                      pullDownEl, pullDownOffset,
-                      generatedCount = 0;
-                      
-                      function pullDownAction () {
-                                onDeviceReady();
-                                     
-                                myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
-                      }
-                  
-                  
-                  function loaded() {
-                      pullDownEl = document.getElementById('pullDown');
-                      pullDownOffset = pullDownEl.offsetHeight;
-
-                      
-                      myScroll = new iScroll('wrapper', {
-                                             useTransition: true,
-                                             topOffset: pullDownOffset,
-                                             onRefresh: function () {
-                                             if (pullDownEl.className.match('loading')) {
-                                             pullDownEl.className = '';
-                                             pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
-                                             }                                              },
-                                             onScrollMove: function () {
-                                             if (this.y > 5 && !pullDownEl.className.match('flip')) {
-                                             pullDownEl.className = 'flip';
-                                             pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Release to refresh...';
-                                             this.minScrollY = 0;
-                                             } else if (this.y < 5 && pullDownEl.className.match('flip')) {
-                                             pullDownEl.className = '';
-                                             pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
-                                             this.minScrollY = -pullDownOffset;
-                                             }                                              },
-                                             onScrollEnd: function () {
-                                             if (pullDownEl.className.match('flip')) {
-                                             pullDownEl.className = 'loading';
-                                             pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';
-                                             pullDownAction();	// Execute custom function (ajax call?)
-                                             }                                              }
-                                             });
-                                             
-                                             setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
-                  }
-                  
-                  document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-                  
-                  document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
-         </script>
                   
                   <style type="text/css" media="all">
                       body,ul,li {
@@ -429,12 +375,6 @@
             <a data-role=button id=verifica data-theme="b" style="display:none">Verifica Connessione</a>
             
             <div class="spinner" id="spinner"></div>
-            
-            <div id="wrapper">
-                <div id="scroller">
-                    <div id="pullDown">
-                        <span class="pullDownIcon"></span><span class="pullDownLabel">Pull down to refresh...</span>
-                    </div>
                     
                     <div data-role="content" class="div2">
                         <script type="text/javascript" src="phonegap.js"></script>
@@ -445,7 +385,7 @@
             
             <table width="310px" class="note">
                 <tr>
-                    <td>
+                    <td align="center">
                         <div id="immagine"></div>
                     </td>
                 </tr>
@@ -455,9 +395,6 @@
                     </td>
                 </tr>
             </table>
-
-        </div>
-          </div>
         
         <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
             <a href="FinderLive.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>

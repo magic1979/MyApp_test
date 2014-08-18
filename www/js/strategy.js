@@ -1,13 +1,22 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
-    
+    document.addEventListener("resume", onResume, false);
+        
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
     
     $.mobile.defaultPageTransition = 'none';
     $.mobile.defaultDialogTransition = 'none';
-        
+    
+    var chip = localStorage.getItem("chip");
+    if (chip == null || typeof(chip) == 'undefined') {
+        $('#fiches').html('<img src="images/chipa.png" height="20px"> 0');
+    }
+    else{
+        $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+    }
+    
         $(".spinner").show();
         
         var connectionStatus = false;
@@ -18,35 +27,61 @@ function onDeviceReady() {
             var landmark1 = '<table align="center" width="310px">';
             
             //QuaryString
-            var tech = getParameterByName('nome');
-            //alert(tech);
+            var tech = getParameterByName('id');
+            
             var newdata;
             var informazioni;
             var nome;
             var IMG;
+            var pagina;
+            
+            if (tech==""){
+                tech = "All";
+                pagina = "0";
+            }
+            else{
+                pagina = "1";
+            }
+
             
             $.ajax({
                    type:"GET",
                    url:"http://www.pokeranswer.it/www/Check_strategy.asp",
                    contentType: "application/json",
-                   //data: {ID: "1", ID2: "4"},
+                   data: {ID: tech, page: pagina},
+                   timeout: 7000,
                    jsonp: 'callback',
                    crossDomain: true,
                    success:function(result){
                    
                    $.each(result, function(i,item){
-                          newdata = dataok(item.Data);
+                          newdata = dataok(item.Data) + " - " + oraok(item.Ora);
                           informazioni = item.News;
                           nome = item.Nome;
                           IMG = item.IMG;
-                          localStorage.setItem("StoreStrat", item.Nome);
+                          if (pagina=="0"){
+                            if (nome != localStorage.getItem("StoreStrat")){
+                                chip = parseInt(chip)-5;
+                                localStorage.setItem("chip", chip);
+                                $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
                           
+                                localStorage.setItem("StoreStrat", item.Nome);
+                            }
+                            else{
+                                localStorage.setItem("StoreStrat", item.Nome);
+                            }
+                          }
                    });
                    
                         landmark1 = landmark1 + '<tr><td><font color="white" size="2">'+ newdata +'</font></td></tr><tr><td align="center"><img src="http://www.pokeranswer.it/www/img/News/'+ IMG +'.png" data-rel="external" width="300px"></td></tr>';
                    
+                   if (chip == 0) {
+                        $('#torneo').html('<table width="310px" class="note"><tr><td><h1>AnswerChips Terminate</h1><p>Puoi riprovare domani</p></td></tr></table>');
+                   }
+                   else{
                         $('#torneo').html('<table width="310px" class="note"><tr><td><h1>' + nome + '</h1><p>'+ informazioni +'</p></td></tr></table>');
-                   
+                   }
+
                         landmark1 = landmark1 + '</table>';
                         $('#descrizione').html(landmark1);
                    
@@ -54,9 +89,10 @@ function onDeviceReady() {
                    
                    },
                    error: function(){
+                   $(".spinner").hide();
                    
                    navigator.notification.alert(
-                   'Dati non presenti al momento.',  // message
+                   'Possibile errore di rete, riprova tra qualche minuto.',  // message
                     alertDismissed,         // callback
                     'Attenzione',            // title
                     'Done'                  // buttonName
@@ -86,6 +122,7 @@ function onDeviceReady() {
                                  onDeviceReady();
                                  }
                                  else{
+                                 $(".spinner").hide();
                                  navigator.notification.alert(
                                    'Nessuna connessione ad internet rilevata',  // message
                                    alertDismissed,         // callback
@@ -106,7 +143,7 @@ function onDeviceReady() {
 
 
 function alertDismissed() {
-    // do something
+    $(".spinner").hide();
 }
 
 function dataok(deg) {
@@ -137,4 +174,8 @@ function getParameterByName(name) {
 
 function verificawifi(){
    $("#verifica").click();
+}
+                          
+function onResume() {
+   onDeviceReady();
 }

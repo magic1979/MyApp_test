@@ -9,9 +9,10 @@ function onDeviceReady() {
     $.mobile.defaultDialogTransition = 'none';
         
         $(".spinner").show();
-        $('body').on('touchmove', function (e) {
-            e.preventDefault();
-        });
+    
+        //$('body').on('touchmove', function (e) {
+            //e.preventDefault();
+        //});
         
         var connectionStatus = false;
         connectionStatus = navigator.onLine ? 'online' : 'offline';
@@ -21,12 +22,14 @@ function onDeviceReady() {
             $('#noconn').hide();
             var tech = getParameterByName('nome');
             var informazioni;
+            var model = device.model;
             
             $.ajax({
                    type:"GET",
                    url:"http://www.pokeranswer.it/www/Check_InfoLive.asp",
                    contentType: "application/json",
                    data: {ID: tech},
+                   timeout: 7000,
                    //data: {ID: $value},
                    jsonp: 'callback',
                    crossDomain: true,
@@ -44,7 +47,12 @@ function onDeviceReady() {
                           $('#immagine').html('');
                           }
                           else{
-                          $('#immagine').html('<img src="http://www.pokeranswer.it/www/img/'+ item.IMG +'.png" width="300px" data-rel="external" class="banner">');
+                            if (model.indexOf('iPad') >= 0) {
+                                $('#immagine').html('<img src="http://www.pokeranswer.it/www/img/'+ item.IMG +'.png" width="600px" data-rel="external" class="banner">');
+                            }
+                            else{
+                                $('#immagine').html('<img src="http://www.pokeranswer.it/www/img/'+ item.IMG +'.png" width="300px" data-rel="external" class="banner">');
+                            }
                           }
                           
                           });
@@ -55,9 +63,10 @@ function onDeviceReady() {
                    
                    },
                    error: function(){
+                   $(".spinner").hide();
                    
                     navigator.notification.alert(
-                     'Dati non presenti al momento, riprova tra qualche instante',  // message
+                     'Possibile errore di rete, riprova tra qualche minuto',  // message
                       alertDismissed,         // callback
                      'Attenzione',            // title
                      'Done'                  // buttonName
@@ -87,7 +96,9 @@ function onDeviceReady() {
                                  onDeviceReady();
                                  }
                                  else{
-                                 navigator.notification.alert(
+                                    $(".spinner").hide();
+                                 
+                                    navigator.notification.alert(
                                     'Nessuna connessione ad internet rilevata',  // message
                                      alertDismissed,         // callback
                                      'Attenzione',            // title
@@ -107,7 +118,7 @@ function onDeviceReady() {
 
 
 function alertDismissed() {
-    // do something
+    $(".spinner").hide();
 }
 
 function dataok(deg) {

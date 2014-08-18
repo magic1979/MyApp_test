@@ -31,7 +31,13 @@ function onDeviceReady() {
         });
     
         var chip = localStorage.getItem("chip");
-        $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+        if (chip == null || typeof(chip) == 'undefined') {
+            $('#fiches').html('<img src="images/chipa.png" height="20px"> 0');
+        }
+        else{
+            $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+        }
+    
         $('#fiches').show();
         var giorni = localStorage.getItem("Day");
     
@@ -40,7 +46,7 @@ function onDeviceReady() {
             $('#descrizione').html('&nbsp;*Vengono considerati solo gli ultimi mesi di gioco.');
             $('#descrizione').show();
             
-            $('#informazioni').html('&nbsp;*I dati sono da considerarsi puramente indicativi, e sono calcolati sugli ultimi mesi di gioco.');
+            $('#informazioni').html('&nbsp;*I dati sono da considerarsi puramente indicativi. Ogni ricerca costa 5Ac');
             $('#informazioni').show();
             
             imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/rooster.png" width="70px"></td></tr></table>'
@@ -55,14 +61,16 @@ function onDeviceReady() {
                 if (self.document.formia.Player.value != "")
                 {
                      if(self.document.formia.Player.value.length<3){
+                        $("#mySelect").val("01");
+                        $("#mySelect").selectmenu("refresh");
+                              
                           navigator.notification.alert(
                           'Devi inserire un nickname corretto',  // message
                             alertDismissed,         // callback
                             'Attenzione',            // title
                             'OK'                  // buttonName
                             );
-                            $("#mySelect").val("01");
-                            $("#mySelect").selectmenu("refresh");
+
                             return;
                     }
                     else{
@@ -72,6 +80,9 @@ function onDeviceReady() {
                     }
                 }
                 else{
+                    $("#mySelect").val("01");
+                    $("#mySelect").selectmenu("refresh");
+                              
                     navigator.notification.alert(
                     'Devi inserire un nickname corretto',  // message
                     alertDismissed,         // callback
@@ -79,8 +90,6 @@ function onDeviceReady() {
                     'OK'                  // buttonName
                     );
 
-                    $("#mySelect").val("01");
-                    $("#mySelect").selectmenu("refresh");
                     return;
                }
             });
@@ -92,6 +101,9 @@ function onDeviceReady() {
                             var Roi;
                             
                             if (self.document.formia.mySelect.value=="01") {
+                                $("#mySelect").val("01");
+                                $("#mySelect").selectmenu("refresh");
+                            
                                 navigator.notification.alert(
                                 'Seleziona una Poker Room',  // message
                                 alertDismissed,         // callback
@@ -102,6 +114,9 @@ function onDeviceReady() {
                             }
                             
                             if (chip < 5) {
+                                $("#mySelect").val("01");
+                                $("#mySelect").selectmenu("refresh");
+                            
                                  navigator.notification.alert(
                                  'Hai terminato le Chips, torna domani :)',  // message
                                  alertDismissed,         // callback
@@ -128,6 +143,7 @@ function onDeviceReady() {
                                    url:"http://www.pokeranswer.it/www/Check_Player.asp",
                                    contentType: "application/json",
                                    data: {Player: self.document.formia.Player.value, Room: "pc"},
+                                   timeout: 7000,
                                    jsonp: 'callback',
                                    crossDomain: true,
                                    success:function(result){
@@ -153,7 +169,8 @@ function onDeviceReady() {
                                                 freccia = 'green.png';
                                                 Roi = parseInt(item.ROI);
                                           
-                                                if (parseInt(item.ROI)>30){
+                                          
+                                                if (Roi>30){
                                                     $('#descrizione').html('Top Player');
                                                     imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/shark.png" width="70px"></td></tr></table>'
                                                 }
@@ -173,7 +190,7 @@ function onDeviceReady() {
                                             var roitter = (Roi*-1);
                                           
                                             if (roitter > confronto){
-                                                $('#descrizione').html('Deve studiare molto, Tilt');
+                                                $('#descrizione').html('Tilt, Deve studiare molto :)');
                                                 imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/fish.png" width="70px"></td></tr></table>'
                                             }
                                             else{
@@ -213,9 +230,10 @@ function onDeviceReady() {
                                    
                                    },
                                    error: function(){
+                                        $(".spinner").hide();
                                    
                                         navigator.notification.alert(
-                                        'Dati non disponibili al momento, riprova tra qualche instante',  // message
+                                        'Possibile errore di rete, riprova tra qualche minuto',  // message
                                          alertDismissed,         // callback
                                         'Attenzione',            // title
                                         'OK'                  // buttonName
@@ -232,6 +250,7 @@ function onDeviceReady() {
                                    url:"http://www.pokeranswer.it/www/Player.asp",
                                    contentType: "application/json",
                                    data: {playerName: self.document.formia.Player.value, room: self.document.formia.mySelect.value},
+                                   timeout: 7000,
                                    jsonp: 'callback',
                                    crossDomain: true,
                                    success:function(result){
@@ -253,14 +272,15 @@ function onDeviceReady() {
                                           
                                             grafico(item.Roi,item.AvStake,item.Twins);
                                           
-                                            if (parseInt(item.Roi)>0){
+                                          if (parseInt(item.Roi)>0){
                                                 $('#descrizione').show();
                                                 $('#informazioni').hide();
                                           
                                                 freccia = 'green.png';
                                                 Roi = parseInt(item.Roi);
                                           
-                                            if (parseInt(item.ROI)>30){
+                                          
+                                            if (Roi>30){
                                                 $('#descrizione').html('Top Player');
                                                 imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/shark.png" width="70px"></td></tr></table>'
                                             }
@@ -319,9 +339,10 @@ function onDeviceReady() {
                                    
                                    },
                                    error: function(){
+                                   $(".spinner").hide();
                                    
                                    navigator.notification.alert(
-                                   'Dati non disponibili al momento, riprova tra qualche instante',  // message
+                                   'Possibile errore di rete, riprova tra qualche minuto',  // message
                                     alertDismissed,         // callback
                                     'Attenzione',            // title
                                     'OK'                  // buttonName
@@ -352,7 +373,8 @@ function onDeviceReady() {
                                  onDeviceReady();
                                  }
                                  else{
-                                 navigator.notification.alert(
+                                   $(".spinner").hide();
+                                   navigator.notification.alert(
                                    'Nessuna connessione ad internet rilevata',  // message
                                    alertDismissed,         // callback
                                    'Attenzione',            // title
@@ -372,7 +394,8 @@ function onDeviceReady() {
 
 
 function alertDismissed() {
-    // do something
+    $("#mySelect").val("01");
+    $("#mySelect").selectmenu("refresh");
 }
 
 function dataok(deg) {

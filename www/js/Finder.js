@@ -1,6 +1,7 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
+    document.addEventListener("resume", onResume, false);
     
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     
@@ -8,7 +9,14 @@ function onDeviceReady() {
     $.mobile.defaultDialogTransition = 'none';
     
     var chip = localStorage.getItem("chip");
-    $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+    if (chip == null || typeof(chip) == 'undefined') {
+        $('#fiches').html('<img src="images/chipa.png" height="20px"> 0');
+    }
+    else{
+        $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+        
+    }
+    
     $('#fiches').show();
     var giorni = localStorage.getItem("Day");
     
@@ -89,13 +97,14 @@ function onDeviceReady() {
                       
         var distanza;
                       
-        var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Poker Room</font></th><th><font color="white" size="2">Distanza <img src="images/freccia.png" width="10px"></font></th><th><font color="white" size="2">GPS</font></th><th><font color="white" size="2">Info</font></th></tr></thead><tbody id="classifica">';
+        var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Poker Room</font><img src="images/giu2.png" height="10px"></th><th><font color="white" size="2">Distanza</font><img src="images/giu2.png" height="10px"></th><th><font color="white" size="2">GPS</font></th><th><font color="white" size="2">Info</font></th></tr></thead><tbody id="classifica">';
                       
                       $.ajax({
                              type:"GET",
                              url:"http://www.pokeranswer.it/www/Check_Room.asp",
                              contentType: "application/json",
                              //data: {ID: "1", ID2: "4"},
+                             timeout: 7000,
                              data: {ID: $value},
                              jsonp: 'callback',
                              crossDomain: true,
@@ -113,6 +122,9 @@ function onDeviceReady() {
                                         
                                         if (item.figp==1){
                                             pinno = '<img src="images/pin_figp.png" width="20px">';
+                                        }
+                                        else if(item.figp==2){
+                                            pinno = '<img src="images/casino.png" width="20px">';
                                         }
                                         else{
                                             pinno = '<img src="images/pin.png" width="12px">';
@@ -147,14 +159,14 @@ function onDeviceReady() {
                              
                              },
                                 error: function(){
+                                    $(".spinner").hide();
+                             
                                     navigator.notification.alert(
-                                    'Dati non presenti al momento, riprova tra qualche minuto.',  // message
+                                    'Possibile errore di rete, riprova tra qualche minuto.',  // message
                                      alertDismissed,         // callback
                                      'Attenzione',           // title
                                      'Done'                  // buttonName
                                       );
-                             
-                                $(".spinner").hide();
 
                              },
                             dataType:"jsonp"});
@@ -180,6 +192,8 @@ function onDeviceReady() {
                  onDeviceReady();
               }
               else{
+                   $(".spinner").hide();
+                             
                    navigator.notification.alert(
                    'Nessuna connessione ad internet rilevata',  // message
                    alertDismissed,         // callback
@@ -227,7 +241,7 @@ function apri() {
 }
 
 function alertDismissed() {
-    // do something
+    $(".spinner").hide();
 }
 function token(){
   navigator.notification.alert(
@@ -241,3 +255,8 @@ function token(){
 function verificawifi(){
     $("#verifica").click();
 }
+
+function onResume() {
+    onDeviceReady();
+}
+

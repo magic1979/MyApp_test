@@ -323,6 +323,37 @@
                        color:#FFF;
                        background-color: #9d3434;
                    }
+                   .home {
+                       background-color: #9d3434;
+                       background-image: url(images/right.png);
+                       background-size: 20px 20px;
+                       background-repeat: no-repeat;
+                       background-position:center;
+                       
+                       height:40px;
+                       width:40px;
+                       border-radius:999em;
+                       -moz-border-radius:999em;
+                       -webkit-border-radius:999em;
+                       -o-border-radius: 999em;
+                       
+                       -webkit-box-shadow: 0px 0px 0.5px 1px #FFF;
+                       -moz-box-shadow: 0px 0px 0.5px 1px #FFF;
+                       box-shadow: 0px 0px 0.5px 1px #FFF;
+                   }
+                   
+                   .home:active {
+                       background-color: #000000;
+                       border-radius:999em;
+                       -moz-border-radius:999em;
+                       -webkit-border-radius:999em;
+                       -o-border-radius: 999em;
+                       
+                       -webkit-box-shadow: 0px 0px 0.5px 1px #000;
+                       -moz-box-shadow: 0px 0px 0.5px 1px #000;
+                       box-shadow: 0px 0px 0.5px 1px #000;
+                   }
+
                   </style>
     </head>
     <body>
@@ -342,6 +373,7 @@
             <div data-role="content" class="div2">
                 <script type="text/javascript" src="phonegap.js"></script>
                 <script type="text/javascript" src="js/strategy.js"></script>
+                <div class="div2"><table align="right" width="80px"><tr><td valign="center" align="right"><font  color="white" size="2"><div id="fiches"></div></font></td></tr></table></div>
             </div>
             <center>
                 
@@ -352,6 +384,7 @@
         
         <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
             <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>
+            <a href="allstrategy.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">+Tutte</a>
         </div><!-- /footer -->
         
     </div><!-- /page -->

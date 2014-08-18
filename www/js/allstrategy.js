@@ -1,6 +1,10 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
+    document.addEventListener("resume", onResume, false);
+    
+    StatusBar.overlaysWebView(false);
+    StatusBar.backgroundColorByHexString("#RRGGBB");
     
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
@@ -18,70 +22,72 @@ function onDeviceReady() {
         connectionStatus = navigator.onLine ? 'online' : 'offline';
         
         if(connectionStatus=='online'){
-            
-            var tech = getParameterByName('nome');
-            var informazioni;
-            var model = device.model;
             $('#noconn').hide();
+            $('#classifica').html('');
+            $('#classifica').listview('refresh');
+            
+            
+            //QuaryString
+            var tech = getParameterByName('nome');
+            //alert(tech);
+            var newdata;
+            var informazioni;
+            var nome;
+            var IMG;
+            var ID;
             
             $.ajax({
                    type:"GET",
-                   url:"http://www.pokeranswer.it/www/Check_InfoRoom.asp",
+                   url:"http://www.pokeranswer.it/www/Check_strategy.asp",
                    contentType: "application/json",
-                   data: {ID: tech},
+                   data: {ID: "All", page: "2"},
                    timeout: 7000,
                    jsonp: 'callback',
                    crossDomain: true,
                    success:function(result){
                    
                    $.each(result, function(i,item){
-                          if (item.Regione == 0){
-                          Informazioni = "Nessuna Informazione";
-                          }
-                          else{
-                          informazioni = 'Via: ' + item.Indirizzo + ', ' + item.Citta + '<br><br><br> <b>TORNEI: </b>' + item.Torneo + '<br><br><b> PROMOZIONI: </b>' + item.Promo + '<br><br><b>LINK: </b>' + item.Link;
-                          }
+                          newdata = dataok(item.Data);
+                          informazioni = item.News;
+                          nome = item.Nome;
+                          IMG = item.IMG;
+                          ID = item.ID;
                           
-                          if (item.IMG=="0"){
-                          $('#immagine').html('');
-                          }
-                          else{
-                            if (model.indexOf('iPad') >= 0) {
-                                $('#immagine').html('<img src="http://www.pokeranswer.it/www/img/'+ item.IMG +'.png" width="600px" data-rel="external" class="banner">');
-                            }
-                            else{
-                                $('#immagine').html('<img src="http://www.pokeranswer.it/www/img/'+ item.IMG +'.png" width="300px" data-rel="external" class="banner">');
-                            }
-                          }
+                          var landmark = '<li><a href="Strategy.html?id='+ ID +'" rel="external"><font color="white" size="2"><b>'+ ID +'. '+ nome +'</b></font><br><font color="white" size="1">'+newdata+'</br></font></a></li>';
+                          
+                          $('#classifica').append(landmark);
                           
                           });
-                   
-                   
-                   $('#torneo').html('<h1>' + tech + '</h1><p>' + informazioni + '</p>');
+
+                   $('#classifica').listview('refresh');
                    
                    $(".spinner").hide();
                    
                    },
                    error: function(){
+                   
                    $(".spinner").hide();
                    
-                    navigator.notification.alert(
-                    'Possibile errore di rete, riprova tra qualche minuto',  // message
-                     alertDismissed,         // callback
-                     'Attenzione',            // title
-                     'Done'                  // buttonName
-                     );
+                   navigator.notification.alert(
+                      'Possibile errore di rete, riprova tra qualche minuto.',  // message
+                       alertDismissed,         // callback
+                       'Attenzione',            // title
+                       'Done'                  // buttonName
+                    );
                    
                    },
                    dataType:"jsonp"});
             
+            $(".spinner").hide();
+
             
         }
         else{
+            
             $('#noconn').show();
             
             var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
-            tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
+            tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td></td></tr>';
             tabella = tabella + '</table>';
             
             $('#noconn').html(tabella);
@@ -95,21 +101,21 @@ function onDeviceReady() {
                                  onDeviceReady();
                                  }
                                  else{
-                                   $(".spinner").hide();
-                                    navigator.notification.alert(
-                                    'Nessuna connessione ad internet rilevata',  // message
-                                    alertDismissed,         // callback
-                                    'Attenzione',            // title
-                                    'OK'                  // buttonName
+                                 $(".spinner").hide();
+                                 
+                                 navigator.notification.alert(
+                                 'Nessuna connessione ad internet rilevata',  // message
+                                 alertDismissed,         // callback
+                                 'Attenzione',            // title
+                                 'OK'                  // buttonName
                                   );
                                  }
                                  
                                  
                                  });
-
+            
             
             $(".spinner").hide();
-
         }
 
     }
@@ -146,5 +152,9 @@ function getParameterByName(name) {
 }
 
 function verificawifi(){
-     $("#verifica").click();
+   $("#verifica").click();
+}
+                          
+function onResume() {
+    onDeviceReady();
 }

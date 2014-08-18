@@ -102,7 +102,7 @@ function onDeviceReady() {
 
           var destIcon = new google.maps.MarkerImage("./images/pin.png", null, null, null, new google.maps.Size(28,40));
 		  var figpIcon = new google.maps.MarkerImage("images/pin_figp.png", null, null, null, new google.maps.Size(36,32));
-                                              
+          var casinoIcon = new google.maps.MarkerImage("images/casino.png", null, null, null, new google.maps.Size(60,48));
 
 		  var beaches = [];
 
@@ -125,6 +125,8 @@ function onDeviceReady() {
 				 //data: {ID: "1", ID2: "4"},
 
 				 data: {ID: "all"},
+				 
+				 timeout: 7000,
 
 				 jsonp: 'callback',
 
@@ -164,7 +166,17 @@ function onDeviceReady() {
 
 				 error: function(){
 
-				 alert('There was an error loading the data.');
+				 navigator.notification.alert(
+
+                 'Possibile errore di rete, riprova tra qualche minuto.',  // message
+
+                 alertDismissed,         // callback
+
+                'Attenzione',           // title
+
+                'Done'                  // buttonName
+
+                );
 
 				 },
 
@@ -332,6 +344,12 @@ function onDeviceReady() {
                                icon = figpIcon;
 
                              }
+							 
+							 else if (beach[4]==2){
+
+                                icon = casinoIcon;
+
+                             }
 
                              else{
 
@@ -355,7 +373,7 @@ function onDeviceReady() {
 
 								  position : myLatLng,
 
-								  content:'<div class="popup">'+ beach[0] +'</div>',
+								  content:'<div class="popup"><h2>'+ beach[0] +'</h2></div>',
 
 								  shape: shape,
 

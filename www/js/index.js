@@ -56,7 +56,7 @@
         
         navigator.notification.alert(
            msg,  		  	   // message
-           alertDismissed,    // callback
+           alertpush,    // callback
            'Notifica',             // title
            'Done'            // buttonName
         );
@@ -110,7 +110,7 @@ var app = {
         var ciao1;
         var dataoggi;
         var storedata;
-        var chip;
+        var chip = 0;
         var giorni;
         var NomeNews;
         var NomeStrat;
@@ -147,6 +147,7 @@ var app = {
                    url:"http://www.pokeranswer.it/www/Check_News.asp",
                    contentType: "application/json",
                    //data: {ID: "1", ID2: "4"},
+				   timeout: 7000,
                    jsonp: 'callback',
                    crossDomain: true,
                    success:function(result){
@@ -154,7 +155,7 @@ var app = {
                    $.each(result, function(i,item){
                           
                           if(item.Nome != '0'){
-                            var newdata = dataok(item.Data);
+                            var newdata = orario1 + " - " + dataok(item.Data);
                             NomeNews = item.Nome;
                             NomeStrat = item.NomeStrat;
                           
@@ -265,10 +266,15 @@ var app = {
                    
                    },
                    error: function(){
-                    $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + localStorage.getItem("chip"));
+                    if (localStorage.getItem("chip") == null || typeof(localStorage.getItem("chip")) == 'undefined') {
+                        $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+                   }
+                   else{
+                        $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + localStorage.getItem("chip"));
+                   }
 					
 					navigator.notification.alert(
-                    'Dati non presenti al momento',  // message
+                    'Possibile errore di rete, riprova tra qualche instante.',  // message
                     alertDismissed,         // callback
                     'Notifiche',            // title
                     'OK'                  // buttonName
@@ -284,7 +290,13 @@ var app = {
            $(".spinner").hide();
 
             $('#noconn').show();
-            $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + localStorage.getItem("chip"));
+			
+			if (localStorage.getItem("chip") == null || typeof(localStorage.getItem("chip")) == 'undefined') {
+                $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+            }
+            else{
+                $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + localStorage.getItem("chip"));
+            }
             
             var newdata = "PokerAnswer";
 			
@@ -384,6 +396,10 @@ function checkConnection() {
 }
 
 function alertDismissed() {
+    $(".spinner").hide();
+}
+
+function alertpush() {
     // do something
 }
 
@@ -434,7 +450,7 @@ function onConfirm(button) {
 
 function apri() {
     
-    var ref = window.open('http://www.google.it', '_blank', 'location=yes');
+    var ref = window.open('http://www.pokeranswer.it/live/aams.html', '_blank', 'location=no');
 }
 
 function apripanel() {
@@ -471,14 +487,31 @@ function checkPos() {
     
 }
 
+function send() {
+    window.plugin.email.open({
+    to:      ['info@pokeranswer.it'],
+    subject: 'Contatto',
+    body:    'Scrivici pure, risponderemo alle tue domande nel piu breve tempo possibile...<br><br>TeamPokerAnswer<br><img src="http://www.pokeranswer.it/img/logo3.png" width="80px">',
+    isHtml:  true
+});
+}
+
 function friend() {
     window.plugin.email.open({
     to:      [''],
-    subject: 'Nuova App PokerAnswer',
-    body:    'Vieni a scoprire tutte le fantastiche funzioni della nuova App sul poker, troverai quello che vuoi sapere.'
+    subject: 'Nuova Applicazione sul Poker',
+    body:    'Vieni a scoprire tutte le fantastiche funzioni della nuova Applicazione sul poker PokerAnswer, dal Radar-Room per le sale di poker sportivo in tutta Italia, alla distanza in base al GPS per raggiungerle. Funzione Trova Player con Avatar divertente, Roi negli ultimi mesi dei nickname che ti interessano. Funzione cerca miglior torneo o evento live per scegliere in modo giusto cosa giocare. Notifiche Push sempre aggiornate e dettagliate per restare sempre aggiornato.<br><br><img src="http://www.pokeranswer.it/img/logo3.png" width="80px">',
+    isHtml:  true
     });
+
 }
 
 function onResume() {
     app.initialize();
+}
+
+function compraFB() {
+    window.plugins.socialsharing.shareViaFacebook('PokerAnswer, Il poker nelle tue mani!', 'http://www.pokeranswer.it/img/panel.png', 'http://www.pokeranswer.it', function() {notifiche('Condivisione Riuscita')}, function(errormsg){notifiche('Nessuna Condivisione')});
+    
+    //alert('compra chips');
 }

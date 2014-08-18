@@ -8,7 +8,6 @@ function onDeviceReady() {
     var informazioni;
         
         $(".spinner").show();
-
     
         document.addEventListener("showkeyboard", function(){ $("[data-role=footer]").hide();}, false);
         document.addEventListener("hidekeyboard", function(){ $("[data-role=footer]").show();}, false);
@@ -222,13 +221,13 @@ function vai() {
             onDeviceReady();
           }
           else{
-                             navigator.notification.alert(
-                               'Nessuna connessione ad internet rilevata',  // message
-                               alertDismissed,         // callback
-                               'Attenzione',            // title
-                                'OK'                  // buttonName
-                              );
-                             }
+            navigator.notification.alert(
+            'Nessuna connessione ad internet rilevata',  // message
+            alertDismissed,         // callback
+            'Attenzione',            // title
+            'OK'                  // buttonName
+            );
+          }
                              
                              
          });
@@ -286,70 +285,7 @@ function getKey(key){
   }
 
 }
-                          
-function verificastore(){
-         window.storekit.init({
-                                               
-               debug: true, /* Because we like to see logs on the console */
-                                               
-                purchase: function (transactionId, productId) {
-
-                                               
-                if (productId === 'it.pokeranswer.answer.coins1000') {
-                              
-                   localStorage.setItem("chip", 1000);
-                   localStorage.setItem("Day", 360);
-                   localStorage.setItem("Token", "NO");
-                   $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/coins.png" width="64px"></td><td width="160px"><font color="white" size="2">1000 AnswerChips Accreditate</font><br></td></tr></table>');
-
-                }
-
-                console.log('purchased: ' + productId);
-                },
-                                               
-                restore: function (transactionId, productId) {
-                    console.log('restored: ' + productId);
-                },
-                                               
-                restoreCompleted: function () {
-                   console.log('all restore complete');
-                },
-                                               
-                restoreFailed: function (errCode) {
-                   console.log('restore failed: ' + errCode);
-                },
-                                               
-                error: function (errno, errtext) {
-                    console.log('error failed:');
-                    
-                    $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/error.png" width="64px"></td><td width="160px"><font color="white" size="2">Riprova tra qualche instante.</font><br></td></tr></table>');
-                              
-                    
-                },
-                                               
-                ready: function () {
-                      var productIds = "it.pokeranswer.answer.coins1000";
-                                               
-                       window.storekit.load(productIds, function(validProducts, invalidProductIds) {
-                              $.each(validProducts, function (i, val) {
-                                    console.log("id: " + val.id + " title: " + val.title + " val: " + val.description + " price: " + val.price);
-                              });
-                                                                    
-                              if(invalidProductIds.length) {
-                                    console.log("Invalid Product IDs: " + JSON.stringify(invalidProductIds));
-                               }
-                       });
-                              
-                }
-      });
-}
-
-function store(){
-  window.storekit.purchase("it.pokeranswer.answer.coins1000", 1);
-
-  $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/waiting.png" width="64px"></td><td width="160px"><font color="white" size="2">Waiting...</font><br></td></tr></table>');
-}
-                          
+                                            
 
 function verificawifi(){
   $("#verifica").click();

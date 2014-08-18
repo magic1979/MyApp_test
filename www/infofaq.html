@@ -36,8 +36,6 @@
                             
                  <script src="jquery-1.10.2.min.js"></script>
                  <script src="js/jquery.mobile-1.4.2.min.js"></script>
-                 
-                 <script src="js/Chart.js"></script>
                   
                   <style type="text/css" media="all">
                       body,ul,li {
@@ -264,9 +262,9 @@
                        text-align: left;
                        border: 2px solid #000000;
                        
-                       border-radius: 5px;
-                       -moz-border-radius: 5px; /* firefox */
-                       -webkit-border-radius: 5px; /* safari, chrome */
+                       border-radius: 10px;
+                       -moz-border-radius: 10px; /* firefox */
+                       -webkit-border-radius: 10px; /* safari, chrome */
                        
                    }
                    table.tablesorter thead tr th, table.tablesorter tfoot tr th {
@@ -276,9 +274,9 @@
                        padding: 4px;
                        width: 65%;
                        
-                       border-radius: 5px;
-                       -moz-border-radius: 5px; /* firefox */
-                       -webkit-border-radius: 5px; /* safari, chrome */
+                       border-radius: 10px;
+                       -moz-border-radius: 10px; /* firefox */
+                       -webkit-border-radius: 10px; /* safari, chrome */
                        
                    }
                    table.tablesorter thead tr .header {
@@ -309,52 +307,16 @@
                    }
                    .note {
                        font-family:arial;
-                       background-color: trasparent;
-                       margin:7px 2pt 10px;
-                       font-size: 9pt;
-                       width: 90%;
-                       height:50px;
-                       text-align: center;
-                       color: #FFF;
+                       background-color: #f0f0f0;
+                       margin:7px 0pt 10px;
+                       font-size: 8pt;
+                       width: 95%;
+                       text-align: left;
+                       border: 2px solid #000000;
                        
-                       border-radius: 5px; 
+                       border-radius: 5px;
                        -moz-border-radius: 5px; /* firefox */
                        -webkit-border-radius: 5px; /* safari, chrome */
-                   }
-                   .conn {
-                       font-size: 9pt;
-                       color:#FFF;
-                       background-color: #9d3434;
-                   }
-                   .home {
-                       background-color: #9d3434;
-                       background-image: url(images/right.png);
-                       background-size: 20px 20px;
-                       background-repeat: no-repeat;
-                       background-position:center;
-                       
-                       height:40px;
-                       width:40px;
-                       border-radius:999em;
-                       -moz-border-radius:999em;
-                       -webkit-border-radius:999em;
-                       -o-border-radius: 999em;
-                       
-                       -webkit-box-shadow: 0px 0px 0.5px 1px #FFF;
-                       -moz-box-shadow: 0px 0px 0.5px 1px #FFF;
-                       box-shadow: 0px 0px 0.5px 1px #FFF;
-                   }
-                   
-                   .home:active {
-                       background-color: #000000;
-                       border-radius:999em;
-                       -moz-border-radius:999em;
-                       -webkit-border-radius:999em;
-                       -o-border-radius: 999em;
-                       
-                       -webkit-box-shadow: 0px 0px 0.5px 1px #000;
-                       -moz-box-shadow: 0px 0px 0.5px 1px #000;
-                       box-shadow: 0px 0px 0.5px 1px #000;
                    }
 
                   </style>
@@ -362,80 +324,56 @@
     <body>
         <div data-role="page" class="div2">
             
-            <div data-role="header" align="center" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
-                <span class="ui-title"> <img src="./barra.png" width="100px" height="26px"></span>
+            <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
+                <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
             </div><!-- /header -->
-            
-            <div class="spinner" id="spinner">
-                <div class="bar1"></div>
-                <div class="bar2"></div>
-                <div class="bar3"></div>
-                <div class="bar4"></div>
-                <div class="bar5"></div>
-                <div class="bar6"></div>
-                <div class="bar7"></div>
-                <div class="bar8"></div>
-                <div class="bar9"></div>
-                <div class="bar10"></div>
-                <div class="bar11"></div>
-                <div class="bar12"></div>
-            </div>
-            <div id="noconn" align="center" style="display:none"></div>
-            <a data-role=button id=verifica data-theme="b" style="display:none">Verifica Connessione</a>
+
 
             <div data-role="content" class="div2">
                 <script type="text/javascript" src="phonegap.js"></script>
-                <script type="text/javascript" src="js/FinderPlayer.js"></script>
-                <div class="div2"><table align="right" width="80px"><tr><td valign="center" align="right"><font  color="white" size="2"><div id="fiches"></div></font></td></tr></table></div>
-                
-                <br><br>
-                <form name="formia" action="entra.asp" method="post">
-                    
-                    <table align="center" width="300px" border=0 style="margin-left:auto; margin-right:auto">
-                        <tr>
-                            <td>
-                                <table align="center" width="300px">
-                                    <tr>
-                                        <td align="center" width="200px">
-                                            <input type="search" name="Player" id="Player" data-theme="b" value="" placeholder="NickName...">
-                                                </td>
-                                        <td align="center" width="100px">
-                                            <div id="select">
-                                            <select id="mySelect" name="mySelect" data-theme="b">
-                                                <option value="01" selected=true>Room</option>
-                                                <option value="PokerClub">P. Club</option>
-                                                <option value="PokerStars.it">P. Stars</option>
-                                                <option value="Ongame.it">GD</option>
-                                            </select>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                    
-                    <table align="center" width="300px" border=0 style="background-image: url(img/WSOP9.png);background-repeat:no-repeat;background-position: 50% 50%;background-size: 250px; width: 300px; height:150px; margin-left:auto; margin-right:auto; margin-top:0;">
-                        <tr>
-                            <td width="80px">
-                                <div id="imgplayer" align="center" style="display:none;"></div>
-                            </td>
-                            <td width="180px">
-                                <div id="descrizione" align="center" class="note" style="display:none">
-                                    </td>
-                        </tr>
-                    </table>
-                    
-                    <a data-role="button" id="btn" data-theme="b" style="display:none" >Mostra Avatar</a>
-                </form>
-                
+                <script type="text/javascript" src="js/Responsabile.js"></script>
             </div>
-            
             <center>
+            
+            <table width="310px" class="note">
+                <tr>
+                    <td>
+                        <h1>Info/Faq</h1>
+                        <p>Ti viene offerta la possibilita' di essere circondato dal poker a 360 gradi.<br>
+                        Ora puoi avere nel palmo della tua mano:<br>
+                        Le Room piu' vicine, i Nickname con le relative Skill sotto forma di divertenti avatar, tutti i maggiori tornei On-Line delle piattaforme .it, gli eventi Live con alcuni dettagli e i riferimenti per decidere con facilita' a quale partecipare, notifiche accuratamente selezionate per tenerti sempre aggiornato, e alcune sorprese.<br><br>
+                        
+                        <b>FANTASTICHE FUNZIONALITA'</b><br>
+                        - Funzione "Radar-Room" con mappe sempre aggiornata in base alla tua posizione.<br>
+                        - Distanza con relativa direzione gps dalle room piu' vicine, selezionate anche per Regione.<br>
+                        - Ricerca, per l' on-line, dei nickname di tutte le poker room .it con relativa Skill sotto forma di divertente avatar.<br>
+                        - Notifiche, selezionate degli Eventi e delle Novita' per restare sempre aggiornato e preparato.<br><br>
+                        
+                        <b>GRATIS, 25 AnswerChips tutti i giorni.</b><br>
+                        Si hai capito bene puoi usare le nostre funzioni gratuitamente tutti i giorni, infatti ogni giorno verranno accreditate GRATUITAMENTE 25 AnswerChips.
+                        <br><br>
+
+                        
+                        <b>- Costo in AnswerChips delle funzioni</b><br>
+                        - 5 AnswerChips per il Cerca Player<br>
+                        - 5 AnswerChips per ogni nuova strategia<br>
+                        - 1 AnswerChip per i Tornei On-Line e gli Eventi Live<br>
+                        - 1 AnswerChip per le sale sportive con relativa distanza e GPS<br>
+                        <br><br>
+                        
+                        <b>- Come puoi avere piu' AnswerChips?</b><br>
+                            Per avere piu AnswerChips puoi andare nella sezione "+Chips" e acquistare 1000 chips senza scandenza o puoi avere uno dei nostri Token con 500 Chips al giorno per 30 giorni, piu notizie le trovi sul nostro sito.<br><br>
+                            
+                            
+                        <b>- Come puoi Inserire o Rimuovere la tua Room?</b><br>
+                            Scrivici ed inseriremo/rimuoveremo la tua Room.
+                        </p>
+                    </td></tr>
                 
-            <div id="classifica" align="center" style="display:none"><canvas id="canvas" height="90px" width="300px"></canvas></div>
-            <div id="informazioni" align="center" class="note"></div>
                 
+            </table>
+
+        
         <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
             <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>
         </div><!-- /footer -->

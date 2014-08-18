@@ -36,8 +36,6 @@
                             
                  <script src="jquery-1.10.2.min.js"></script>
                  <script src="js/jquery.mobile-1.4.2.min.js"></script>
-                 
-                 <script src="js/Chart.js"></script>
                   
                   <style type="text/css" media="all">
                       body,ul,li {
@@ -264,9 +262,9 @@
                        text-align: left;
                        border: 2px solid #000000;
                        
-                       border-radius: 5px;
-                       -moz-border-radius: 5px; /* firefox */
-                       -webkit-border-radius: 5px; /* safari, chrome */
+                       border-radius: 10px;
+                       -moz-border-radius: 10px; /* firefox */
+                       -webkit-border-radius: 10px; /* safari, chrome */
                        
                    }
                    table.tablesorter thead tr th, table.tablesorter tfoot tr th {
@@ -276,9 +274,9 @@
                        padding: 4px;
                        width: 65%;
                        
-                       border-radius: 5px;
-                       -moz-border-radius: 5px; /* firefox */
-                       -webkit-border-radius: 5px; /* safari, chrome */
+                       border-radius: 10px;
+                       -moz-border-radius: 10px; /* firefox */
+                       -webkit-border-radius: 10px; /* safari, chrome */
                        
                    }
                    table.tablesorter thead tr .header {
@@ -306,20 +304,6 @@
                    table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
                        background-color: #9d3434;
                        
-                   }
-                   .note {
-                       font-family:arial;
-                       background-color: trasparent;
-                       margin:7px 2pt 10px;
-                       font-size: 9pt;
-                       width: 90%;
-                       height:50px;
-                       text-align: center;
-                       color: #FFF;
-                       
-                       border-radius: 5px; 
-                       -moz-border-radius: 5px; /* firefox */
-                       -webkit-border-radius: 5px; /* safari, chrome */
                    }
                    .conn {
                        font-size: 9pt;
@@ -356,90 +340,35 @@
                        -moz-box-shadow: 0px 0px 0.5px 1px #000;
                        box-shadow: 0px 0px 0.5px 1px #000;
                    }
-
                   </style>
     </head>
     <body>
         <div data-role="page" class="div2">
             
-            <div data-role="header" align="center" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
-                <span class="ui-title"> <img src="./barra.png" width="100px" height="26px"></span>
+            <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
+                <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
             </div><!-- /header -->
             
-            <div class="spinner" id="spinner">
-                <div class="bar1"></div>
-                <div class="bar2"></div>
-                <div class="bar3"></div>
-                <div class="bar4"></div>
-                <div class="bar5"></div>
-                <div class="bar6"></div>
-                <div class="bar7"></div>
-                <div class="bar8"></div>
-                <div class="bar9"></div>
-                <div class="bar10"></div>
-                <div class="bar11"></div>
-                <div class="bar12"></div>
-            </div>
             <div id="noconn" align="center" style="display:none"></div>
             <a data-role=button id=verifica data-theme="b" style="display:none">Verifica Connessione</a>
-
+            
+            <div class="spinner" id="spinner"></div>
+            
             <div data-role="content" class="div2">
                 <script type="text/javascript" src="phonegap.js"></script>
-                <script type="text/javascript" src="js/FinderPlayer.js"></script>
-                <div class="div2"><table align="right" width="80px"><tr><td valign="center" align="right"><font  color="white" size="2"><div id="fiches"></div></font></td></tr></table></div>
-                
-                <br><br>
-                <form name="formia" action="entra.asp" method="post">
-                    
-                    <table align="center" width="300px" border=0 style="margin-left:auto; margin-right:auto">
-                        <tr>
-                            <td>
-                                <table align="center" width="300px">
-                                    <tr>
-                                        <td align="center" width="200px">
-                                            <input type="search" name="Player" id="Player" data-theme="b" value="" placeholder="NickName...">
-                                                </td>
-                                        <td align="center" width="100px">
-                                            <div id="select">
-                                            <select id="mySelect" name="mySelect" data-theme="b">
-                                                <option value="01" selected=true>Room</option>
-                                                <option value="PokerClub">P. Club</option>
-                                                <option value="PokerStars.it">P. Stars</option>
-                                                <option value="Ongame.it">GD</option>
-                                            </select>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </td>
-                        </tr>
-                    </table>
-                    
-                    <table align="center" width="300px" border=0 style="background-image: url(img/WSOP9.png);background-repeat:no-repeat;background-position: 50% 50%;background-size: 250px; width: 300px; height:150px; margin-left:auto; margin-right:auto; margin-top:0;">
-                        <tr>
-                            <td width="80px">
-                                <div id="imgplayer" align="center" style="display:none;"></div>
-                            </td>
-                            <td width="180px">
-                                <div id="descrizione" align="center" class="note" style="display:none">
-                                    </td>
-                        </tr>
-                    </table>
-                    
-                    <a data-role="button" id="btn" data-theme="b" style="display:none" >Mostra Avatar</a>
-                </form>
-                
+                <script type="text/javascript" src="js/allstrategy.js"></script>
             </div>
-            
             <center>
-                
-            <div id="classifica" align="center" style="display:none"><canvas id="canvas" height="90px" width="300px"></canvas></div>
-            <div id="informazioni" align="center" class="note"></div>
-                
+
+            <ul id="classifica" data-role="listview" data-filter="true" data-filter-placeholder="Find Strategy..." data-filter-theme="a" data-inset="true" data-theme="b">
+            </ul>
+
         <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
-            <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>
+            <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Home</a>
+            <a href="Strategy.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>
         </div><!-- /footer -->
         
     </div><!-- /page -->
+
     </body>
 </html>

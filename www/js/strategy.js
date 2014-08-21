@@ -2,9 +2,10 @@ document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
     document.addEventListener("resume", onResume, false);
-        
+    
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
+    var model = device.model;
     
     $.mobile.defaultPageTransition = 'none';
     $.mobile.defaultDialogTransition = 'none';
@@ -34,6 +35,8 @@ function onDeviceReady() {
             var nome;
             var IMG;
             var pagina;
+            var video;
+            var link;
             
             if (tech==""){
                 tech = "All";
@@ -41,6 +44,19 @@ function onDeviceReady() {
             }
             else{
                 pagina = "1";
+            }
+            
+            if (chip < 5) {
+                navigator.notification.alert(
+                'Hai terminato le Chips, torna domani :)',  // message
+                alertDismissed,         // callback
+                'Attenzione',            // title
+                'OK'                  // buttonName
+             );
+                
+                window.location.href = "index.html";
+                
+                return;
             }
 
             
@@ -59,6 +75,9 @@ function onDeviceReady() {
                           informazioni = item.News;
                           nome = item.Nome;
                           IMG = item.IMG;
+                          video = item.Video;
+                          link = item.Link;;
+                          
                           if (pagina=="0"){
                             if (nome != localStorage.getItem("StoreStrat")){
                                 chip = parseInt(chip)-5;
@@ -73,14 +92,21 @@ function onDeviceReady() {
                           }
                    });
                    
-                        landmark1 = landmark1 + '<tr><td><font color="white" size="2">'+ newdata +'</font></td></tr><tr><td align="center"><img src="http://www.pokeranswer.it/www/img/News/'+ IMG +'.png" data-rel="external" width="300px"></td></tr>';
-                   
-                   if (chip == 0) {
-                        $('#torneo').html('<table width="310px" class="note"><tr><td><h1>AnswerChips Terminate</h1><p>Puoi riprovare domani</p></td></tr></table>');
+                   if (model.indexOf('iPad') >= 0) {
+                        landmark1 = landmark1 + '<tr><td><font color="white" size="2">'+ newdata +'</font></td></tr><tr><td align="center"><img src="http://www.pokeranswer.it/www/img/News/'+ IMG +'.png" data-rel="external" width="600px"></td></tr>';
                    }
                    else{
-                        $('#torneo').html('<table width="310px" class="note"><tr><td><h1>' + nome + '</h1><p>'+ informazioni +'</p></td></tr></table>');
+                        landmark1 = landmark1 + '<tr><td><font color="white" size="2">'+ newdata +'</font></td></tr><tr><td align="center"><img src="http://www.pokeranswer.it/www/img/News/'+ IMG +'.png" data-rel="external" width="300px"></td></tr>';
                    }
+                   
+                   if (video == 1) {
+                        $('#video').html('<table width="310px" align="center"><tr><td align="center"><a href="javascript:apri('+ link +')"><img src="images/play.png" width="80px"></a></td></tr></table>');
+                   }
+                   else{
+                        $('#video').html('');
+                   }
+                   
+                        $('#torneo').html('<table width="310px" class="note"><tr><td><h1>' + nome + '</h1><p>'+ informazioni +'</p></td></tr></table>');
 
                         landmark1 = landmark1 + '</table>';
                         $('#descrizione').html(landmark1);
@@ -178,4 +204,8 @@ function verificawifi(){
                           
 function onResume() {
    onDeviceReady();
+}
+
+function apri(mess) {
+    var ref = window.open(mess, '_blank', 'location=no');
 }

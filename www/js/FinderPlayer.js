@@ -43,10 +43,10 @@ function onDeviceReady() {
     
         if(connectionStatus=='online'){
             
-            $('#descrizione').html('&nbsp;*Vengono considerati solo gli ultimi mesi di gioco.');
+            $('#descrizione').html('♠&nbsp;Vengono considerati solo gli ultimi mesi di gioco.');
             $('#descrizione').show();
             
-            $('#informazioni').html('&nbsp;*I dati sono da considerarsi puramente indicativi. Ogni ricerca costa 5Ac');
+            $('#informazioni').html('♥&nbsp;I dati sono da considerarsi puramente indicativi. Ogni ricerca costa 5Ac');
             $('#informazioni').show();
             
             imgaply = '<table align="center"><tr><td align="center" width="310px";><img src="./player/rooster.png" width="70px"></td></tr></table>'
@@ -454,7 +454,7 @@ function getKey(key){
                           var randomScalingFactor = function(){ return Math.round(Math.random()*100)};
                           
                           var lineChartData = lineChartData = {
-                          labels : ["Game Win (" + Twins + ")","R.O.I ("+ roi +")","Ev.Ticket (" + avstacke + ")"],
+                          labels : ["Tornei Vinti (" + Twins + ")","R.O.I ("+ roi +"%)","Avg.BuyIn (" + avstacke + ")"],
                           datasets : [
                                       {
                                       label: "My First dataset",
@@ -482,9 +482,10 @@ function getKey(key){
                           
                           var ctx = document.getElementById("canvas").getContext("2d");
                           window.myLine = new Chart(ctx).Line(lineChartData, {
-                                                              responsive: true
-                                                              });
+                          responsive: true
+                });
            }
+                          
 function token(){
    navigator.notification.alert(
    'buttone disattivato',  // message

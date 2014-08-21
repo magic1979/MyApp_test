@@ -40,7 +40,7 @@ function onDeviceReady() {
                           Informazioni = "Nessuna Informazione";
                           }
                           else{
-                          informazioni = item.Luogo + ', Casino: ' + item.Casino + '<br><br><br> <b>DATE: </b>' + dataok(item.DataStart) + ' - ' + dataok(item.DataFine) + '<br><br><b> MAIN EVENT(buy-in): </b>' + item.Buy + ' &euro;<br><br><b>DESCRIZIONE: </b>' + item.Descrizione +'<br><br><b>SATELLITI: </b>' + item.Sat;
+                          informazioni = item.Luogo + ', Casino: ' + item.Casino + '<br><br><br> <b>DATE: </b>' + dataok(item.DataStart) + ' - ' + dataok(item.DataFine) + '<br><br><b> MAIN EVENT(buy-in): </b>' + item.Buy + ' &euro;<br><br><b>DESCRIZIONE: </b>' + item.Descrizione +'<br><br><b>SATELLITI: </b>' + item.Sat + '<br><br><b>DETTAGLI: </b>' + item.Dettagli;
                           }
                           
                           if (item.IMG=="img"){
@@ -57,9 +57,10 @@ function onDeviceReady() {
                           
                           });
                    
-
                    
                    $('#torneo').html('<h1>' + tech + '</h1><p>' + informazioni + '</p>');
+                   
+                    $(".spinner").hide();
                    
                    },
                    error: function(){
@@ -74,8 +75,6 @@ function onDeviceReady() {
                    
                    },
                    dataType:"jsonp"});
-            
-            $(".spinner").hide();
             
         }
         else{

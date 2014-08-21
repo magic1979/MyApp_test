@@ -64,12 +64,11 @@ function onDeviceReady() {
         tabella = tabella + '</table>';
         
         $('#tabella').html(tabella);
-        
-        $('#classifica').html('<img src="http://www.pokeranswer.it/www/img/logo_FIGP.png" width="180px" data-rel="external">');
     
     $(".spinner").hide();
     
-    
+    $('#classifica').html('<img src="http://www.pokeranswer.it/www/img/logo_FIGP.png" width="180px" data-rel="external">');
+        
     $('#mySelect').on('change', function(){
         var $this = $(this),
         $value = $this.val();
@@ -97,7 +96,7 @@ function onDeviceReady() {
                       
         var distanza;
                       
-        var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Poker Room</font><img src="images/giu2.png" height="10px"></th><th><font color="white" size="2">Distanza</font><img src="images/giu2.png" height="10px"></th><th><font color="white" size="2">GPS</font></th><th><font color="white" size="2">Info</font></th></tr></thead><tbody id="classifica">';
+        var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">'+ $value +'</font><img src="images/giu2.png" height="10px"></th><th><font color="white" size="2">Distanza</font><img src="images/giu2.png" height="10px"></th><th><font color="white" size="2">GPS</font></th><th><font color="white" size="2">Info</font></th></tr></thead><tbody id="classifica">';
                       
                       $.ajax({
                              type:"GET",
@@ -153,13 +152,18 @@ function onDeviceReady() {
                                 $('#mySelect').hide();
                                 token();
                              }
-
+                             
+                             $("#mySelect").val("01");
+                             $("#mySelect").selectmenu("refresh");
                              
                              $(".spinner").hide();
                              
                              },
                                 error: function(){
                                     $(".spinner").hide();
+                             
+                                    $("#mySelect").val("01");
+                                    $("#mySelect").selectmenu("refresh");
                              
                                     navigator.notification.alert(
                                     'Possibile errore di rete, riprova tra qualche minuto.',  // message
@@ -242,6 +246,9 @@ function apri() {
 
 function alertDismissed() {
     $(".spinner").hide();
+    
+    $("#mySelect").val("01");
+    $("#mySelect").selectmenu("refresh");
 }
 function token(){
   navigator.notification.alert(

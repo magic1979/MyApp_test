@@ -310,7 +310,7 @@
         <div data-role="page" class="div2">
             
             <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
-                <span class="ui-title"> <img src="barra.png" width="100px" height="26px"></span>
+                <span class="ui-title"> <img src="barra.png" width="120px" height="26px"></span>
             </div><!-- /header -->
             
             <div class="spinner" id="spinner"></div>
@@ -324,30 +324,46 @@
             <center>
             <form name="formia" action="entra.asp" method="post">
 
-            <table width="310px" align="center" >
+            <table width="310px" align="center" id="credenziali">
                 <tr>
-                    <td width="200px" align="center">
+                    <td colspan="2" width="200px" align="center">
                         <input type="text" data-theme="b" name="email" id="email" value="" placeholder="Email">
-                            </td>
+                    </td>
                 </tr>
                 <tr>
-                    <td width="200px" align="center">
+                    <td colspan="2" width="200px" align="center">
                         <input type="password" data-theme="b" name="password" id="password" value="" autocomplete="off" placeholder="Pin">
-                            </td>
+                    </td>
                 </tr>
                 <tr>
-                    <td width="200px" align="center">
+                    <td width="80px" align="center">
                         <a id="bottone" href="javascript:vai()" data-role="button" data-theme="b" data-icon="check">Token</a>
+                    </td>
+                    <td width="230px" align="center">
+                        <div id="torneo"></div>
                     </td>
                 </tr>
             </table>
             </form>
             
-            <table align="center" width="310px">
+            <table id="negozio" align="center" width="310px">
                 <tr>
-                    <div id="torneo"></div>
+                    <td align="center">
+                        <ul data-role="listview" data-inset="true" data-theme="b">
+                            <li>
+                             <a href="javascript:apri();" data-rel="popup" data-position-to="window" data-transition="pop">
+                                <img src="images/chips2.png">
+                                <h2>500 AnswerChips</h2>
+                                <p>Dona</p>
+                            </a>
+                            </li>
+                        </ul>
+                    </td>
                 </tr>
             </table>
+            
+            <!--<a href="#popupDialog" data-rel="popup" data-position-to="window" data-transition="pop" class="ui-btn ui-corner-all ui-shadow ui-btn-inline ui-icon-delete ui-btn-icon-left ui-btn-b">Delete page...</a>-->
+            
 
         <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
             <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>

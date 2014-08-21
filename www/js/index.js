@@ -125,10 +125,11 @@ var app = {
 		checkData();
 		
 		var inizio = '<table align="center" border="0" width="310px" height="100px">';
-            inizio = inizio + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">PokerAnswer</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi Gratuitamente Search Chips.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/news.png" width="40px"></a></td></tr>';
+            inizio = inizio + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">PokerAnswer ♥</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi AnswerChips Gratis.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/glass3.png" width="40px"></a></td></tr>';
         inizio = inizio + '</table>';
         $('#classifica').html(inizio);
-        
+        $('#fiches').html('<img src="images/chipa.png" height="20px">');
+		
         var connectionStatus = false;
         connectionStatus = navigator.onLine ? 'online' : 'offline';
         
@@ -190,7 +191,7 @@ var app = {
                           storedata = localStorage.getItem("storedata");
                           }
                           
-                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><a id="badde" class="badge1" data-badge="1"><font color="white" size="2">'+ item.Nome +'</font></a></td></tr></table></td><td><a href="FindNews.html?nome='+ item.Nome +'" rel="external" ><div width="40px" class="home"></div></a></td></tr>';
+                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +' ♠</font></td></tr><tr><td align="left"><a id="badde" class="badge1" data-badge="1"><font color="white" size="2">'+ item.Nome +'</font></a></td></tr></table></td><td><a href="FindNews.html?nome='+ item.Nome +'" rel="external" ><div width="40px" class="home"></div></a></td></tr>';
                           
                           }
                           else{
@@ -232,7 +233,7 @@ var app = {
                           }
                           
                           
-                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi Gratuitamente Search Chips.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/news.png" width="40px"></a></td></tr>';
+                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +' ♥</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi AnswerChips Gratis.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/glass3.png" width="40px"></a></td></tr>';
                           }
                           
                           });
@@ -491,7 +492,7 @@ function send() {
     window.plugin.email.open({
     to:      ['info@pokeranswer.it'],
     subject: 'Contatto',
-    body:    'Scrivici pure, risponderemo alle tue domande nel piu breve tempo possibile...<br><br>TeamPokerAnswer<br><img src="http://www.pokeranswer.it/img/logo3.png" width="80px">',
+    body:    'Scrivici pure, risponderemo alle tue domande nel piu breve tempo possibile...<br><br>TeamPokerAnswer<br><img src="http://www.pokeranswer.it/img/logo256.png" width="80px">',
     isHtml:  true
 });
 }
@@ -500,7 +501,7 @@ function friend() {
     window.plugin.email.open({
     to:      [''],
     subject: 'Nuova Applicazione sul Poker',
-    body:    'Vieni a scoprire tutte le fantastiche funzioni della nuova Applicazione sul poker PokerAnswer, dal Radar-Room per le sale di poker sportivo in tutta Italia, alla distanza in base al GPS per raggiungerle. Funzione Trova Player con Avatar divertente, Roi negli ultimi mesi dei nickname che ti interessano. Funzione cerca miglior torneo o evento live per scegliere in modo giusto cosa giocare. Notifiche Push sempre aggiornate e dettagliate per restare sempre aggiornato.<br><br><img src="http://www.pokeranswer.it/img/logo3.png" width="80px">',
+    body:    'Vieni a scoprire tutte le fantastiche funzioni della nuova Applicazione sul poker PokerAnswer, dal Radar-Room per le sale di poker sportivo in tutta Italia, alla distanza in base al GPS per raggiungerle. Funzione Trova Player con Avatar divertente, Roi negli ultimi mesi dei nickname che ti interessano. Funzione cerca miglior torneo o evento live per scegliere in modo giusto cosa giocare. Notifiche Push sempre aggiornate e dettagliate per restare sempre aggiornato.<br><br><img src="http://www.pokeranswer.it/img/logo256.png" width="80px">',
     isHtml:  true
     });
 

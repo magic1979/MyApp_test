@@ -363,7 +363,7 @@ function online(){
                     else{
                         if(orario.slice(0,1) == "0"){
 
-                            if((newora.slice(0,1) == "0") && (orario.slice(1,2) < 3)){
+                            if((newora.slice(0,1) == "0") && (orario.slice(1,2) < 2)){
                                 noimage = '<div id="pulsar"><font size="2"><img src="./images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
                             }
                             else{
@@ -379,7 +379,7 @@ function online(){
                   
                   }
                   else{
-                    if((orario.slice(0,1) == "0") && (orario.slice(1,2) < 3) && (newora.slice(0,2)>21)){
+                    if((orario.slice(0,1) == "0") && (orario.slice(1,2) < 2) && (newora.slice(0,2)>21)){
                         sveglia = "svegliarossa";
                         noimage = '<div id="pulsar"><font size="2"><img src="./images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
                     }
@@ -506,9 +506,9 @@ function cerca() {
     var chip = localStorage.getItem("chip");
     var giorni = localStorage.getItem("Day");
     
-    if (chip < 1) {
+    if (chip < 2) {
         navigator.notification.alert(
-        'Hai terminato le Chips, torna domani :)',  // message
+        'Ricerca disponibile con almeno 2 AChips, ritorna domani :)',  // message
          alertDismissed,         // callback
          'Attenzione',            // title
          'OK'                  // buttonName
@@ -587,7 +587,7 @@ function cerca() {
                     else{
                   
                         if(orario.slice(0,1) == "0"){
-                            if((newora.slice(0,1) == "0") && (orario.slice(1,2) < 3)){
+                            if((newora.slice(0,1) == "0") && (orario.slice(1,2) < 2)){
                                 noimage = '<div id="pulsar"><font size="2"><img src="./images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
                             }
                             else{
@@ -602,7 +602,7 @@ function cerca() {
                     pulse($('#pulsar'), 1000, 'swing', {opacity:0}, {opacity:1}, function() { return false; });
                   }
                   else{
-                    if((orario.slice(0,1) == "0") && (orario.slice(1,2) < 3) && (newora.slice(0,2)>21)){
+                    if((orario.slice(0,1) == "0") && (orario.slice(1,2) < 2) && (newora.slice(0,2)>21)){
                         sveglia = "svegliarossa";
                         noimage = '<div id="pulsar"><font size="2"><img src="./images/'+ sveglia +'.png" width="10px">'+ newora +'</font></div>';
                     }
@@ -638,7 +638,7 @@ function cerca() {
            
            $("#myTable").tablesorter();
            
-           chip = parseInt(chip)-1;
+           chip = parseInt(chip)-2;
            localStorage.setItem("chip", chip);
            $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
            

@@ -1,16 +1,15 @@
 document.addEventListener('deviceready', onDeviceReady, false);
 
 function onDeviceReady() {
+    document.addEventListener("resume", onResume, false);
     
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
     var newdata;
     var informazioni;
+    var model = device.model;
         
         $(".spinner").show();
-    
-        document.addEventListener("showkeyboard", function(){ $("[data-role=footer]").hide();}, false);
-        document.addEventListener("hidekeyboard", function(){ $("[data-role=footer]").show();}, false);
     
         // Workaround for buggy header/footer fixed position when virtual keyboard is on/off
         $('input, textarea')
@@ -33,23 +32,32 @@ function onDeviceReady() {
         connectionStatus = navigator.onLine ? 'online' : 'offline';
         
         if(connectionStatus=='online'){
+
             $('#noconn').hide();
             $('#negozio').show();
+            $('#credenziali').show();
             
             //localStorage.setItem("Day", 1);
-            //localStorage.setItem("chip", 200);
+            //localStorage.setItem("chip", 16);
             //localStorage.setItem("Token", "NO");
             
-            //verificastore();
+            if ((model.indexOf('iPhone5') >= 0)||(model.indexOf('iPad') >= 0)||(model.indexOf('iPhone6') >= 0)) {
+                $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60"><img src="images/ticket.png" height="34px"></td><td width="150px" align="left"><font color="white" size="2">+ Chips per 30 giorni</font><br></td></tr></table><br><br>');
+            }
+            else{
+                $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticket.png" height="34px"></td><td width="150px" align="left"><font color="white" size="2">+ Chips per 30 giorni</font></td></tr></table>');
+            }
+
             
-            $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/ticket.png" width="64px"></td><td width="160px"><font color="white" size="2">Con un Token puoi avere, per 30 giorni, molte AnswerChips in +</font><br></td></tr></table>');
             $(".spinner").hide();
             
         }
         else{
-            
+
+            $(".spinner").hide();
             $('#noconn').show();
             $('#negozio').hide();
+            $('#credenziali').hide();
             
             var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
             tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
@@ -78,8 +86,6 @@ function onDeviceReady() {
                                  });
 
             $("#bottone").attr("href", "#");
-            
-            $(".spinner").hide();
 
         }
 
@@ -136,6 +142,7 @@ function vai() {
            url:"http://www.pokeranswer.it/www/token.asp",
            contentType: "application/json",
            data: {email: indirizzo, token: pin},
+           timeout: 7000,
            jsonp: 'callback',
            crossDomain: true,
            success:function(result){
@@ -147,7 +154,7 @@ function vai() {
             });
            
            if (newdata==0){
-           $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/error.png" width="64px"></td><td width="160px"><font color="white" size="2">Credenziali non corrette</font><br></td></tr></table>');
+           $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/error.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Credenziali non corrette</font><br></td></tr></table>');
            
            navigator.notification.alert(
            'Nessun Token associato a questi dati. Consulta le info per sapere come avere un pin valido.',  // message
@@ -157,7 +164,7 @@ function vai() {
            );
            
            setTimeout(function() {
-             $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/ticket.png" width="64px"></td><td width="160px"><font color="white" size="2">Con un Token puoi avere, per 30 giorni, molte AnswerChips in +</font><br></td></tr></table>');
+             $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticket.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">+ Chips per 30 giorni</font><br></td></tr></table>');
            }, 9000);
 
            }
@@ -166,10 +173,10 @@ function vai() {
            localStorage.setItem("Day", 30);
            localStorage.setItem("chip", 500);
            
-           $('#torneo').html('<table align="center" width="310px"><tr><td align="center" width="150px"><img src="images/ticketverde128.png" width="64px"></td><td width="160px"><font color="white" size="2">Token accreditato.</font><br></td></tr></table>');
+           $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticketverde128.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Token accreditato.</font><br></td></tr></table>');
            
            navigator.notification.alert(
-           'Il tuo Tocket è valido: ' + newdata + 'giorni.',  // message
+           'Il tuo Tocken è valido: ' + newdata + 'giorni.',  // message
             alertDismissed,         // callback
             'Attenzione',            // title
             'OK'                  // buttonName
@@ -189,7 +196,7 @@ function vai() {
            error: function(){
            
             navigator.notification.alert(
-             'Dati non presenti al momento.',  // message
+             'Possibile errore di rete, riprova tra qualche minuto.',  // message
              alertDismissed,         // callback
              'Attenzione',            // title
              'OK'                  // buttonName
@@ -205,6 +212,7 @@ function vai() {
         
         $('#noconn').show();
         $('#negozio').hide();
+        $('#credenziali').hide();
         
         var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
         tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
@@ -223,12 +231,11 @@ function vai() {
           else{
             navigator.notification.alert(
             'Nessuna connessione ad internet rilevata',  // message
-            alertDismissed,         // callback
-            'Attenzione',            // title
-            'OK'                  // buttonName
-            );
+             alertDismissed,         // callback
+             'Attenzione',            // title
+              'OK'                  // buttonName
+             );
           }
-                             
                              
          });
         
@@ -240,7 +247,7 @@ function vai() {
 
 
 function alertDismissed() {
-    // do something
+    $(".spinner").hide();
 }
 
 function dataok(deg) {
@@ -262,32 +269,124 @@ function oraok(deg) {
     return o
 }
 
+function getKey(key){
+    if ( key == null ) {
+        keycode = event.keyCode;
+        
+    } else {
+        keycode = key.keyCode;
+    }
+    
+    if (keycode ==13){
+        
+        vai();
+        
+        return false;
+    }
+    
+}
+
+function verificastore(){
+    window.storekit.init({
+                         
+                         debug: true, /* Because we like to see logs on the console */
+                         
+                         purchase: function (transactionId, productId) {
+                         
+                         
+                         if (productId === 'it.pokeranswer.answer.coins1000') {
+                         
+                         localStorage.setItem("chip", 1000);
+                         localStorage.setItem("Day", 360);
+                         localStorage.setItem("Token", "NO");
+                         $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/coins.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">1000 AnswerChips Accreditate</font><br></td></tr></table>');
+                         
+                         }
+                         
+                         if (productId === 'it.pokeranswer.answer.coins500') {
+                         
+                         localStorage.setItem("chip", 500);
+                         localStorage.setItem("Day", 360);
+                         localStorage.setItem("Token", "NO");
+                         $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/coins.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">500 AnswerChips Accreditate</font><br></td></tr></table>');
+                         
+                         }
+                         
+                         console.log('purchased: ' + productId);
+                         },
+                         
+                         restore: function (transactionId, productId) {
+                         console.log('restored: ' + productId);
+                         },
+                         
+                         restoreCompleted: function () {
+                         console.log('all restore complete');
+                         },
+                         
+                         restoreFailed: function (errCode) {
+                         console.log('restore failed: ' + errCode);
+                         },
+                         
+                         error: function (errno, errtext) {
+                         console.log('error failed:');
+                         
+                         $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/error.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Riprova tra poco.</font><br></td></tr></table>');
+                         
+                         
+                         },
+                         
+                         ready: function () {
+                         var productIds = [
+                          "it.pokeranswer.answer.coins1000",
+                          "it.pokeranswer.answer.coins500"
+                          ];
+                         
+                         window.storekit.load(productIds, function(validProducts, invalidProductIds) {
+                                              $.each(validProducts, function (i, val) {
+                                                     console.log("id: " + val.id + " title: " + val.title + " val: " + val.description + " price: " + val.price);
+                                                     });
+                                              
+                                              if(invalidProductIds.length) {
+                                              console.log("Invalid Product IDs: " + JSON.stringify(invalidProductIds));
+                                              }
+                                              });
+                         
+                         }
+                         });
+}
+
+function store(){
+    window.storekit.purchase("it.pokeranswer.answer.coins1000", 1);
+    
+    $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/waiting.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Waiting...</font><br></td></tr></table>');
+}
+
+function store2(){
+    window.storekit.purchase("it.pokeranswer.answer.coins500", 1);
+    
+    $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/waiting.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Waiting...</font><br></td></tr></table>');
+}
+
+function verificawifi(){
+    $("#verifica").click();
+}
+
+function onResume() {
+    onDeviceReady();
+}
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
     results = regex.exec(location.search);
     return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
+function apri() {
+    
+    var ref = window.open('http://www.pokeranswer.it/live/grazie.asp', '_blank', 'location=no');
+}
                           
-function getKey(key){
-  if ( key == null ) {
-     keycode = event.keyCode;
 
-     } else {
-     keycode = key.keyCode;
-  }
 
-  if (keycode ==13){
-
-      vai();
-
-      return false;
-  }
-
-}
-                                            
-
-function verificawifi(){
-  $("#verifica").click();
-}
 

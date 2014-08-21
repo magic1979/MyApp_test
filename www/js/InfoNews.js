@@ -4,6 +4,7 @@ function onDeviceReady() {
     
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
+    var model = device.model;
     
     $.mobile.defaultPageTransition = 'none';
     $.mobile.defaultDialogTransition = 'none';
@@ -40,12 +41,19 @@ function onDeviceReady() {
                           localStorage.setItem("StoreNews", item.Nome);
                    });
                    
+                   if (model.indexOf('iPad') >= 0) {
+                        landmark1 = landmark1 + '<tr><td><font color="white" size="2">'+ newdata +'</font></td></tr><tr><td align="center"><img src="http://www.pokeranswer.it/www/img/News/'+ IMG +'.png" data-rel="external" width="600px" class="banner"></td></tr>';
+                   }
+                   else{
                         landmark1 = landmark1 + '<tr><td><font color="white" size="2">'+ newdata +'</font></td></tr><tr><td align="center"><img src="http://www.pokeranswer.it/www/img/News/'+ IMG +'.png" data-rel="external" width="300px" class="banner"></td></tr>';
+                   }
+
+                   
                    
                    $('#torneo').html('<table width="310px" class="note"><tr><td><h1>' + tech + '</h1><p>'+ informazioni +'</p></td></tr></table>');
                    
-                        landmark1 = landmark1 + '</table>';
-                        $('#descrizione').html(landmark1);
+                    landmark1 = landmark1 + '</table>';
+                    $('#descrizione').html(landmark1);
                    
                         $(".spinner").hide();
                    

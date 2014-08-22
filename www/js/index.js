@@ -191,7 +191,7 @@ var app = {
                           storedata = localStorage.getItem("storedata");
                           }
                           
-                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +' ♠</font></td></tr><tr><td align="left"><a id="badde" class="badge1" data-badge="1"><font color="white" size="2">'+ item.Nome +'</font></a></td></tr></table></td><td><a href="FindNews.html?nome='+ item.Nome +'" rel="external" ><div width="40px" class="home"></div></a></td></tr>';
+                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><a id="badde" class="badge1" data-badge="1"><font size="2" color="gold" class="scritta">'+ newdata +' ♠</font></a></td></tr><tr><td align="left"><font color="white" size="2">'+ item.Nome +'</font></td></tr></table></td><td><a href="FindNews.html?nome='+ item.Nome +'" rel="external" ><div width="40px" class="home"></div></a></td></tr>';
                           
                           }
                           else{
@@ -243,7 +243,7 @@ var app = {
                    
                    
                    if (localStorage.getItem("Token")=="SI"){
-                      $('#fiches').html(giorni + 'G <img src="images/ticket.png" height="20px"> ' + chip);
+                      $('#fiches').html('<font color="white" size="1">-' + giorni + 'day</font> <img src="images/ticket.png" height="20px"><img src="images/chipa.png" height="20px"> ' + chip);
                    }
                    else{
                      $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
@@ -451,7 +451,7 @@ function onConfirm(button) {
 
 function apri() {
     
-    var ref = window.open('http://www.pokeranswer.it/live/aams.html', '_blank', 'location=no');
+    var ref = window.open('http://www.pokeranswer.it/live/aams.html', '_blank', 'location=si');
 }
 
 function apripanel() {

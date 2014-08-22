@@ -541,16 +541,16 @@ function codeLatLng(lati,lngi) {
                      
                         localStorage.setItem("Via", viadotto)
                      
-                        $('#classifica').html(tabella);
+                        $('#classifica').html('');
                         $(".spinner").hide();
                      
                      } else {
 						 var string = "<a href='javascript:again()'>RIPROVA</a>";
-                        $('#classifica').html('Non posso determinare la tua posizione, ti viene assegnata una posizione generica');
+                        $('#classifica').html('Non posso determinare la tua posizione, a volte bisogna spegnere il telefono');
                         $(".spinner").hide();
                      }
                      } else {
-                        $('#classifica').html('Non posso determinare la tua posizione, ti viene assegnata una posizione generica');
+                        $('#classifica').html('Non posso determinare la tua posizione, a volte bisogna spegnere il telefono');
                         $(".spinner").hide();
                      }
                      });

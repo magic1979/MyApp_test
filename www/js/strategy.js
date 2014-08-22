@@ -94,19 +94,23 @@ function onDeviceReady() {
                    
                    if (model.indexOf('iPad') >= 0) {
                         landmark1 = landmark1 + '<tr><td><font color="white" size="2">'+ newdata +'</font></td></tr><tr><td align="center"><img src="http://www.pokeranswer.it/www/img/News/'+ IMG +'.png" data-rel="external" width="600px"></td></tr>';
+                   
+                        $('#torneo').html('<table width="600px"><tr><td class="note"><h1>' + nome + '</h1><p>'+ informazioni +'</p></td></tr></table><br>');
                    }
                    else{
                         landmark1 = landmark1 + '<tr><td><font color="white" size="2">'+ newdata +'</font></td></tr><tr><td align="center"><img src="http://www.pokeranswer.it/www/img/News/'+ IMG +'.png" data-rel="external" width="300px"></td></tr>';
+                   
+                        $('#torneo').html('<table width="310px"><tr><td class="note"><h1>' + nome + '</h1><p>'+ informazioni +'</p></td></tr></table><br>');
                    }
                    
                    if (video == 1) {
-                        $('#video').html('<table width="310px" align="center"><tr><td align="center"><a href="javascript:apri('+ link +')"><img src="images/play.png" width="80px"></a></td></tr></table>');
+                        //$('#video').html('<table width="310px" align="center"><tr><td align="center"><a href="javascript:apri('+ link +')"><img src="images/play.png" width="80px"></a></td></tr></table>');
+                            $('#video').html('<iframe width="300" height="180" src="http://www.youtube.com/embed/'+ link +'?feature=player_embedded" frameborder="0" allowfullscreen></iframe>');
                    }
                    else{
                         $('#video').html('');
                    }
                    
-                        $('#torneo').html('<table width="310px" class="note"><tr><td><h1>' + nome + '</h1><p>'+ informazioni +'</p></td></tr></table>');
 
                         landmark1 = landmark1 + '</table>';
                         $('#descrizione').html(landmark1);

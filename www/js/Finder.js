@@ -131,10 +131,10 @@ function onDeviceReady() {
                                     
                                         //alert(geoloc);
                                         if (geoloc == 'SI'){
-                                            landmark = landmark + '<tr><td><font size="2">'+ pinno + item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="1">(Km)</font><font size="2"> '+ distanza +'</font></td><td> <a href="maps:saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><div width="40px" class="home"></div></a></td><td><a href="InfoRoom.html?nome=' + item.Room + '" rel="external"><div width="40px" class="home1"></div></a></td></tr>';
+                                            landmark = landmark + '<tr><td><font size="2">'+ pinno + item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="1">(Km)</font><font size="2"> '+ distanza +'</font></td><td> <a href="http://maps.google.com/maps?saddr='+ via +'&daddr='+ item.Indirizzo +','+ item.Citta +'"><div width="40px" class="home"></div></a></td><td><a href="InfoRoom.html?nome=' + item.Room + '" rel="external"><div width="40px" class="home1"></div></a></td></tr>';
                                         }
                                         else{
-                                            landmark = landmark + '<tr><td><font size="2">'+ pinno + item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">-- </font></td><td><a href="maps:q='+ item.Indirizzo +','+ item.Citta +'"><div width="40px" class="home"></div></a></td><td><a href="InfoRoom.html?nome=' + item.Room + '" rel="external"><div width="40px" class="home1"></div></a></td></tr>';
+                                            landmark = landmark + '<tr><td><font size="2">'+ pinno + item.Room +'</font><br> ('+ item.Indirizzo +')</br></td><td><font size="2">-- </font></td><td><a href="http://maps.google.com/maps?q='+ item.Indirizzo +','+ item.Citta +'"><div width="40px" class="home"></div></a></td><td><a href="InfoRoom.html?nome=' + item.Room + '" rel="external"><div width="40px" class="home1"></div></a></td></tr>';
                                         }
                                     }
                                     

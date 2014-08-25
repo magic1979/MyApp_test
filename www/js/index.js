@@ -125,7 +125,7 @@ var app = {
 		checkData();
 		
 		var inizio = '<table align="center" border="0" width="310px" height="100px">';
-            inizio = inizio + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">PokerAnswer ♥</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi AnswerChips Gratis.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/glass3.png" width="40px"></a></td></tr>';
+            inizio = inizio + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">PokerAnswer ♥</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi AnswerChips Gratis.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/glass4.png" width="40px"></a></td></tr>';
         inizio = inizio + '</table>';
         $('#classifica').html(inizio);
         $('#fiches').html('<img src="images/chipa.png" height="20px">');
@@ -233,7 +233,7 @@ var app = {
                           }
                           
                           
-                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +' ♥</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi AnswerChips Gratis.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/glass3.png" width="40px"></a></td></tr>';
+                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +' ♥</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi AnswerChips Gratis.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/glass4.png" width="40px"></a></td></tr>';
                           }
                           
                           });
@@ -451,7 +451,7 @@ function onConfirm(button) {
 
 function apri() {
     
-    var ref = window.open('http://www.pokeranswer.it/live/aams.html', '_blank', 'location=si');
+    var ref = window.open('http://www.aams.gov.it/site.php?id=13982', '_blank', 'location=si');
 }
 
 function apripanel() {
@@ -501,7 +501,7 @@ function friend() {
     window.plugin.email.open({
     to:      [''],
     subject: 'Nuova Applicazione sul Poker',
-    body:    'Vieni a scoprire tutte le fantastiche funzioni della nuova Applicazione sul poker PokerAnswer, dal Radar-Room per le sale di poker sportivo in tutta Italia, alla distanza in base al GPS per raggiungerle. Funzione Trova Player con Avatar divertente, Roi negli ultimi mesi dei nickname che ti interessano. Funzione cerca miglior torneo o evento live per scegliere in modo giusto cosa giocare. Notifiche Push sempre aggiornate e dettagliate per restare sempre aggiornato.<br><br><img src="http://www.pokeranswer.it/img/logo256.png" width="80px">',
+    body:    'Scopri la nuova applicazione PokerAnswer, tante funzioni pensate per tutti giocatori.<br><br><img src="http://www.pokeranswer.it/img/logo256.png" width="80px">',
     isHtml:  true
     });
 
@@ -512,7 +512,7 @@ function onResume() {
 }
 
 function compraFB() {
-    window.plugins.socialsharing.shareViaFacebook('PokerAnswer, Il poker nelle tue mani!', 'http://www.pokeranswer.it/img/panel.png', 'http://www.pokeranswer.it', function() {notifiche('Condivisione Riuscita')}, function(errormsg){notifiche('Nessuna Condivisione')});
+    window.plugins.socialsharing.shareViaFacebook('PokerAnswer, Il poker nelle tue mani!', 'http://www.pokeranswer.it/img/logo256.png', 'http://www.pokeranswer.it', function() {notifiche('Condivisione Riuscita')}, function(errormsg){notifiche('Nessuna Condivisione')});
     
     //alert('compra chips');
 }

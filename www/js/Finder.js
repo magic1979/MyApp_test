@@ -53,7 +53,7 @@ function onDeviceReady() {
     geoloc = localStorage.getItem("geoloc");
     
     if (!via) {
-        via = "Non posso determinare il tuo indirizzo";
+        via = "Non posso determinare il tuo indirizzo, prova con un restart del device";
     }
         
     var test;

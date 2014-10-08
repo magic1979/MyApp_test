@@ -103,13 +103,18 @@ function onDeviceReady() {
                         $('#torneo').html('<table width="310px"><tr><td class="note"><h1>' + nome + '</h1><p>'+ informazioni +'</p></td></tr></table><br>');
                    }
                    
-                   if (video == 1) {
+                  if (video == 1) {
                         //$('#video').html('<table width="310px" align="center"><tr><td align="center"><a href="javascript:apri('+ link +')"><img src="images/play.png" width="80px"></a></td></tr></table>');
-                            $('#video').html('<iframe width="300" height="180" src="http://www.youtube.com/embed/'+ link +'?feature=player_embedded" frameborder="0" allowfullscreen></iframe>');
+                        $('#video').html('<iframe width="300" height="180" src="http://www.youtube.com/embed/'+ link +'?feature=player_embedded" frameborder="0" allowfullscreen></iframe>');
                    }
+				   else if (video == 2){
+						$('#video').html('<iframe width="320" height="180" src="http://www.pokertube.com/embed/'+ link +'?feature=player_embedded" frameborder="0" allowfullscreen></iframe>');
+                   }
+
                    else{
                         $('#video').html('');
                    }
+
                    
 
                         landmark1 = landmark1 + '</table>';

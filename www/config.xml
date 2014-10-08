@@ -2,11 +2,10 @@
 	<widget xmlns = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
 		id        = "it.pokeranswer.answer"
-		versionCode="1.0.0"
-		version   = "1.0.0">
+		versionCode="1.2"
+		version   = "1.2">
 		<name>PokerAnswer</name>
-		<description>
-Tante funzioni pensate per tutti i giocatori.		</description>
+		<description>PokerAnswer, il Poker nelle tue mani, Tante funzioni pensate per tutti i giocatori.</description>
 		<author href="http://www.pokeranswer.it" email="info@pokeranswer.it">
 PokerAnswer Team
 		</author>

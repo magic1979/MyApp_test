@@ -37,7 +37,7 @@ function onDeviceReady() {
                 $('#classifica').html('<br><img src="http://www.pokeranswer.it/www/img/live.png" width="300px" data-rel="external" class="banner">');
             }
             
-            var filtro = '<table id="filtroTB" width="310px" align="center"><tr><td width="33%"><select id="buin" data-theme="b"><option value="All" selected>Buy-In</option><option value="small">Piccolo</option><option value="medio">Medio</option><option value="Alto">Alto</option></select></td><td width="33%"><select id="grt" data-theme="b"><option value="All" selected>GRT</option><option value="small">50-300</option><option value="Med">500-2000</option><option value="Alto">>2000</option></select></td><td width="33%" align="center"><a id="search" href="javascript:cerca()"><div width="40px" class="home"></div></a></td></tr></table>';
+            var filtro = '<table id="filtroTB" width="310px" align="center"><tr><td width="33%"><select id="sala" data-theme="b"><option value="All" selected>Room</option><option value="PS">P.Stars</option><option value="LTM">P.Club</option><option value="PT">I.Poker</option><option value="GD">O.Game</option><option value="PP">M.Game</option></select></td><td width="33%"><select id="grt" data-theme="b"><option value="All" selected>GRT</option><option value="Small">50-300</option><option value="Med">500-2000</option><option value="Alto">>2000</option></select></td><td width="33%" align="center"><a id="search" href="javascript:cerca()"><div width="40px" class="home"></div></a></td></tr></table>';
             
             $('#selezione').html(filtro);
             
@@ -108,6 +108,14 @@ function alertDismissed() {
     $(".spinner").hide();
 }
 
+function onConfirm(button) {
+    $(".spinner").hide();
+    
+    if (button==1){
+        window.location.href = "Token.html";
+    }
+}
+
 function dataok(deg) {
 	var year=deg.slice(0,4);
 	var day=deg.substr(6,2);
@@ -152,11 +160,11 @@ function live(){
     var giorni = localStorage.getItem("Day");
     
     if (chip < 1) {
-        navigator.notification.alert(
+        navigator.notification.confirm(
         'Hai terminato le Chips, torna domani :)',  // message
-         alertDismissed,         // callback
+         onConfirm,         // callback
          'Attenzione',            // title
-         'OK'                  // buttonName
+         'Prendile Ora,Attendo'                  // buttonName
         );
         
         return;
@@ -275,11 +283,11 @@ function online(){
     var giorni = localStorage.getItem("Day");
     
     if (chip < 1) {
-        navigator.notification.alert(
+        navigator.notification.confirm(
         'Hai terminato le Chips, torna domani :)',  // message
-         alertDismissed,         // callback
-         'Attenzione',            // title
-          'OK'                  // buttonName
+         onConfirm,         // callback
+        'Attenzione',            // title
+        'Prendile Ora,Attendo'                  // buttonName
      );
     
     return;
@@ -298,15 +306,16 @@ function online(){
 	
     var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Torneo</font><img src="images/giu2.png" height="10px"></th><th><font color="white" size="2">Room</font><img src="images/giu2.png" height="10px"></th><th><font color="white" size="2">Orario</font><img src="images/giu2.png" height="10px"></th></tr></thead><tbody id="classifica">';
     
-    var filtro = '<table id="filtroTB" width="310px" align="center"><tr><td width="33%"><select id="buin" data-theme="b"><option value="All" selected>Buy-In</option><option value="small">Piccolo</option><option value="medio">Medio</option><option value="Alto">Alto</option></select></td><td width="33%"><select id="grt" data-theme="b"><option value="All" selected>GRT</option><option value="small">50-300</option><option value="Med">500-2000</option><option value="Alto">>2000</option></select></td><td width="33%" align="center"><a id="search" href="javascript:cerca()"><div width="40px" class="home"></div></a></td></tr></table>';
+		
+	var filtro = '<table id="filtroTB" width="310px" align="center"><tr><td width="33%"><select id="sala" data-theme="b"><option value="All" selected>Room</option><option value="PS">P.Stars</option><option value="LTM">P.Club</option><option value="PT">I.Poker</option><option value="GD">O.Game</option><option value="PP">M.Game</option></select></td><td width="33%"><select id="grt" data-theme="b"><option value="All" selected>GRT</option><option value="Small">50-300</option><option value="Med">500-2000</option><option value="Alto">>2000</option></select></td><td width="33%" align="center"><a id="search" href="javascript:cerca()"><div width="40px" class="home"></div></a></td></tr></table>';
     
     $('#selezione').html(filtro);
     
     $.ajax({
            type:"GET",
-           url:"http://www.pokeranswer.it/www/Check_OnLineV3.asp",
+           url:"http://www.pokeranswer.it/www/Check_OnLineV4.asp",
            contentType: "application/json",
-           data: {buin: "All", grt: "All"},
+           data: {sala: "All", grt: "All"},
            //data: {ID: $value},
            timeout: 7000,
            jsonp: 'callback',
@@ -507,11 +516,11 @@ function cerca() {
     var giorni = localStorage.getItem("Day");
     
     if (chip < 2) {
-        navigator.notification.alert(
+        navigator.notification.confirm(
         'Ricerca disponibile con almeno 2 AChips, ritorna domani :)',  // message
-         alertDismissed,         // callback
+         onConfirm,         // callback
          'Attenzione',            // title
-         'OK'                  // buttonName
+         'Prendile Ora,Attendo'                  // buttonName
      );
         
     return;
@@ -531,9 +540,9 @@ function cerca() {
     
 	$.ajax({
            type:"GET",
-           url:"http://www.pokeranswer.it/www/Check_OnLineV3.asp",
+           url:"http://www.pokeranswer.it/www/Check_OnLineV4.asp",
            contentType: "application/json",
-           data: {buin: self.document.formia.buin.value, grt: self.document.formia.grt.value},
+           data: {sala: self.document.formia.sala.value, grt: self.document.formia.grt.value},
            timeout: 7000,
            jsonp: 'callback',
            crossDomain: true,

@@ -49,13 +49,11 @@ function onDeviceReady() {
             if (chip < 5) {
                 navigator.notification.alert(
                 'Hai terminato le Chips, torna domani :)',  // message
-                alertDismissed,         // callback
+                 alertDismissed,         // callback
                 'Attenzione',            // title
-                'OK'                  // buttonName
+                'Ok'                  // buttonName
              );
-                
                 window.location.href = "index.html";
-                
                 return;
             }
 
@@ -87,9 +85,20 @@ function onDeviceReady() {
                                 localStorage.setItem("StoreStrat", item.Nome);
                             }
                             else{
+								chip = parseInt(chip)-1;
+								localStorage.setItem("chip", chip);
+								$('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+						  
                                 localStorage.setItem("StoreStrat", item.Nome);
                             }
                           }
+						  else{
+							chip = parseInt(chip)-1;
+							localStorage.setItem("chip", chip);
+							$('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+						  }
+
+						  
                    });
                    
                    if (model.indexOf('iPad') >= 0) {
@@ -103,18 +112,16 @@ function onDeviceReady() {
                         $('#torneo').html('<table width="310px"><tr><td class="note"><h1>' + nome + '</h1><p>'+ informazioni +'</p></td></tr></table><br>');
                    }
                    
-                  if (video == 1) {
+                   if (video == 1) {
                         //$('#video').html('<table width="310px" align="center"><tr><td align="center"><a href="javascript:apri('+ link +')"><img src="images/play.png" width="80px"></a></td></tr></table>');
-                        $('#video').html('<iframe width="300" height="180" src="http://www.youtube.com/embed/'+ link +'?feature=player_embedded" frameborder="0" allowfullscreen></iframe>');
+                            $('#video').html('<iframe width="300" height="180" src="http://www.youtube.com/embed/'+ link +'?feature=player_embedded" frameborder="0" allowfullscreen></iframe>');
                    }
 				   else if (video == 2){
 						$('#video').html('<iframe width="320" height="180" src="http://www.pokertube.com/embed/'+ link +'?feature=player_embedded" frameborder="0" allowfullscreen></iframe>');
                    }
-
                    else{
                         $('#video').html('');
                    }
-
                    
 
                         landmark1 = landmark1 + '</table>';
@@ -217,4 +224,16 @@ function onResume() {
 
 function apri(mess) {
     var ref = window.open(mess, '_blank', 'location=no');
+}
+
+function onConfirm(button) {
+    $(".spinner").hide();
+                          
+    if (button==1){
+       window.location.href = "Token.html";
+    }
+    else{
+       window.location.href = "index.html";
+    }
+                          
 }

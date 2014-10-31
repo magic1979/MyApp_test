@@ -76,7 +76,7 @@ function onDeviceReady() {
                                  else{
                                  navigator.notification.alert(
                                    'Nessuna connessione ad internet rilevata',  // message
-                                    alertDismissed,         // callback
+                                    alertDismissed,         // call
                                     'Attenzione',            // title
                                      'OK'                  // buttonName
                                  );

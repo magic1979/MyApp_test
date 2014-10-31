@@ -42,10 +42,10 @@ function onDeviceReady() {
             //localStorage.setItem("Token", "NO");
             
             if ((model.indexOf('iPhone5') >= 0)||(model.indexOf('iPad') >= 0)||(model.indexOf('iPhone6') >= 0)) {
-                $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60"><img src="images/ticket.png" height="34px"></td><td width="150px" align="left"><font color="white" size="2">+ Chips per 30 giorni</font><br></td></tr></table><br><br>');
+                $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60"><img src="images/ticket.png" height="34px"></td><td width="150px" align="left"><font color="white" size="2">Inserisci i dati</font><br></td></tr></table><br><br>');
             }
             else{
-                $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticket.png" height="34px"></td><td width="150px" align="left"><font color="white" size="2">+ Chips per 30 giorni</font></td></tr></table>');
+                $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticket.png" height="34px"></td><td width="150px" align="left"><font color="white" size="2">Inserisci i dati</font></td></tr></table>');
             }
 
             
@@ -157,14 +157,14 @@ function vai() {
            $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/error.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Credenziali non corrette</font><br></td></tr></table>');
            
            navigator.notification.alert(
-           'Nessun Token associato a questi dati. Consulta le info per sapere come avere un pin valido.',  // message
+           'Nessun Token associato a questi dati. Consulta le info per sapere come averlo.',  // message
            alertDismissed,         // callback
            'Attenzione',            // title
            'OK'                  // buttonName
            );
            
            setTimeout(function() {
-             $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticket.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">+ Chips per 30 giorni</font><br></td></tr></table>');
+             $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticket.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Inserisci i dati</font><br></td></tr></table>');
            }, 9000);
 
            }
@@ -173,7 +173,7 @@ function vai() {
            localStorage.setItem("Day", 30);
            localStorage.setItem("chip", 500);
            
-           $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticketverde128.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Token accreditato.</font><br></td></tr></table>');
+           $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticketverde128.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Token valido.</font><br></td></tr></table>');
            
            navigator.notification.alert(
            'Il tuo Tocken è valido: ' + newdata + 'giorni.',  // message

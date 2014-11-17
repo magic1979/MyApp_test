@@ -19,7 +19,9 @@ function onDeviceReady() {
             $('#noconn').hide();
 			$(".spinner").hide();
 			
-			$('#immagine').html('<img src="http://www.pokeranswer.it/img/any_device.png" width="300px" data-rel="external" class="banner">');
+			prendiimg(1);
+			
+
 			$('#torneo').html('<font color="white" size="2"><h2>Gioca Gratis su Facebook</h2>Accedi su </font><font color="gold" size="2">https://apps.facebook.com/pokeranswer </font><font color="white" size="2">e scopri i nostri tornei settimanali e a sorpresa dove ti potrai misurare con gli altri pokeristi del gruppo.<br><br>Puoi giocare su pokeranswer solo su Facebook e per sport, infatti i nostri tornei e sit sono gratuiti per permetterti di migliorare il tuo gioco e cercare di scalare le classifiche per ricevere</font> <font color="gold" size="2">AnswerChips. </font>');
 
 			
@@ -130,7 +132,7 @@ function friend() {
 	window.plugin.email.open({
 	to:      [''],
 	subject: 'Gioca anche tu Gratis',
-	body:    'Scopri la nuova applicazione PokerAnswer, tante funzioni pensate per tutti i giocatori.<br><br>Puoi giocare solo su Facebook, in modo gratuito, ci sono tanti regali ed inviti per eventi live per i migliori delle classifiche e per i partecipanti ai nostri tornei settimanali.<br><br><img src="http://www.pokeranswer.it/img/logo256.png" width="80px">',
+	body:    'Scopri la nuova applicazione PokerAnswer, tante funzioni pensate per tutti giocatori.<br><br>Puoi giocare solo su Facebook,in modo gratuito, ci sono tanti regali ed inviti per eventi live per i migliori delle classifiche e per i partecipanti ai nostri tornei settimanali.<br><br><img src="http://www.pokeranswer.it/img/logo256.png" width="80px">',
 	isHtml:  true
 	});
 }
@@ -142,7 +144,6 @@ function classmia() {
 						  
 						  
 function classweek() {
-		$('#immagine').html('<img src="http://www.pokeranswer.it/img/classweek.png" width="300px" data-rel="external" class="banner">');
 						  
 		landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Nome</font></th><th><font color="white" size="2">Punti</font></th></tr></thead><tbody id="classifica">';
 						  
@@ -161,6 +162,7 @@ function classweek() {
 								 landmark = landmark + '</tbody></table>';
 								 $('#torneo').html(landmark);
 								 $("#myTable").tablesorter();
+					             prendiimg(2);
 								 
 								 $(".spinner").hide();
 								 
@@ -183,7 +185,7 @@ function classweek() {
 }
 						  
 function classmese() {
-		$('#immagine').html('<img src="http://www.pokeranswer.it/img/classmese.png" width="300px" data-rel="external" class="banner">');
+		prendiimg(3);
 						  
 		landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Nome</font></th><th><font color="white" size="2">Punti</font></th></tr></thead><tbody id="classifica">';
 						  
@@ -223,7 +225,7 @@ function classmese() {
 }
 						  
 function classtot() {
-	$('#immagine').html('<img src="http://www.pokeranswer.it/img/classtot.png" width="300px" data-rel="external" class="banner">');
+	prendiimg(4);
 						  
 	landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Nome</font></th><th><font color="white" size="2">Punti</font></th></tr></thead><tbody id="classifica">';
 						  
@@ -259,4 +261,65 @@ function classtot() {
 								 
 			},
 	dataType:"json"});
+}
+						  
+
+function prendiimg(tipo) {
+						  
+						  var any_device;
+						  var classweek;
+						  var classmese;
+						  var classtot;
+						  
+						  //alert(tipo);
+						  
+						  
+						  $.ajax({
+								 type:"GET",
+								 url:"http://www.pokeranswer.it/www/Check_InfoImg.asp",
+								 contentType: "application/json",
+								 //data: {ID: tech},
+								 timeout: 7000,
+								 jsonp: 'callback',
+								 crossDomain: true,
+								 success:function(result){
+								 
+								 $.each(result, function(i,item){
+									
+									if(tipo==1){
+										any_device=item.any_device;
+										$('#immagine').html('<img src="http://www.pokeranswer.it/img/'+ any_device +'.png" width="300px" data-rel="external" class="banner">');
+									}
+									else if(tipo==2){
+										any_device=item.classweek;
+										$('#immagine').html('<img src="http://www.pokeranswer.it/img/'+ any_device +'.png" width="300px" data-rel="external" class="banner">');
+									}
+									else if(tipo==3){
+										any_device=item.classmese;
+										$('#immagine').html('<img src="http://www.pokeranswer.it/img/'+ any_device +'.png" width="300px" data-rel="external" class="banner">');
+										}
+									else if(tipo==4){
+										any_device=item.classtot;
+										$('#immagine').html('<img src="http://www.pokeranswer.it/img/'+ any_device +'.png" width="300px" data-rel="external" class="banner">');
+										}
+									else{
+										any_device=item.any_device;
+										$('#immagine').html('<img src="http://www.pokeranswer.it/img/'+ any_device +'.png" width="300px" data-rel="external" class="banner">');
+									}
+
+
+									});
+								 },
+								 error: function(){
+									$(".spinner").hide();
+								 
+									navigator.notification.alert(
+										'Possibile errore di rete, riprova tra qualche minuto',  // message
+										 alertDismissed,         // callback
+										 'Attenzione',            // title
+										 'Done'                  // buttonName
+									);
+								 
+							},
+							dataType:"jsonp"});
 }

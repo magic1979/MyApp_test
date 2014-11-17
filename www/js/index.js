@@ -114,6 +114,7 @@ var app = {
         var giorni;
         var NomeNews;
         var NomeStrat;
+		var ImgLogo;
 		
 		$.mobile.defaultPageTransition = 'none';
         $.mobile.defaultDialogTransition = 'none';
@@ -159,6 +160,7 @@ var app = {
                             var newdata = orario1 + " - " + dataok(item.Data);
                             NomeNews = item.Nome;
                             NomeStrat = item.NomeStrat;
+							ImgLogo = item.ImgLogo;
                           
                           dataoggi = item.dataoggi;
                           storedata = localStorage.getItem("storedata");
@@ -191,7 +193,7 @@ var app = {
                           storedata = localStorage.getItem("storedata");
                           }
                           
-                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><a id="badde" class="badge1" data-badge="1"><font size="2" color="gold" class="scritta">'+ newdata +' ♠</font></a></td></tr><tr><td align="left"><font color="white" size="2">'+ item.Nome +'</font></td></tr></table></td><td><a href="FindNews.html?nome='+ item.Nome +'" rel="external" ><div width="40px" class="home"></div></a></td></tr>';
+                            landmark = landmark + '<tr><td align="center" width="100px"><img src="http://www.pokeranswer.it/img/'+ ImgLogo +'.png" data-rel="external" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><a id="badde" class="badge1" data-badge="1"><font size="2" color="gold" class="scritta">'+ newdata +' ♠</font></a></td></tr><tr><td align="left"><font color="white" size="2">'+ item.Nome +'</font></td></tr></table></td><td><a href="FindNews.html?nome='+ item.Nome +'" rel="external" ><div width="40px" class="home"></div></a></td></tr>';
                           
                           }
                           else{
@@ -200,6 +202,7 @@ var app = {
                             dataoggi = item.dataoggi;
                             NomeNews = "";
                             NomeStrat = item.NomeStrat;
+							ImgLogo = item.ImgLogo;
                           
                           dataoggi = item.dataoggi;
                           storedata = localStorage.getItem("storedata");
@@ -233,7 +236,7 @@ var app = {
                           }
                           
                           
-                            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +' ♥</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi AnswerChips Gratis.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/glass4.png" width="40px"></a></td></tr>';
+                            landmark = landmark + '<tr><td align="center" width="100px"><img src="http://www.pokeranswer.it/img/'+ ImgLogo +'.png" data-rel="external" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +' ♥</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi AnswerChips Gratis.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/glass4.png" width="40px"></a></td></tr>';
                           }
                           
                           });

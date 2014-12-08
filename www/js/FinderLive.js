@@ -26,7 +26,8 @@ function onDeviceReady() {
             $('#noconn').hide();
             $('#verifica').hide();
             
-            $('#live').show();
+			$('#social').show();
+			$('#live').show();
             $('#online').show();
             $('#selezione').show();
             
@@ -149,16 +150,134 @@ function getorario() {
 	return ora;
 }
 
+function answer(){
+	var connectionStatus = false;
+	connectionStatus = navigator.onLine ? 'online' : 'offline';
+	
+	if(connectionStatus=='online'){
+		
+		
+		var chip = localStorage.getItem("chip");
+		var giorni = localStorage.getItem("Day");
+		var newora = "";
+		
+		
+		$('#classifica').html('');
+		$('#live').show();
+		$('#online').show();
+		$(".spinner").show();
+		
+		$('#social').hide();
+		$('#filtroTB').hide();
+		
+		var landmark = '<table id="myTable" class="tablesorter"><thead><tr><th><font color="white" size="2">Nome</font><img src="images/giu2.png" height="10px"></th><th><font color="white" size="2">Giorno</font></th><th><font color="white" size="2">Ora</font></th><th><font color="white" size="2">Info</font></th></tr></thead><tbody id="classifica">';
+		
+		$.ajax({
+			   type:"GET",
+			   url:"http://www.pokeranswer.it/www/Check_Social.asp",
+			   contentType: "application/json",
+			   //data: {ID: "1", ID2: "4"},
+			   timeout: 7000,
+			   jsonp: 'callback',
+			   crossDomain: true,
+			   success:function(result){
+			   
+			   $.each(result, function(i,item){
+					  if (item.Nome == 0){
+						Nome = "Nessun Evento";
+					  }
+					  else{
+					  var newdata = dataok(item.DataStart);
+					  newora = oraok(item.Ora);
+					  
+					  }
+					  
+					if(item.Special==0){
+					  landmark = landmark + '<tr><td><font size="2">'+ item.Nome +'</font><br>'+ item.Buy +', '+ item.Descrizione +'</br></td><td><font size="2">'+ item.Giorno +'</font></td><td><font size="2">'+ newora +'</font></td><td>'+ item.Info +'</td></tr>';
+					}
+					else{
+					  var special = dataok(item.Special);
+					  landmark = landmark + '<tr><td><font size="2" color="red">'+ item.Nome +'</font><br>'+ item.Buy +', '+ item.Descrizione +'</br></td><td><font size="2" color="red"><img src="logo3.png" width="16px"> '+ special +'</font></td><td><font size="2" color="red">'+ newora +'</font></td><td><font size="2">'+ item.Info +'</font></td></tr>';
+					}
+					  
+					  });
+			   
+			   landmark = landmark + '</tbody></table>';
+			   $('#classifica').html(landmark);
+			   $('#bottone').html('<a href="#"> <img src="img/playfacebook.png" width="120px" data-rel="external" class="buttonFB"></a>');
+			   
+			   $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+			   
+			   //$("#myTable").tablesorter( {sortList: [[2,0]]} );
+			   $(".spinner").hide();
+			   
+			   },
+			   error: function(){
+			   $(".spinner").hide();
+			   
+			   navigator.notification.alert(
+					'Possibile errore di rete, riprova tra qualche minuto.',  // message
+					alertDismissed,         // callback
+					'Attenzione',            // title
+					'OK'                  // buttonName
+				);
+			   
+			   },
+			   dataType:"jsonp"});
+	}
+	else{
+		$('#social').hide();
+		$('#live').hide();
+		$('#online').hide();
+		$('#selezione').hide();
+		$('#noconn').show();
+		//$('#verifica').show();
+		
+		var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
+		tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left"><font color="white" size="2">Nessuna connessione attiva</font></td><td><a href="javascript:verificawifi()"><div width="40px" class="home"></div></a></td></tr>';
+		tabella = tabella + '</table>';
+		
+		$('#noconn').html(tabella);
+		
+		$("#verifica").bind ("click", function (event)
+							 {
+							 var connectionStatus = false;
+							 connectionStatus = navigator.onLine ? 'online' : 'offline';
+							 
+							 if(connectionStatus=='online'){
+							 onDeviceReady();
+							 }
+							 else{
+							 $(".spinner").hide();
+							 
+							 navigator.notification.alert(
+														  'Nessuna connessione ad internet rilevata',  // message
+														  alertDismissed,         // callback
+														  'Attenzione',            // title
+														  'OK'                  // buttonName
+														  );
+							 }
+							 
+							 
+							 });
+		
+		$(".spinner").hide();
+		
+	}
+	
+}
+
+
 function live(){
     var connectionStatus = false;
     connectionStatus = navigator.onLine ? 'online' : 'offline';
-    
+	
     if(connectionStatus=='online'){
 
-    
+		
     var chip = localStorage.getItem("chip");
     var giorni = localStorage.getItem("Day");
-    
+		
     if (chip < 1) {
         navigator.notification.confirm(
         'Hai terminato le Chips, torna domani :)',  // message
@@ -166,15 +285,16 @@ function live(){
          'Attenzione',            // title
          'Prendile Ora,Attendo'                  // buttonName
         );
-        
+		
         return;
     }
 
-    
+	$('#bottone').html('');
     $('#classifica').html('');
-    $('#online').show();
+	$('#social').show();
+	$('#online').show();
     $(".spinner").show();
-    
+		
 	$('#live').hide();
 	$('#filtroTB').hide();
 	
@@ -232,7 +352,8 @@ function live(){
            dataType:"jsonp"});
 	}
     else{
-        $('#live').hide();
+		$('#social').hide();
+		$('#live').hide();
         $('#online').hide();
         $('#selezione').hide();
         $('#noconn').show();
@@ -296,7 +417,9 @@ function online(){
     $('#classifica').html('');
     $(".spinner").show();
     
-    $('#live').show();
+	$('#bottone').html('');
+	$('#social').show();
+	$('#live').show();
     $('#online').hide();
     $('#filtroTB').show();
     var orario = getorario();
@@ -465,7 +588,8 @@ function online(){
            dataType:"jsonp"});
     }
     else{
-        $('#live').hide();
+		$('#social').hide();
+		$('#live').hide();
         $('#online').hide();
         $('#selezione').hide();
         $('#noconn').show();
@@ -528,6 +652,7 @@ function cerca() {
     
     var orario = getorario();
 	$('#classifica').html('');
+	$('#bottone').html('');
     var level="";
     var levelimg="";
     var special = "";
@@ -689,7 +814,8 @@ function cerca() {
            dataType:"jsonp"});
     }
     else{
-        $('#live').hide();
+		$('#social').hide();
+		$('#live').hide();
         $('#online').hide();
         $('#selezione').hide();
         $('#noconn').show();
@@ -755,4 +881,9 @@ function verificawifi(){
 
 function onResume() {
     onDeviceReady();
+}
+
+function apriplay() {
+	
+	var ref = window.open('http://www.pokeranswer.it/login_game.html', '_system', 'location=no');
 }

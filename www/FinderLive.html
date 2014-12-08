@@ -349,6 +349,9 @@
                        -webkit-border-radius: 10px;
                        -o-border-radius: 10px;
                    }
+				   .buttonFB:active {
+					   border:1px solid #FFFFFF;
+				   }
 
                   </style>
     </head>
@@ -370,10 +373,17 @@
             </div>
             <center>
                 
-                <ul id="online" data-role="listview" data-inset="true" data-theme="b" style="display:none">
+				<ul id="social" data-role="listview" data-inset="true" data-theme="b" style="display:none">
+					<li><a id="inter" href="javascript:answer()" rel="external"><img src="img/Fac1.png">
+						<h2><img src="images/face.png" width="16px">&nbsp;Social Network</h2>
+						<p>Gioca Gratis su PokerAnswer</p></a>
+					</li>
+				</ul>
+				
+				<ul id="online" data-role="listview" data-inset="true" data-theme="b" style="display:none">
                     <li><a id="inter" href="javascript:online()" rel="external"><img src="img/full.png">
-                        <h2><img src="images/chip.png" width="16px">&nbsp;On-Line</h2>
-                        <p>Tornei On-Line</p></a>
+                        <h2><img src="images/chip.png" width="16px">&nbsp;On-Line.it</h2>
+                        <p>Tornei On-Line.it</p></a>
                     </li>
                 </ul>
                 
@@ -396,7 +406,7 @@
 
             
             <div id="classifica" align="center"></div>
-
+			<div id="bottone" align="center"></div>
         
         <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
             <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>

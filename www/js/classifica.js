@@ -22,7 +22,7 @@ function onDeviceReady() {
 			prendiimg(1);
 			
 
-			$('#torneo').html('<font color="white" size="2"><h2>Gioca Gratis su Facebook</h2>Accedi su </font><font color="gold" size="2">https://apps.facebook.com/pokeranswer </font><font color="white" size="2">e scopri i nostri tornei settimanali e a sorpresa dove ti potrai misurare con gli altri pokeristi del gruppo.<br><br>Puoi giocare su pokeranswer solo su Facebook e per sport, infatti i nostri tornei e sit sono gratuiti per permetterti di migliorare il tuo gioco e cercare di scalare le classifiche per ricevere</font> <font color="gold" size="2">AnswerChips. </font>');
+			$('#torneo').html('<font color="white" size="2"><h2>Gioca Gratis su Facebook</h2>Accedi su </font><font color="gold" size="2">https://apps.facebook.com/pokeranswer </font><font color="white" size="2">e scopri i nostri tornei settimanali e a sorpresa dove ti potrai misurare con gli altri pokeristi del gruppo.<br><br>Puoi giocare su PokerAnswer solo attraverso Facebook e per sport, infatti i nostri tornei e sit sono gratuiti per permetterti di migliorare il tuo gioco e cercare di scalare le classifiche per ricevere</font> <font color="gold" size="2">AnswerChips, XCC, Regali e Sorprese.</font>');
 
 			
 			$('#mySelect').on('change', function(){
@@ -132,7 +132,7 @@ function friend() {
 	window.plugin.email.open({
 	to:      [''],
 	subject: 'Gioca anche tu Gratis',
-	body:    'Scopri la nuova applicazione PokerAnswer, tante funzioni pensate per tutti giocatori.<br><br>Puoi giocare solo su Facebook,in modo gratuito, ci sono tanti regali ed inviti per eventi live per i migliori delle classifiche e per i partecipanti ai nostri tornei settimanali.<br><br><img src="http://www.pokeranswer.it/img/logo256.png" width="80px">',
+	body:    'Scopri la nuova applicazione PokerAnswer, tanti premi e regali pensati per tutti giocatori.<br><br>Puoi giocare solo attraverso Facebook e in modo gratuito, ci sono anche inviti per eventi live per i migliori delle classifiche e per i partecipanti ai nostri tornei settimanali.<br><br><img src="http://www.pokeranswer.it/img/logo256.png" width="80px">',
 	isHtml:  true
 	});
 }
@@ -140,6 +140,11 @@ function friend() {
 						  
 function classmia() {
 
+}
+
+function apriplay() {
+						  
+	var ref = window.open('http://www.pokeranswer.it/login_game.html', '_system', 'location=no');
 }
 						  
 						  

@@ -2,8 +2,8 @@
 	<widget xmlns = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
 		id        = "it.pokeranswer.poker"
-		versionCode="6.0"
-		version   = "6.0">
+		versionCode="7.0"
+		version   = "7.0">
 		<name>PokerAnswer</name>
 		<description>PokerAnswer, Tante funzioni pensate per tutti gli appassionati di poker. Migliora il tuo gioco con Poker Answer, è gratuito, e si gioca attraverso Facebook</description>
 		<author href="http://www.pokeranswer.it" email="info@pokeranswer.it">

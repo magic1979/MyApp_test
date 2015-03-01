@@ -21,25 +21,23 @@
     <head>
         <title>Poker Answer</title>
         
-        <meta property="og:locale" content="en_US" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-            
-            <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-                
-                <link rel="stylesheet" href="themes/jquery.mobile.structure-1.4.2.min.css" />
-                <link rel="stylesheet" href="themes/ThemeAnswer.css" />
-                <link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
-                <link rel="stylesheet" href="css/spinner.css" />
-                
-                <meta name="apple-mobile-web-app-capable" content="yes">
-                <meta name="apple-mobile-web-app-status-bar-style" content="black">
-                            
-                 <script src="jquery-1.10.2.min.js"></script>
-                 <script src="js/jquery.mobile-1.4.2.min.js"></script>
-                 
-                 <script type="text/javascript" src="jquery.tablesorter.js"></script>
-                 
-
+		<meta property="og:locale" content="en_US" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+			
+			<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+				
+				<link rel="stylesheet" href="themes/jquery.mobile.structure-1.4.2.min.css" />
+				<link rel="stylesheet" href="themes/ThemeAnswer.css" />
+				<link rel="stylesheet" href="themes/jquery.mobile.icons.min.css" />
+				<link rel="stylesheet" href="css/spinner.css" />
+				<link rel="stylesheet" type="text/css" href="css/zocial.css" />
+				
+				<meta name="apple-mobile-web-app-capable" content="yes">
+					<meta name="apple-mobile-web-app-status-bar-style" content="black">
+						
+						<script src="jquery-1.10.2.min.js"></script>
+						<script src="js/jquery.mobile-1.4.2.min.js"></script>
+						
                   <style type="text/css" media="all">
                       body,ul,li {
                           padding:0;
@@ -191,6 +189,18 @@
                        background: linear-gradient(to bottom, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* W3C */
                        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=0 ); /* IE6-9 */
                    }
+				   
+				   .div4 {
+					   background: rgb(125,126,125); /* Old browsers */
+					   background: -moz-linear-gradient(45deg, rgba(125,126,125,1) 0%, rgba(14,14,14,1) 100%); /* FF3.6+ */
+					   background: -webkit-gradient(linear, left bottom, right top, color-stop(0%,rgba(125,126,125,1)), color-stop(100%,rgba(14,14,14,1))); /* Chrome,Safari4+ */
+					   background: -webkit-linear-gradient(45deg, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Chrome10+,Safari5.1+ */
+					   background: -o-linear-gradient(45deg, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* Opera 11.10+ */
+					   background: -ms-linear-gradient(45deg, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* IE10+ */
+					   background: linear-gradient(45deg, rgba(125,126,125,1) 0%,rgba(14,14,14,1) 100%); /* W3C */
+					   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7d7e7d', endColorstr='#0e0e0e',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+				   }
+
                    .push_button{
                        position:relative;
                        width:60px;
@@ -308,7 +318,6 @@
                        background-color: #9d3434;
                        
                    }
-                   
                    .note {
                        font-family:arial;
                        background-color: #f0f0f0;
@@ -318,114 +327,123 @@
                        text-align: left;
                        border: 2px solid #000000;
                        
-                       border-radius: 5px; 
+                       border-radius: 5px;
                        -moz-border-radius: 5px; /* firefox */
                        -webkit-border-radius: 5px; /* safari, chrome */
                    }
-                   .conn {
-                       font-size: 9pt;
-                       color:#FFF;
-                       background-color: #9d3434;
-                   }
-                   .home {
-                       background-color: #9d3434;
-                       background-image: url(images/right.png);
-                       background-size: 20px 20px;
-                       background-repeat: no-repeat;
-                       background-position:center;
-                       
-                       height:40px;
-                       width:40px;
-                       border-radius:999em;
-                       -moz-border-radius:999em;
-                       -webkit-border-radius:999em;
-                       -o-border-radius: 999em;
-                       
-                       -webkit-box-shadow: 0px 0px 0.5px 1px #FFF;
-                       -moz-box-shadow: 0px 0px 0.5px 1px #FFF;
-                       box-shadow: 0px 0px 0.5px 1px #FFF;
-                   }
-                   
-                   .home:active {
-                       background-color: #000000;
-                       border-radius:999em;
-                       -moz-border-radius:999em;
-                       -webkit-border-radius:999em;
-                       -o-border-radius: 999em;
-                       
-                       -webkit-box-shadow: 0px 0px 0.5px 1px #000;
-                       -moz-box-shadow: 0px 0px 0.5px 1px #000;
-                       box-shadow: 0px 0px 0.5px 1px #000;
-                   }
-                   .banner {
-                       -moz-border-radius: 10px;
-                       -webkit-border-radius: 10px;
-                       -o-border-radius: 10px;
-                   }
 				   
-				   .buttonFB:active {
-					   border:1px solid #FFFFFF;
+				   .custom-btn {
+					   width: 280px !important;
+				   }
+				   .bannerreg {
+					   
+					   -moz-border-radius: 10px;
+					   -webkit-border-radius: 10px;
+					   -o-border-radius: 10px;
+				   }
+				   
+				   .home {
+					   background-color: #9d3434;
+					   background-image: url(images/picched.png);
+					   background-size: 20px 20px;
+					   background-repeat: no-repeat;
+					   background-position:center;
+					   
+					   height:50px;
+					   width:50px;
+					   border-radius:999em;
+					   -moz-border-radius:999em;
+					   -webkit-border-radius:999em;
+					   -o-border-radius: 999em;
+					   
+					   -webkit-box-shadow: 0px 0px 0.5px 1px #FFF;
+					   -moz-box-shadow: 0px 0px 0.5px 1px #FFF;
+					   box-shadow: 0px 0px 0.5px 1px #FFF;
+				   }
+				   
+				   .home:active {
+					   background-color: #000000;
+					   border-radius:999em;
+					   -moz-border-radius:999em;
+					   -webkit-border-radius:999em;
+					   -o-border-radius: 999em;
+					   
+					   -webkit-box-shadow: 0px 0px 0.5px 1px #000;
+					   -moz-box-shadow: 0px 0px 0.5px 1px #000;
+					   box-shadow: 0px 0px 0.5px 1px #000;
 				   }
 
 
+
                   </style>
+				   
+				   
     </head>
     <body>
         <div data-role="page" class="div2">
-            
-            <div data-role="header" align="center" data-theme="b" data-position="fixed" class="div3">
-                <span class="ui-title"> <img src="barra.png" width="120px" height="26px"></span>
-            </div><!-- /header -->
-            
-            <div class="spinner" id="spinner"></div>
-            <div id="noconn" align="center" style="display:none"></div>
-            <a data-role=button id=verifica data-theme="b" style="display:none">Verifica Connessione</a>
-
-                    
-                    <div data-role="content" class="div2">
-                        <script type="text/javascript" src="phonegap.js"></script>
-                        <script type="text/javascript" src="js/classifica.js"></script>
-						<div id="playchips" align="center"></div>
-                    </div>
-                    <center>
-						
-						<select id="mySelect" data-theme="b">
-							<option value="01" selected>Classifiche</option>
-							<option value="week">Top Settimana</option>
-							<option value="mese">Top Mese</option>
-							<option value="tot">Top Anno</option>
-						</select>
-
-
-                        <table width="310px" >
-                            <tr>
-                                <td align="center">
-                                    <div id="immagine"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td align="center">
-                                    <div id="torneo"></div>
-                                </td>
-                            </tr>
-							<tr>
-								<td align="center"><br>
-									<table width="250px" border="0"><tr>
-									<td align="center" valig="center" witdh="30%">
-									<a href="javascript:friend();"><font color="white" size="2">♥ Invita Amici</font></a></td>
-									<td align="center" valig="center" witdh="70%">
-									<a href="#" onclick="javascript:apriplay();"> <img src="img/buttonplay.png" width="120px" data-rel="external" class="buttonFB"></a></td></tr>
-									</table>
+			
+			<div data-role="header" align="center" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
+				<span class="ui-title"> <img src="barra.png" width="120px" height="26px"></span>
+			</div><!-- /header -->
+			
+			<div class="spinner" id="spinner"></div>
+			
+			<div data-role="content" class="div2">
+				<script type="text/javascript" src="phonegap.js"></script>
+				<script type="text/javascript" src="js/Login.js"></script>
+				<script src="openfb.js"></script>
+				<center><font color="white" size="2"><h2>Accedi a PokerAnswer</h2></center>
+			</div>
+			
+			
+			<center>
+				<a data-role=button id=verifica data-theme="b" style="display:none">Verifica Connessione</a>
+				<table id="formreg" align="center" width="320px">
+					<tr>
+						<td colspan="2" width="320px" align="center">
+							<div id="accFB"><a href='javascript:aprilogin();' class='zocial facebook'>Accedi con Facebook</a></div>
+						</td>
+					</tr>
+					<tr>
+						<td width="320px" align="left">
+							<font size="2" color="#FFFFFF">Puoi ricevere in anteprima tutte le news sui tornei gratuiti in programma e visualizzare, nella sezione classifiche, le tue "Chips Virtuali" sempre aggiornate.</font><br>
+						</td>
+					</tr>
+					<tr>
+						<td width="320px" align="center">
+							<br>o<br><br>
+						</td>
+					</tr>
+					<tr>
+						<td width="320px" align="center">
+							<form name="formia" action="entra.asp" method="post">
+								<input type="text" data-theme="b" name="email" id="email" value="" placeholder="Email">
 									
-								</td>
-							</tr>
-                        </table>
-
-
-            <div data-role="footer" align="left" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div3">
-                <a href="index.html" rel="external" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-back">Back</a>
-            </div><!-- /footer -->
-            
-        </div><!-- /page -->
+									<a href="javascript:Login();" id="#" data-role="button" class="custom-btn" data-theme="b">Accedi con la tua Email</a>
+									</form>
+						</td>
+					</tr>
+					<tr>
+						<td width="320px" align="left">
+							<font size="2" color="#FFFFFF">Puoi ricevere le ultime news sull'applicazione e sul gioco PokerAnswer in tempo reale.</font><br>
+						</td>
+					</tr>
+					
+					<tr>
+						<td width="320px" align="center">
+							<div id="Start" align="center"></div>
+						</td>
+					</tr>
+				</table>
+				
+			</center>
+			<div data-role="footer" align="center" data-theme="b" data-position="fixed" data-tap-toggle="false" class="div4">
+				<table id="idfooter4"><tr><td width="200px">
+					<a href="#page" onclick="javascript:relpul();"  class="ui-btn ui-shadow ui-corner-all ui-btn-icon-left ui-icon-home">Salta</a>
+				</td>
+				<td width="120px" align="center"></td>
+				</tr></table>
+			</div><!-- /footer4 -->
+    </div><!-- /page -->
     </body>
 </html>

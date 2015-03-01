@@ -3,13 +3,23 @@ document.addEventListener('deviceready', onDeviceReady, false);
 function onDeviceReady() {
     document.addEventListener("resume", onResume, false);
     
+    StatusBar.overlaysWebView(false);
+    StatusBar.backgroundColorByHexString("#RRGGBB");
+    
     var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
     var landmark;
     var newdata;
     var informazioni;
     var model = device.model;
+    
+    //$('body').on('touchmove', function (e) {
+        //e.preventDefault();
+    //});
         
         $(".spinner").show();
+    
+        document.addEventListener("showkeyboard", function(){ $("[data-role=footer]").hide();}, false);
+        document.addEventListener("hidekeyboard", function(){ $("[data-role=footer]").show();}, false);
     
         // Workaround for buggy header/footer fixed position when virtual keyboard is on/off
         $('input, textarea')
@@ -41,11 +51,13 @@ function onDeviceReady() {
             //localStorage.setItem("chip", 16);
             //localStorage.setItem("Token", "NO");
             
+            verificastore();
+            
             if ((model.indexOf('iPhone5') >= 0)||(model.indexOf('iPad') >= 0)||(model.indexOf('iPhone6') >= 0)) {
-                $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60"><img src="images/ticket.png" height="34px"></td><td width="150px" align="left"><font color="white" size="2">Inserisci i dati</font><br></td></tr></table><br><br>');
+                $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60"><img src="images/ticket.png" height="34px"></td><td width="150px" align="left"><font color="white" size="2">+ Chips per 30 giorni</font><br></td></tr></table><br><br>');
             }
             else{
-                $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticket.png" height="34px"></td><td width="150px" align="left"><font color="white" size="2">Inserisci i dati</font></td></tr></table>');
+                $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticket.png" height="34px"></td><td width="150px" align="left"><font color="white" size="2">+ Chips per 30 giorni</font></td></tr></table>');
             }
 
             
@@ -76,7 +88,7 @@ function onDeviceReady() {
                                  else{
                                  navigator.notification.alert(
                                    'Nessuna connessione ad internet rilevata',  // message
-                                    alertDismissed,         // call
+                                    alertDismissed,         // callback
                                     'Attenzione',            // title
                                      'OK'                  // buttonName
                                  );
@@ -157,26 +169,26 @@ function vai() {
            $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/error.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Credenziali non corrette</font><br></td></tr></table>');
            
            navigator.notification.alert(
-           'Nessun Token associato a questi dati. Consulta le info per sapere come averlo.',  // message
+           'Nessun Token associato a questi dati. Consulta le info per sapere come avere un pin valido.',  // message
            alertDismissed,         // callback
            'Attenzione',            // title
            'OK'                  // buttonName
            );
            
            setTimeout(function() {
-             $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticket.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Inserisci i dati</font><br></td></tr></table>');
+             $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticket.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">+ Chips per 30 giorni</font><br></td></tr></table>');
            }, 9000);
 
            }
            else{
            localStorage.setItem("Token", "SI");
-           localStorage.setItem("Day", 30);
+           localStorage.setItem("Day", 10);
            localStorage.setItem("chip", 500);
            
-           $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticketverde128.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Token valido.</font><br></td></tr></table>');
+           $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/ticketverde128.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Token accreditato.</font><br></td></tr></table>');
            
            navigator.notification.alert(
-           'Il tuo Tocken è valido: ' + newdata + 'giorni.',  // message
+           'Il tuo Tocken è valido per 10 giorni!',  // message@
             alertDismissed,         // callback
             'Attenzione',            // title
             'OK'                  // buttonName
@@ -286,6 +298,86 @@ function getKey(key){
     
 }
 
+function verificastore(){
+    window.storekit.init({
+                         
+                         debug: true, /* Because we like to see logs on the console */
+                         
+                         purchase: function (transactionId, productId) {
+                         
+                         
+                         if (productId === 'it.pokeranswer.answer.coins1000') {
+                         
+                         localStorage.setItem("chip", 1000);
+                         localStorage.setItem("Day", 360);
+                         localStorage.setItem("Token", "NO");
+                         $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/coins.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">1000 AnswerChips Accreditate</font><br></td></tr></table>');
+                         
+                         }
+                         
+                         if (productId === 'it.pokeranswer.answer.coins500') {
+                         
+                         localStorage.setItem("chip", 500);
+                         localStorage.setItem("Day", 360);
+                         localStorage.setItem("Token", "NO");
+                         $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/coins.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">500 AnswerChips Accreditate</font><br></td></tr></table>');
+                         
+                         }
+                         
+                         console.log('purchased: ' + productId);
+                         },
+                         
+                         restore: function (transactionId, productId) {
+                         console.log('restored: ' + productId);
+                         },
+                         
+                         restoreCompleted: function () {
+                         console.log('all restore complete');
+                         },
+                         
+                         restoreFailed: function (errCode) {
+                         console.log('restore failed: ' + errCode);
+                         },
+                         
+                         error: function (errno, errtext) {
+                         console.log('error failed:');
+                         
+                         $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/error.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Riprova tra poco.</font><br></td></tr></table>');
+                         
+                         
+                         },
+                         
+                         ready: function () {
+                         var productIds = [
+                          "it.pokeranswer.answer.coins1000",
+                          "it.pokeranswer.answer.coins500"
+                          ];
+                         
+                         window.storekit.load(productIds, function(validProducts, invalidProductIds) {
+                                              $.each(validProducts, function (i, val) {
+                                                     console.log("id: " + val.id + " title: " + val.title + " val: " + val.description + " price: " + val.price);
+                                                     });
+                                              
+                                              if(invalidProductIds.length) {
+                                              console.log("Invalid Product IDs: " + JSON.stringify(invalidProductIds));
+                                              }
+                                              });
+                         
+                         }
+                         });
+}
+
+function store(){
+    window.storekit.purchase("it.pokeranswer.answer.coins1000", 1);
+    
+    $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/waiting.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Waiting...</font><br></td></tr></table>');
+}
+
+function store2(){
+    window.storekit.purchase("it.pokeranswer.answer.coins500", 1);
+    
+    $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60px"><img src="images/waiting.png" width="34px"></td><td width="150px" align="left"><font color="white" size="2">Waiting...</font><br></td></tr></table>');
+}
 
 function verificawifi(){
     $("#verifica").click();

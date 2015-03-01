@@ -14,10 +14,18 @@ function onDeviceReady() {
         
         if(connectionStatus=='online'){
             
-            var informazioni;
+			var emailFB = localStorage.getItem("emailFB");
+			var informazioni;
             var model = device.model;
             $('#noconn').hide();
 			$(".spinner").hide();
+			
+			if(emailFB=="no@email.it"){
+				$("#playchips").html("<font color='white' size='2'>Ciao, effettua il <a href='#' onclick='javascript:resetcred();'>LOGIN</a> per visualizzare le tue Play Chips</font>");
+			}
+			else{
+				predocubeiaid(emailFB);
+			}
 			
 			prendiimg(1);
 			
@@ -92,6 +100,86 @@ function onDeviceReady() {
         }
 
     }
+
+function predocubeiaid(emailFB) {
+	//alert(emailFB);
+	
+	$(".spinner").show();
+	$.ajax({
+		   type:"GET",
+		   url:"http://www.msop.it/Check_CubeiaId.asp",
+		   contentType: "application/json",
+		   data: {email:emailFB},
+		   timeout: 7000,
+		   jsonp: 'callback',
+		   crossDomain: true,
+		   success:function(result){
+		   
+		   $.each(result, function(i,item){
+				  if (item.Token == 1024){
+				    prendipunteggio(emailFB,item.CubeiaID,item.NickName);
+				  }
+				  else{
+					prendipunteggio(emailFB,0,0);
+				  }
+			});
+		   
+		   $(".spinner").hide();
+		   
+		   },
+		   error: function(){
+		   $(".spinner").hide();
+		   
+		   navigator.notification.alert(
+										'Possibile errore di rete, riprova tra qualche minuto.',  // message
+										alertDismissed,         // callback
+										'Attenzione',            // title
+										'OK'                  // buttonName
+										);
+		   
+		   },
+		   dataType:"jsonp"});
+
+	
+}
+
+function prendipunteggio(emailFB,CubeiaID,NickName) {
+	//alert(CubeiaID);
+	
+	if (CubeiaID!=0){
+	$(".spinner").show();
+	$.ajax({
+		   type:"GET",
+		   url:"https://csplb1.cubeia.com/operator-api/rest/operator/user/"+ CubeiaID +"/account/XCC?apiKey=4a12ddd2-2d04-44ad-bb01-34719608835d",
+		   contentType: "application/json; charset=utf-8",
+		   json: 'callback',
+		   crossDomain: true,
+		   success:function(result){
+		   
+			$("#playchips").html("<font color='white' size='2'>"+ NickName +" hai</font> <font color='gold' size='2'>"+ Number(result.balance.amount).toFixed(2) +" </font><font color='white' size='2'>Play Chips</font>");
+		   
+		   $(".spinner").hide();
+		   
+		   },
+		   error: function(){
+		   $(".spinner").hide();
+		   
+		   navigator.notification.alert(
+										'Possibile errore di rete, riprova tra qualche minuto',  // message
+										alertDismissed,         // callback
+										'Attenzione',            // title
+										'Done'                  // buttonName
+										);
+		   
+		   },
+		   dataType:"json"});
+	}
+	else{
+		$("#playchips").html("<font color='white' size='2'>"+ emailFB +" hai</font> <font color='gold' size='2'>1 </font><font color='white' size='2'>Play Chips</font>");
+	}
+	
+	
+}
 
 
 function alertDismissed() {
@@ -327,4 +415,11 @@ function prendiimg(tipo) {
 								 
 							},
 							dataType:"jsonp"});
+}
+						  
+function resetcred() {
+	localStorage.setItem("email", "")
+	localStorage.setItem("emailFB", "")
+	localStorage.setItem("loginfacebook", "NO")
+	window.location.href = "Login.html";
 }

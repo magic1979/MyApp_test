@@ -33,7 +33,14 @@ function onDeviceReady() {
 			
 			
 			function onError1(error) {
-				alert('errore1');
+				
+				navigator.notification.alert(
+									 'Prova ad abilitare la funzione GPS del tuo telefono',  // message
+									 alertDismissed,         // callback
+									 'Attenzione',            // title
+									 'OK'                  // buttonName
+									 );
+				
 				if (error.code == error.TIMEOUT)
 				{
 					navigator.geolocation.getCurrentPosition(onSuccess1, onError, { maximumAge:600000, timeout:80000, enableHighAccuracy: false });
@@ -60,7 +67,14 @@ function onDeviceReady() {
 			}
 			
 			function onError(error) {
-				alert('errore');
+				
+					navigator.notification.alert(
+							 'Prova ad abilitare la funzione GPS del tuo telefono',  // message
+							 alertDismissed,         // callback
+							 'Attenzione',            // title
+							 'OK'                  // buttonName
+							 );
+				
 					if (error.code == 1){
 						$('#classifica').html('Permesso negato');
 					}
@@ -627,5 +641,10 @@ function gps() {
 function verificawifi(){
 
     $("#verifica").click();
+
+}
+
+function alertDismissed() {
+
 
 }

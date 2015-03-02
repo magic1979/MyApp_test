@@ -16,7 +16,7 @@ function onDeviceReady() {
         //e.preventDefault();
     //});
         
-        $(".spinner").show();
+        //$(".spinner").show();
     
         document.addEventListener("showkeyboard", function(){ $("[data-role=footer]").hide();}, false);
         document.addEventListener("hidekeyboard", function(){ $("[data-role=footer]").show();}, false);
@@ -51,7 +51,7 @@ function onDeviceReady() {
             //localStorage.setItem("chip", 16);
             //localStorage.setItem("Token", "NO");
             
-            verificastore();
+            //verificastore();
             
             if ((model.indexOf('iPhone5') >= 0)||(model.indexOf('iPad') >= 0)||(model.indexOf('iPhone6') >= 0)) {
                 $('#torneo').html('<table align="center" width="230px"><tr><td align="center" width="60"><img src="images/ticket.png" height="34px"></td><td width="150px" align="left"><font color="white" size="2">+ Chips per 30 giorni</font><br></td></tr></table><br><br>');

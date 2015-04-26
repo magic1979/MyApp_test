@@ -2,8 +2,8 @@
 	<widget xmlns = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
 		id        = "it.pokeranswer.poker"
-		versionCode="7.0"
-		version   = "7.0">
+		versionCode="8.0"
+		version   = "8.0">
 		<name>PokerAnswer</name>
 		<description>PokerAnswer, Tante funzioni pensate per tutti gli appassionati di poker. Migliora il tuo gioco con Poker Answer, è gratuito, e si gioca attraverso Facebook</description>
 		<author href="http://www.pokeranswer.it" email="info@pokeranswer.it">
@@ -64,6 +64,10 @@ PokerAnswer Team
 		<gap:plugin name="org.apache.cordova.network-information"  />
 		<gap:plugin name="org.apache.cordova.splashscreen"  />
 		<gap:plugin name="org.apache.cordova.vibration"  />
+		<gap:plugin name="com.phonegap.plugins.facebookconnect" version="0.9.0">
+        <param name="APP_ID" value="111520365623521" />
+        <param name="APP_NAME" value="pokeranswer" />
+    	</gap:plugin>
 		<icon src="res/icon/ios/icon-57.png" gap:platform="ios" width="57" height="57" />
 		<icon src="res/icon/ios/icon-72.png" gap:platform="ios" width="72" height="72" />
 		<icon src="res/icon/ios/icon-57-2x.png" gap:platform="ios" width="114" height="114" />

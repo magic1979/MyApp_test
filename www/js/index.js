@@ -372,6 +372,7 @@ function convertTo24Hour(time) {
 
 
 function cambiap() {
+	PlayAudio();
 	 var permessogeo = localStorage.getItem("permessogeo");
 	
  	if (permessogeo == "SI")
@@ -531,13 +532,50 @@ function onResume() {
 }
 
 function compraFB() {
-    window.plugins.socialsharing.shareViaFacebook('PokerAnswer, Il poker nelle tue mani!', 'http://www.pokeranswer.it/img/logo256.png', 'http://www.pokeranswer.it', function() {notifiche('Condivisione Riuscita')}, function(errormsg){notifiche('Nessuna Condivisione')});
+    //window.plugins.socialsharing.shareViaFacebook('PokerAnswer, Il poker nelle tue mani!', 'http://www.pokeranswer.it/img/logo256.png', 'http://www.pokeranswer.it', function() {notifiche('Condivisione Riuscita')}, function(errormsg){notifiche('Nessuna Condivisione')});
     
-    //alert('compra chips');
+   //manca la funzione ok.
+	facebookConnectPlugin.showDialog(
+									 {
+									 method: "feed",
+									 picture:'http://www.pokeranswer.it/img/condivisione.png',
+									 name:'Hai appena ricevuto 5 AnswerChip Gratis!',
+									 message:'Gioca Gratis su Facebook e migliora il tuo gioco e con la nostra App scopri chi sono i tuoi avversari.',
+									 caption: 'www.pokeranswer.it',
+									 description: 'Scopri chi sono i tuoi avversari'
+									 },
+									 function (response) { /*alert(JSON.stringify(response))*/
+										chip = localStorage.getItem("chip");
+										chip = parseInt(chip)+5;
+										localStorage.setItem("chip", chip);
+										$('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+									 },
+									 function (response) { /*alert(JSON.stringify(response))*/
+										navigator.notification.alert(
+										'Nessuna Condivisione, niente Chips :)',  // message
+										alertDismissed,         // callback
+										'AnswerChip',            // title
+										'OK'                  // buttonName
+										 );
+
+									 });
 }
 
 function aprilogin(){
-	openFB.login(
+	
+	facebookConnectPlugin.login(["email"], function(response) {
+		//alert(response.status)
+		if (response.authResponse) {
+			facebookConnectPlugin.api('/me', null,
+				function(response) {
+					//alert('Good to see you, ' + response.email + response.name + '.' + response.id);
+					LoginFB(response.email);
+			});
+								
+		}
+	});
+	
+	/*openFB.login(
 				 function(response) {
 				 if(response.status === 'connected') {
 				 getInfo();
@@ -549,7 +587,7 @@ function aprilogin(){
 											  'OK'                  // buttonName
 											  );
 				 }
-				 }, {scope: 'email'});
+				 }, {scope: 'email'});*/
 	
 }
 
@@ -707,7 +745,7 @@ function prendiimg() {
 		   
 		   $.each(result, function(i,item){
 				  
-				  $('#Start').html("<img src='http://www.pokeranswer.it/img/"+ item.starter +".png' height='80px' data-rel='external' class='bannerreg'>");
+				  $('#Start').html("<img src='http://www.pokeranswer.it/img/"+ item.starter +".png' height='65px' data-rel='external' class='bannerreg'>");
 				  $(".spinner").hide();
 			});
 		   },
@@ -781,4 +819,20 @@ function relpul(){
 	localStorage.setItem("emailFB", "no@email.it")
 	localStorage.setItem("loginfacebook", "SI")
 	window.location.href = "index.html";
+}
+
+function PlayAudio() {
+	var my_media = new Media("Sound/Button2.mp3",
+        // success callback
+        function () {
+							 console.log("playAudio():Audio Success");
+        },
+        // error callback
+        function (err) {
+							 console.log("playAudio():Audio Error: " + err);
+        }
+							 );
+	// Play audio
+	//my_media.setVolume('0.4');
+	my_media.play();
 }

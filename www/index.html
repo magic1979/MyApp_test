@@ -335,6 +335,112 @@
                    .badge2[data-badge]:after {
                        
                    }
+				   
+				    <!--LATO-->
+				   
+				   /* latin-ext */
+				   @font-face {
+					   font-family: 'Lato';
+					   font-style: normal;
+					   font-weight: 700;
+					   src: local('Lato Bold'), local('Lato-Bold'), url(fonte/UyBMtLsHKBKXelqf4x7VRQ.woff2) format('woff2');
+					   unicode-range: U+0100-024F, U+1E00-1EFF, U+20A0-20AB, U+20AD-20CF, U+2C60-2C7F, U+A720-A7FF;
+				   }
+				   /* latin */
+				   @font-face {
+					   font-family: 'Lato';
+					   font-style: normal;
+					   font-weight: 700;
+					   src: local('Lato Bold'), local('Lato-Bold'), url(fonte/1YwB1sO8YE1Lyjf12WNiUA.woff2) format('woff2');
+					   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2212, U+2215, U+E0FF, U+EFFD, U+F000;
+				   }
+				   
+				   /* Facebook  */
+				   .fb-icon-bg {
+					   background: #354f88;
+					   height: 37px;
+					   margin: 0 0 -37px 0;
+					   width: 41px;
+				   }
+				   
+				   .fb-icon-bg:after {
+					   content: url(fonte/fb-icon.png);
+					   zoom: 0.55;
+					   
+					   display: block;
+					   padding: 20px 20px 20px 32px;
+				   }
+				   
+				   .fb-bg {
+					   background: #3b5998;
+					   display: block;
+					   height: 37px;
+					   margin: 0 0 30px 41px;
+					   width: 140px;
+					   text-decoration:none;
+				   }
+				   
+				   .fb-bg:after {
+					   color: #fff;
+					   content: "Condividi Qualcosa";
+					   font-family: 'Lato', sans-serif;
+					   height: 37px;
+					   left: 8%;
+					   position: relative;
+					   
+					   top: 25%;
+					   width: 41px;
+					   text-decoration:none;
+				   }
+				   
+				   .fb-bg:hover{
+					   cursor: pointer;
+					   text-decoration:none;
+				   }
+				   
+				   .fb-bg:active{
+					   background: #354f88;
+					   text-decoration:none;
+				   }
+				   
+				   .fb-bg2 {
+					   background: #3b5998;
+					   display: block;
+					   height: 37px;
+					   margin: 0 0 30px 41px;
+					   width: 160px;
+					   text-decoration:none;
+				   }
+				   
+				   .fb-bg2:after {
+					   color: #fff;
+					   content: "Accedi con Facebook";
+					   font-family: 'Lato', sans-serif;
+					   height: 37px;
+					   left: 8%;
+					   position: relative;
+					   
+					   top: 25%;
+					   width: 41px;
+					   text-decoration:none;
+				   }
+				   
+				   .fb-bg2:hover{
+					   cursor: pointer;
+					   text-decoration:none;
+				   }
+				   
+				   .fb-bg2:active{
+					   background: #354f88;
+					   text-decoration:none;
+				   }
+
+				   
+				   .sotto {
+					   font-family: 'Lato', sans-serif;
+					   text-decoration:none;
+				   }
+
 
                   </style>
     </head>
@@ -348,14 +454,15 @@
                         <br>
                         <br>
                         <ul data-role="listview" data-inset="true">
-                            <li id="badde2" class="badge1" data-badge="1"><a href="Strategy.html" rel="external"><img src="img/strategy.png" >
+                            <!--<li id="badde2" class="badge1" data-badge="1"><a href="Strategy.html" rel="external"><img src="img/strategy.png" >
                                 <h2>♠ Strategia</h2>
                                 <p>Articoli-Migliora</p></a>
-                            </li>
+                            </li>-->
                             <li><a href="classifica.html" rel="external"><img src="img/classifica.png" >
 								<h2>♠ Classifica</h2>
 								<p>Gioca For Fun</p></a>
 							</li>
+                            <li id="badde2" class="badge1" data-badge="1"><a href="Strategy.html" rel="external">♠ Strategia</a></li>
                             <li><a href="javascript:send();">♥ Contattaci</a></li>
                             <li><a href="infofaq.html" rel="external">♣ Info/Faq</a></li>
                             <li><a href="Privacy.html" rel="external">♦ Privacy</a></li>
@@ -366,8 +473,11 @@
                         </ul>
                 </center>
 				<br>
-                <a href="#" onclick="javascript:compraFB();"> <img src="img/facebook.png" width="80px" data-rel="external" class="buttonFB"></a>
-                 <a href="#" onclick="window.plugins.socialsharing.shareViaTwitter('Scopri la nuova applicazione PokerAnswer, tante funzioni pensate per tutti giocatori.')"> <img src="img/twitter.png" width="80px" data-rel="external" class="buttonTW"></a><br>									<br>
+                <img src="fonte/Like.png" height="15px"><font color="white" size="2"> +5 Chips!</font>
+				<br>
+				<a href='javascript:compraFB();' class="sotto"><div class="fb-icon-bg"></div><div class="fb-bg"></div></a>
+                <!--<a href="#" onclick="javascript:compraFB();"> <img src="img/facebook.png" width="80px" data-rel="external" class="buttonFB"></a>
+                 <a href="#" onclick="window.plugins.socialsharing.shareViaTwitter('Scopri la nuova applicazione PokerAnswer, tante funzioni pensate per tutti giocatori.')"> <img src="img/twitter.png" width="80px" data-rel="external" class="buttonTW"></a><br><br>-->
                  <a href="#my-header" onclick="javascript:chiudipanel();" class="ui-btn ui-corner-all ui-btn-inline ui-icon-delete ui-btn-icon-left" data-rel="close">Close</a>
             </div><!-- /panel -->
             
@@ -402,15 +512,15 @@
             <br>
         <div>
             <ul data-role="listview"  data-theme="b" data-inset="true">
-                <li><a href="javascript:cambiap();" rel="external"><img src="img/italia.png" >
+                <li><a onclick="javascript:PlayAudio();" href="javascript:cambiap();" rel="external"><img src="img/italia.png" >
                     <h2><img src="images/finder.png" width="16px">&nbsp;Radar-Sale</h2>
                     <p>Strutture Sportive Intorno a Te</p></a>
                 </li>
-                <li><a href="FindPlayer.html" rel="external"><img src="img/Full4.png">
+                <li><a onclick="javascript:PlayAudio();" href="FindPlayer.html" rel="external"><img src="img/Full4.png">
                     <h2><img src="images/avatar.png" width="16px">&nbsp;Cerca Giocatori</h2>
                     <p>Avatar, Andamanto, R.o.i</p></a>
                 </li>
-                <li><a href="FinderLive.html" rel="external"><img src="img/palinsesti.png" height="70">
+                <li><a onclick="javascript:PlayAudio();" href="FinderLive.html" rel="external"><img src="img/palinsesti.png" height="70">
                     <h2><img src="images/live.png" width="16px">&nbsp;Cosa Giocare</h2>
                     <p>Tornei Live, Tornei On-Line</p></a>
                 </li>
@@ -453,17 +563,20 @@
 					</tr>
 					<tr>
 						<td width="320px" align="left">
-							<font size="2" color="#FFFFFF">Puoi ricevere le ultime news sull'applicazione e sul gioco PokerAnswer in tempo reale.</font><br>
+							<font size="2" color="#FFFFFF">Puoi ricevere le ultime news sull'applicazione e sul gioco PokerAnswer in tempo reale.</font>
 						</td>
 					</tr>
 					<tr>
 						<td width="320px" align="center">
-							<br>o<br><br>
+							o
 						</td>
 					</tr>
 					<tr>
 						<td colspan="2" width="320px" align="center">
-							<div id="accFB"><a href='javascript:aprilogin();' class='zocial facebook'>Accedi con Facebook</a></div>
+                        	<table width="200px" align="center"><tr><td>
+								<a href='javascript:aprilogin();' class="sotto"><div class="fb-icon-bg"></div><div class="fb-bg2"></div></a>
+							</td></tr></table>
+							<!--<div id="accFB"><a href='javascript:aprilogin();' class='zocial facebook'>Accedi con Facebook</a></div>-->
 						</td>
 					</tr>
 					<tr>

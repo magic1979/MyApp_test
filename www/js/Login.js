@@ -21,7 +21,18 @@ function onDeviceReady() {
 }
 
 function aprilogin(){
-	openFB.login(
+	
+	facebookConnectPlugin.login(["email"], function(response) {
+		if (response.authResponse) {
+			facebookConnectPlugin.api('/me', null,
+				function(response) {
+					LoginFB(response.email);
+				});
+								
+			}
+	});
+	
+	/*openFB.login(
 				 function(response) {
 				 if(response.status === 'connected') {
 				 getInfo();
@@ -33,7 +44,7 @@ function aprilogin(){
 											  'OK'                  // buttonName
 											  );
 				 }
-				 }, {scope: 'email'});
+				 }, {scope: 'email'});*/
 	
 }
 
@@ -192,7 +203,7 @@ function prendiimg() {
 			   
 			   $.each(result, function(i,item){
 					  
-					  $('#Start').html("<img src='http://www.pokeranswer.it/img/"+ item.starter +".png' height='80px' data-rel='external' class='bannerreg'>");
+					  $('#Start').html("<img src='http://www.pokeranswer.it/img/"+ item.starter +".png' height='65px' data-rel='external' class='bannerreg'>");
 					  $(".spinner").hide();
 					  });
 			   },

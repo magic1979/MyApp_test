@@ -21,7 +21,7 @@ function onDeviceReady() {
 			$(".spinner").hide();
 			
 			if(emailFB=="no@email.it"){
-				$("#playchips").html("<font color='white' size='2'>Ciao, effettua il <a href='#' onclick='javascript:resetcred();'>LOGIN</a> per visualizzare le tue Play Chips</font>");
+				$("#playchips").html("<font color='white' size='2'>Ciao, effettua il <a href='#' onclick='javascript:resetcred();'>LOGIN</a> <img src='fonte/Like.png' width='16px'> per visualizzare le tue Play Chips</font>");
 			}
 			else{
 				predocubeiaid(emailFB);

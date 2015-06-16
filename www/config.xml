@@ -108,7 +108,7 @@ PokerAnswer Team
 		<gap:plugin name="nl.x-services.plugins.socialsharing"  version="4.3.0" />
 		<gap:plugin name="de.appplant.cordova.plugin.email-composer"  />
 		
-	<gap:config-file platform="android" parent="/manifest" mode="add” xmlns:android=”http://schemas.android.com/apk/res/android">
+	<gap:config-file platform="android" parent="/manifest" mode="add" xmlns:android="http://schemas.android.com/apk/res/android">
 		<uses-permission android:name="com.android.vending.BILLING" />
 	</gap:config-file>
 	</widget>

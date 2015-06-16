@@ -3,7 +3,7 @@ document.addEventListener('deviceready', onDeviceReady, false);
 function onDeviceReady() {
     document.addEventListener("resume", onResume, false);
 	
-	openFB.init({appId: '280486968769228'});
+	//openFB.init({appId: '280486968769228'});
 	
 	$.mobile.defaultPageTransition = 'none';
 	$.mobile.defaultDialogTransition = 'none';
@@ -63,14 +63,20 @@ function getInfo() {
 
 
 function logout(){
-	openFB.logout(
+	
+				  localStorage.setItem("email", "")
+				  localStorage.setItem("emailFB", "")
+				  localStorage.setItem("loginfacebook", "NO")
+				  location.reload();
+	
+	/*openFB.logout(
 				  function() {
 				  localStorage.setItem("email", "")
 				  localStorage.setItem("emailFB", "")
 				  localStorage.setItem("loginfacebook", "NO")
 				  location.reload();
 				  },
-				  errorHandler);
+				  errorHandler);*/
 }
 
 function errorHandler(error) {

@@ -126,7 +126,7 @@ var app = {
         var NomeNews;
         var NomeStrat;
 		var ImgLogo;
-		openFB.init({appId: '280486968769228'});
+		//openFB.init({appId: '280486968769228'});
 		
 		$.mobile.defaultPageTransition = 'none';
         $.mobile.defaultDialogTransition = 'none';
@@ -532,10 +532,10 @@ function onResume() {
 }
 
 function compraFB() {
-    //window.plugins.socialsharing.shareViaFacebook('PokerAnswer, Il poker nelle tue mani!', 'http://www.pokeranswer.it/img/logo256.png', 'http://www.pokeranswer.it', function() {notifiche('Condivisione Riuscita')}, function(errormsg){notifiche('Nessuna Condivisione')});
+    window.plugins.socialsharing.shareViaFacebook('PokerAnswer, Il poker nelle tue mani!', 'http://www.pokeranswer.it/img/logo256.png', 'http://www.pokeranswer.it', function() {notifiche('Condivisione Riuscita')}, function(errormsg){notifiche('Nessuna Condivisione')});
     
    //manca la funzione ok.
-	facebookConnectPlugin.showDialog(
+	/*facebookConnectPlugin.showDialog(
 									 {
 									 method: "feed",
 									 picture:'http://www.pokeranswer.it/img/condivisione.png',
@@ -545,20 +545,20 @@ function compraFB() {
 									 description: 'Scopri chi sono i tuoi avversari'
 									 },
 									 function (response) { /*alert(JSON.stringify(response))*/
-										chip = localStorage.getItem("chip");
+										/*chip = localStorage.getItem("chip");
 										chip = parseInt(chip)+5;
 										localStorage.setItem("chip", chip);
 										$('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
 									 },
 									 function (response) { /*alert(JSON.stringify(response))*/
-										navigator.notification.alert(
+										/*navigator.notification.alert(
 										'Nessuna Condivisione, niente Chips :)',  // message
 										alertDismissed,         // callback
 										'AnswerChip',            // title
 										'OK'                  // buttonName
 										 );
 
-									 });
+									 });*/
 }
 
 function aprilogin(){
@@ -606,14 +606,20 @@ function getInfo() {
 
 
 function logout(){
-	openFB.logout(
+	
+	localStorage.setItem("email", "")
+	localStorage.setItem("emailFB", "")
+	localStorage.setItem("loginfacebook", "NO")
+	window.location.href = "Login.html";
+	
+	/*openFB.logout(
 	function() {
 		localStorage.setItem("email", "")
 		localStorage.setItem("emailFB", "")
 		localStorage.setItem("loginfacebook", "NO")
 		window.location.href = "Login.html";
 		},
-	errorHandler);
+	errorHandler);*/
 }
 
 function errorHandler(error) {

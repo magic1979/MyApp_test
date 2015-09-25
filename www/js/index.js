@@ -204,11 +204,21 @@ function onResume() {
 	//}, 0);
 	
 	//show splash
-	alert("Resume");
+	navigator.notification.alert(
+		'Resume',  // message
+		alertDismissed,         // callback
+		'Error',            // title
+		'OK'                  // buttonName
+	);
 }
 
 function onPause() {
-	alert("Pause");
+	navigator.notification.alert(
+		'Resume',  // message
+		alertDismissed,         // callback
+		'Error',            // title
+		'OK'                  // buttonName
+		);
 }
 
 

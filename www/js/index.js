@@ -6,12 +6,10 @@ var app = {
     
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
+	document.addEventListener('resume', onResume, false);
     },
    
     onDeviceReady: function() {
-		document.addEventListener("pause", onPause, false);
-		document.addEventListener("resume", onResume, false);
-		
         app.receivedEvent('deviceready');
     },
     

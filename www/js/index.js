@@ -209,7 +209,7 @@ function onResume() {
 	alert("Resume");
 }
 
-function onResume() {
+function onPause() {
 	alert("Pause");
 }
 

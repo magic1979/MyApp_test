@@ -2,8 +2,8 @@
 	<widget xmlns = "http://www.w3.org/ns/widgets"
 		xmlns:gap = "http://phonegap.com/ns/1.0"
 		id        = "it.pokeranswer.poker"
-		versionCode="8.0"
-		version   = "8.0">
+		versionCode="9.0"
+		version   = "9.0">
 		<name>PokerAnswer</name>
 		<description>PokerAnswer, Tante funzioni pensate per tutti gli appassionati di poker. Migliora il tuo gioco con Poker Answer, è gratuito, e si gioca attraverso Facebook</description>
 		<author href="http://www.pokeranswer.it" email="info@pokeranswer.it">
@@ -107,6 +107,7 @@ PokerAnswer Team
 		<gap:plugin name="com.pushwoosh.plugins.pushwoosh" version="3.4.2" />
 		<gap:plugin name="nl.x-services.plugins.socialsharing"  version="4.3.0" />
 		<gap:plugin name="de.appplant.cordova.plugin.email-composer"  />
+		<gap:plugin name="com.mcm.plugins.androidinappbilling" version="3.0.6" />
 		
 		
 	<gap:config-file platform="android" parent="/manifest" mode="add" xmlns:android="http://schemas.android.com/apk/res/android">

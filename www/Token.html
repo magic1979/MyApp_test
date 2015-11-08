@@ -305,6 +305,70 @@
                    }
 
                   </style>
+                  
+              <script type="text/javascript" charset="utf-8">
+            function successHandler (result) {
+                var strResult = "";
+                if(typeof result === 'object') {
+                    strResult = JSON.stringify(result);
+                } else {
+                    strResult = result;
+                }
+                alert("SUCCESS: \r\n"+strResult );
+            }
+
+            function errorHandler (error) {
+                alert("ERROR: \r\n"+error );
+            }
+
+            // Click on init button
+            function init(){
+                // Initialize the billing plugin
+                inappbilling.init(successHandler, errorHandler, {showLog:true});
+            }
+
+            // Click on purchase button
+            function buy(){
+                // make the purchase
+                inappbilling.buy(successHandler, errorHandler,"100_ac");
+
+            }
+
+            // Click on ownedProducts button
+            function ownedProducts(){
+                // Initialize the billing plugin
+                inappbilling.getPurchases(successHandler, errorHandler);
+
+            }
+
+            // Click on Consume purchase button
+            function consumePurchase(){
+
+                inappbilling.consumePurchase(successHandler, errorHandler, "100_ac");
+            }
+
+            // Click on subscribe button
+            function subscribe(){
+                // make the purchase
+                inappbilling.subscribe(successHandler, errorHandler,"100_ac");
+
+            }
+
+            // Click on Query Details button
+            function getDetails(){
+                // Query the store for the product details
+                //inappbilling.getProductDetails(successHandler, errorHandler, ["gas","infinite_gas"]);
+				inappbilling.getProductDetails(successHandler, errorHandler, "100_ac");
+            }
+
+            // Click on Get Available Products button
+            function getAvailable(){
+                // Get the products available for purchase.
+                inappbilling.getAvailableProducts(successHandler, errorHandler);
+
+            }                       
+
+        </script>
     </head>
     <body>
         <div data-role="page" class="div2">
@@ -345,6 +409,17 @@
                 </tr>
             </table>
             </form>
+            
+            <br><br>
+             <h1>IN APP BILLING</h1>
+        	<button onclick="init();">Initalize the billing plugin</button>
+        	<button onclick="buy();">Purchase</button>
+        	<button onclick="ownedProducts();">Owned products</button>
+        	<button onclick="consumePurchase();">Consume purchase</button>
+        	<button onclick="subscribe();">Subscribe</button>
+        	<button onclick="getDetails();">Query Details</button>
+        	<button onclick="getAvailable();">Get Available Products</button>
+            
             <br>
             <font size="2" color="#FFFFFF">♥ Area riservata ai possessori di un token valido.<br>I token non si possono acquistare ma vengono assegnati per merito.<br><br>
             * The tokens can not be purchased but are awarded for merit.</font>           

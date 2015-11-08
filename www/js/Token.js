@@ -387,6 +387,10 @@ function onResume() {
     onDeviceReady();
 }
 
+
+//IN APP BILLING
+
+
 function getParameterByName(name) {
     name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
     var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),

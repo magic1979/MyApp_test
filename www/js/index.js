@@ -1,685 +1,521 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ */
+ 
+ function initPushwoosh()
+{
+    //get pushwoosh plugin
+    var pushNotification = window.plugins.pushNotification;
+    //notify plugin that device is ready, this is VERY important as it will dispatch on start push notification
+    pushNotification.onDeviceReady();
+ 
+    //register for push notifications
+    pushNotification.registerDevice({ projectid: "103551733757", appid : "5370F-D83D1" },
+        function(status) {
+            //this is push token
+            var pushToken = status;
+            console.warn('push token: ' + pushToken);
+        },
+        function(status) {
+            console.warn(JSON.stringify(['failed to register ', status]));
+            
+        navigator.notification.alert(
+          'Al momento non puoi ricevere alcuna notifiche',  // message
+           alertDismissed,         // callback
+           'Notifica',            // title
+           'Done'                  // buttonName
+       );
+
+        }
+    );
+ 
+    //this function gets called when push notifications has been received
+    document.addEventListener('push-notification', function(event) {
+        var title = event.notification.title;
+        var userData = event.notification.userdata;
+        var msg = event.notification.message;
+                                 
+        if(typeof(msg) != "undefined") {
+            console.warn('user data: ' + JSON.stringify(userData));
+        }
+        
+        navigator.notification.alert(
+           msg,  		  	   // message
+           alertpush,    // callback
+           'Notifica',             // title
+           'Done'            // buttonName
+        );
+        
+       //var notification = event.notification;
+       //navigator.notification.alert(
+          //'News: ' + notification.aps.alert,  // message
+         //alertDismissed,         // callback
+         //'Notifica',            // title
+         //  'Done'                  // buttonName
+        //);
+        
+        //Next Test
+    });
+}
+
+function init() {
+    document.addEventListener("deviceready", initPushwoosh, true);
+
+}
+ 
+ 
 var app = {
-   
+    // Application Constructor
     initialize: function() {
         this.bindEvents();
     },
-    
+    // Bind Event Listeners
+    //
+    // Bind any events that are required on startup. Common events are:
+    // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
         document.addEventListener('deviceready', this.onDeviceReady, false);
-	document.addEventListener('resume', onResume, false);
     },
-   
+    // deviceready Event Handler
+    //
+    // The scope of 'this' is the event. In order to call the 'receivedEvent'
+    // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+		document.addEventListener("resume", onResume, false);
+		
+		var orario1;
+		
         app.receivedEvent('deviceready');
     },
-    
+    // Update DOM on a Received Event
     receivedEvent: function(id) {
 		
-		/*if(PushbotsPlugin.isiOS()){
-			PushbotsPlugin.initializeiOS("55eef2521779597d478b456a");
-		}
-		if(PushbotsPlugin.isAndroid()){
-			PushbotsPlugin.initializeAndroid("55eef2521779597d478b456a", "1068247241830");
-		}
+        var hoverDelay = $.mobile.buttonMarkup.hoverDelay = 0;
+		var ciao;
+        var ciao1;
+        var dataoggi;
+        var storedata;
+        var chip = 0;
+        var giorni;
+        var NomeNews;
+        var NomeStrat;
+		var ImgLogo;
 		
+		$.mobile.defaultPageTransition = 'none';
+        $.mobile.defaultDialogTransition = 'none';
+        
+        $('body').on('touchmove', function (e) {
+            e.preventDefault();
+        });
 		
-		PushbotsPlugin.resetBadge();*/
+		checkData();
 		
-		//var isPhone = screen.height < 800 || screen.width < 800;
+		var inizio = '<table align="center" border="0" width="310px" height="100px">';
+            inizio = inizio + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">PokerAnswer ♥</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi AnswerChips Gratis.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/glass4.png" width="40px"></a></td></tr>';
+        inizio = inizio + '</table>';
+        $('#classifica').html(inizio);
+        $('#fiches').html('<img src="images/chipa.png" height="20px">');
 		
-		//alert(screen.width);
+        var connectionStatus = false;
+        connectionStatus = navigator.onLine ? 'online' : 'offline';
+        
+        if(connectionStatus=='online'){
+        	//var connessione = checkConnection();
+			checkPos();
+            
+            $('#noconn').hide();
+            
+            $(".spinner").show();
+            
+            var landmark = '<table align="center" border="0" width="310px" height="100px">';
+            
+            $.ajax({
+                   type:"GET",
+                   url:"http://www.pokeranswer.it/www/Check_News.asp",
+                   contentType: "application/json",
+                   //data: {ID: "1", ID2: "4"},
+				   timeout: 7000,
+                   jsonp: 'callback',
+                   crossDomain: true,
+                   success:function(result){
+                   
+                   $.each(result, function(i,item){
+                          
+                          if(item.Nome != '0'){
+                            var newdata = orario1 + " - " + dataok(item.Data);
+                            NomeNews = item.Nome;
+                            NomeStrat = item.NomeStrat;
+							ImgLogo = item.ImgLogo;
+                          
+                          dataoggi = item.dataoggi;
+                          storedata = localStorage.getItem("storedata");
+                          giorni = localStorage.getItem("Day");
+                          
+                          if (parseInt(dataoggi) != parseInt(storedata)){
+                          giorni = parseInt(giorni)-1;
+                          localStorage.setItem("Day", giorni);
+                          
+                            if (parseInt(giorni)>0){
+                                if(localStorage.getItem("Token")=="SI"){
+                                    chip = 500;
+                                }
+                                else{
+                                    chip = localStorage.getItem("chip");
+                                }
+                            }
+                            else{
+                                chip = parseInt(item.Chip);
+								localStorage.setItem("Token", "NO");
+                            }
+                          
+                          localStorage.setItem("chip", chip);
+                          
+                          storedata = dataoggi;
+                          localStorage.setItem("storedata", dataoggi);
+                          }
+                          else{
+                          chip = localStorage.getItem("chip");
+                          storedata = localStorage.getItem("storedata");
+                          }
+                          
+                            landmark = landmark + '<tr><td align="center" width="100px"><img src="http://www.pokeranswer.it/img/'+ ImgLogo +'.png" data-rel="external" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><a id="badde" class="badge1" data-badge="1"><font size="2" color="gold" class="scritta">'+ newdata +' ♠</font></a></td></tr><tr><td align="left"><font color="white" size="2">'+ item.Nome +'</font></td></tr></table></td><td><a href="FindNews.html?nome='+ item.Nome +'" rel="external" ><div width="40px" class="home"></div></a></td></tr>';
+                          
+                          }
+                          else{
+                          
+                            var newdata = orario1 + " - PokerAnswer";
+                            dataoggi = item.dataoggi;
+                            NomeNews = "";
+                            NomeStrat = item.NomeStrat;
+							ImgLogo = item.ImgLogo;
+                          
+                          dataoggi = item.dataoggi;
+                          storedata = localStorage.getItem("storedata");
+                          giorni = localStorage.getItem("Day");
+                          
+                          if (parseInt(dataoggi) != parseInt(storedata)){
+                          giorni = parseInt(giorni)-1;
+                          localStorage.setItem("Day", giorni);
+                          
+                            if (parseInt(giorni)>0){
+                                if(localStorage.getItem("Token")=="SI"){
+                                    chip = 500;
+                                }
+                                else{
+                                    chip = localStorage.getItem("chip");
+                                }
+                            }
+                            else{
+                                chip = parseInt(item.Chip);
+                                localStorage.setItem("Token", "NO");
+                            }
+                          
+                          localStorage.setItem("chip", chip);
+                          
+                          storedata = dataoggi;
+                          localStorage.setItem("storedata", dataoggi);
+                          }
+                          else{
+                          chip = localStorage.getItem("chip");
+                          storedata = localStorage.getItem("storedata");
+                          }
+                          
+                          
+                            landmark = landmark + '<tr><td align="center" width="100px"><img src="http://www.pokeranswer.it/img/'+ ImgLogo +'.png" data-rel="external" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +' ♥</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi AnswerChips Gratis.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/glass4.png" width="40px"></a></td></tr>';
+                          }
+                          
+                          });
+                   
+                   landmark = landmark + '</table>';
+                   $('#classifica').html(landmark);
+                   
+                   
+                   if (localStorage.getItem("Token")=="SI"){
+                      $('#fiches').html('<font color="white" size="1">-' + giorni + 'day</font> <img src="images/ticket.png" height="20px"><img src="images/chipa.png" height="20px"> ' + chip);
+                   }
+                   else{
+                     $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+                   }
+                   
+                   if (NomeNews == localStorage.getItem("StoreNews")){
+                      $('#badde').removeClass('badge1').addClass('badge2');
+                   }
+				   else{
+                      navigator.notification.beep();
+                   }
+                   
+                   if (NomeStrat == localStorage.getItem("StoreStrat")){
+                      $('#badde2').removeClass('badge1').addClass('badge2');
+                   }
+                   else{
+                      $('#badde2').removeClass('badge2').addClass('badge1');
+                   }
 
-		//StatusBar.styleDefault();
-		
-		last_click_time = new Date().getTime();
-		
-		document.addEventListener('click', function (e) {
-								  
-								  click_time = e['timeStamp'];
-								  
-								  if (click_time && (click_time - last_click_time) < 1000) { e.stopImmediatePropagation();
-								  
-								  e.preventDefault();
-								  
-								  return false;
-								  
-								  }
-								  
-								  last_click_time = click_time;
-								  
-								  }, true);
-		
-		
-		var ciccio;
-		
-		$(document).on("touchend", "#primo", function(e){
-			$.mobile.changePage( "#page2", { transition: "slide", changeHash: false });
-			carica()
-		});
-		
-		$(document).on("touchend", "#secondo", function(e){
-			$.mobile.changePage( "#page3", { transition: "slide", changeHash: false });
-			carica2()
-		});
-		
-		$(document).on("touchend", "#terzo", function(e){
-			$.mobile.changePage( "#page4", { transition: "slide", changeHash: false });
-			carica3()
-		});
-		
-		$(document).on("touchend", "#quarto", function(e){
-			$.mobile.changePage( "#page6", { transition: "slide", changeHash: false });
-			carica4()
-		});
-		
-		$(document).on("touchend", "#sesto", function(e){
-		   myScroll.scrollTo(0,-440);
-		});
-		
-		$(document).on("touchend", "#vedi", function(e){
-			$.mobile.changePage( "#page7", { transition: "slide", changeHash: false });
-			vedi()
-		});
-		
-		$(document).on("touchend", "#primos", function(e){
-			$.mobile.changePage( "#page", { transition: "slide", changeHash: false, reverse: true });
-			 myScroll.scrollTo(0,0);
-		});
-		
-		$(document).on("touchend", "#secondos", function(e){
-			$.mobile.changePage( "#page", { transition: "slide", changeHash: false, reverse: true });
-			myScroll.scrollTo(0,0);
-		});
-		
-		$(document).on("touchend", "#terzos", function(e){
-			$.mobile.changePage( "#page", { transition: "slide", changeHash: false, reverse: true });
-			myScroll.scrollTo(0,0);
-			checkpush()
-		});
-		
-		$(document).on("touchend", "#quartos", function(e){
-			$.mobile.changePage( "#page4", { transition: "slide", changeHash: false, reverse: true });
-			carica3()
-		});
-		
-		$(document).on("touchend", "#quintos", function(e){
-			$.mobile.changePage( "#page", { transition: "slide", changeHash: false, reverse: true });
-			myScroll.scrollTo(0,0);
-		});
-		
-		$(document).on("touchend", "#pulsms", function(e){
-			aprisms()
-		});
-		
-		$(document).on("touchend", "#pulrefresh", function(e){
-			carica3()
-		});
-		
-		$("#video").html("<iframe width='220' height='130' src='http://www.youtube.com/embed/cf5PVgbrlCM?feature=player_embedded' frameborder='0' allowfullscreen></iframe>");
-		
-		$("#video2").html("<iframe width='220' height='130' src='http://www.youtube.com/embed/Hl10lNEVBrU?feature=player_embedded' frameborder='0' allowfullscreen></iframe>");
-		
-		/*last_click_time = new Date().getTime();
-		
-		document.addEventListener('click', function (e) {
-								  
-								  click_time = e['timeStamp'];
-								  
-								  if (click_time && (click_time - last_click_time) < 1000) { e.stopImmediatePropagation();
-								  
-								  e.preventDefault();
-								  
-								  return false;
-								  
-								  }
-								  
-								  last_click_time = click_time;
-								  
-								  }, true);*/
+                   
+                   
+                   },
+                   error: function(){
+                    if (localStorage.getItem("chip") == null || typeof(localStorage.getItem("chip")) == 'undefined') {
+                        $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+                   }
+                   else{
+                        $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + localStorage.getItem("chip"));
+                   }
+					
+					navigator.notification.alert(
+                    'Possibile errore di rete, riprova tra qualche instante.',  // message
+                    alertDismissed,         // callback
+                    'Notifiche',            // title
+                    'OK'                  // buttonName
+                    );
+                   },
+                   dataType:"jsonp"});
+            
+            $(".spinner").hide();
+            
+        }
+        else{
+            
+           $(".spinner").hide();
 
-	
-	
-		var connectionStatus = false;
-		connectionStatus = navigator.onLine ? 'online' : 'offline';
-		
-		if(connectionStatus=='online'){
+            $('#noconn').show();
 			
+			if (localStorage.getItem("chip") == null || typeof(localStorage.getItem("chip")) == 'undefined') {
+                $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + chip);
+            }
+            else{
+                $('#fiches').html('<img src="images/chipa.png" height="20px"> ' + localStorage.getItem("chip"));
+            }
+            
+            var newdata = "PokerAnswer";
 			
-			$(".spinner").hide();
-			
-			//provino()
-			checkpush() 
-			
-			/*setTimeout (function(){
-						
-						PushbotsPlugin.getToken(function(token){
-												
-												navigator.notification.alert(
-																			 token,  // message
-																			 alertDismissed,         // callback
-																			 'Attenzione',            // title
-																			 'Done'                  // buttonName
-																			 );
-												
-												//regToken(token)
-												console.log(token);
-												
-						});
-						
-						
-			}, 2000);*/
-			
-			
-			
-		}
-		else{
-			/*$('#noconn').show();
-			
-			var tabella = "<table align='center' border='0' width='100%' height='120px'>";
-			tabella = tabella + "<tr><td align='center'><a href='javascript:riparti()' class='btn'><font color='#fff'>Connetti</font></a></td></tr>";
-			tabella = tabella + "</table>";
-			
-			$('#noconn').html(tabella);
+            var landmark = '<table align="center" border="0" width="310px" height="100px">';
+            landmark = landmark + '<tr><td align="center" width="100px"><img src="logo3.png" width="80px"></td><td align="left" width="180px"><table align="center" border="0" width="180px"><tr><td align="left"><font size="2" color="gold" class="scritta">'+ newdata +'</font></td></tr><tr><td align="left"><font color="white" size="2">Ogni Giorno Ricevi Gratuitamente Search Chips.</font></td></tr></table></td><td><a href="#" rel="external"><img src="images/noconn.png" width="40px"></a></td></tr>';
+            landmark = landmark + '</table>';
+            $('#classifica').html(landmark);
+            
+            var tabella = '<table align="center" border="0" width="310px" height="60px" class="conn">';
+            tabella = tabella + '<tr><td align="center" width="50px"><img src="images/wire.png" width="32px"></td><td align="left">Per leggere le news e ricevere le notifiche push, hai bisogno di una connessione attiva</td></tr>';
+            tabella = tabella + '</table>';
 
-			$(".spinner").hide();
-			
-			$("#footer").show();*/
-		}
+            $('#noconn').html(tabella);
+
+        }
+        
+        setTimeout(function() {
+            navigator.splashscreen.hide();
+        }, 2000);
+        
     }
+
+};
+
+function checkData() {
+    navigator.globalization.dateToString(
+    new Date(),
+    function (date) { convertTo24Hour(date.value); },
+    function () { alert('Error getting dateString\n'); },
+    { selector: 'time' }
+
+);
+
+}
+
+
+function convertTo24Hour(time) {
+    
+    var hours = parseInt(time.substr(0, 2));
+    
+    if(time.indexOf('AM') != -1 && hours < 12) {
+        time = time.replace(hours, '0' + "" + hours); //time.replace('12', '00');
+    }
+    
+    if(time.indexOf('PM')  != -1 && hours < 12) {
+        time = time.replace(hours, (hours + 12));
+    }
+    
+    orario1 = time.replace(/(AM|PM)/, '');
+
+}
+
+
+
+function cambiap() {
+	 var permessogeo = localStorage.getItem("permessogeo");
 	
+ 	if (permessogeo == "SI")
+    {
+        window.location.href = "map.html";
+    }
+    else{
+        navigator.notification.confirm(
+        'Per usare la funzione Radar e Mappa Poker Answer vuole usare la tua posizione',  // message
+         onConfirm,              // callback to invoke with index of button pressed
+         'Tua Posizione',            // title
+         'Accetto,Rifiuto'          // buttonLabels
+        );
+    }
+
 }
 
-function verificawifi(){
-	$("#verifica").click();
+function checkConnection() {
+    var networkState = navigator.connection.type;
+    
+    var states = {};
+    states[Connection.UNKNOWN]  = 'Unknown connection';
+    states[Connection.ETHERNET] = 'Ethernet connection';
+    states[Connection.WIFI]     = 'WiFi connection';
+    states[Connection.CELL_2G]  = 'Cell 2G connection';
+    states[Connection.CELL_3G]  = 'Cell 3G connection';
+    states[Connection.CELL_4G]  = 'Cell 4G connection';
+    states[Connection.CELL]     = 'Cell generic connection';
+    states[Connection.NONE]     = 'No network connection';
+    
+    //alert('Connection type: ' + states[networkState]);
+    
+    navigator.notification.alert(
+        'Connection type: ' + states[networkState],  // message
+         alertDismissed,         // callback
+         'Connessione',            // title
+         'Done'                  // buttonName
+    );
+    
+    
+    //$('#connessione').html(states[networkState] + '\n');
 }
-
-
-function onResume() {
-
-	//setTimeout(function() {
-		//navigator.splashscreen.show();
-		//window.location.href = "#page";
-		//myScroll.scrollTo(0,0);
-		//app.initialize();
-	//}, 0);
-	
-	//show splash
-	navigator.notification.alert(
-		'Resume',  // message
-		alertDismissed,         // callback
-		'Error',            // title
-		'OK'                  // buttonName
-	);
-}
-
-function onPause() {
-	navigator.notification.alert(
-		'Resume',  // message
-		alertDismissed,         // callback
-		'Error',            // title
-		'OK'                  // buttonName
-		);
-}
-
-
-function getKey(key){
-	if ( key == null ) {
-		keycode = event.keyCode;
-		
-	} else {
-		keycode = key.keyCode;
-	}
-	
-	if (keycode ==13){
-		
-		document.activeElement.blur();
-		$("input").blur()
-		return false;
-		
-	}
-	
-}
-
 
 function alertDismissed() {
-	
+    $(".spinner").hide();
 }
 
-
-function initscroll() {
-	
-	myScroll = new IScroll('#wrapper', { click: true });
-				   
-	document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
-				   
-	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-
+function alertpush() {
+    // do something
 }
 
-function carica() {
+function dataok(deg) {
+	var year=deg.slice(0,4);
+	var day=deg.substr(6,2);
+	var month=deg.substr(4,2);
 	
-	var myScroll2;
-
-		myScroll2 = new iScroll('wrapper2', {
-								zoom: true,
-								click: true,
-								zoomMin:1,
-								zoomMax:2
-		});
-		setTimeout (function(){
-			myScroll2.refresh();
-		}, 1000);
-
+	var d = day + "/" + month + "/" + year
 	
-	//document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-	
-	document.addEventListener('DOMContentLoaded', loaded, false);
+    return d
 }
 
-function carica2() {
-	
-	var myScroll3;
-	
-	myScroll3 = new iScroll('wrapper3', {
-		click: true
-	});
-	setTimeout (function(){
-		myScroll3.refresh();
-	}, 1000);
-	
-	
-	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-	
-	document.addEventListener('DOMContentLoaded', loaded, false);
+function codeLatLng(vir1) {
+    var geocoder;
+    geocoder = new google.maps.Geocoder();
+    var input = vir1;
+    //alert(input);
+    
+    var latlngStr = input.split(',', 2);
+    var lat = parseFloat(latlngStr[0]);
+    var lng = parseFloat(latlngStr[1]);
+    var latlng = new google.maps.LatLng(lat, lng);
+    
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+                     if (status == google.maps.GeocoderStatus.OK) {
+                     if (results[1]) {
+                     alert(results[1].formatted_address);
+                     $('#posizione').html(results[1].formatted_address);
+                     
+                     } else {
+                     alert('No results found');
+                     $('#posizione').html('Nessuna Posizione');
+                     }
+                     } else {
+                     alert('Geocoder failed due to: ' + status);
+                     $('#posizione').html('Geocoder failed due to: ' + status);
+                     }
+                     });
 }
 
-function carica3() {
-	provino()
-	
+function onConfirm(button) {
+    if (button==1){
+        localStorage.setItem("permessogeo", "SI")
+		window.location.href = "map.html";
+    }
 }
 
-function carica4() {
-	
-	var myScroll6;
-	
-	myScroll6 = new iScroll('wrapper6', { click: true });
-	setTimeout (function(){
-		myScroll6.refresh();
-	}, 1000);
-	
-	
-	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-	
-	document.addEventListener('DOMContentLoaded', loaded, false);
+function apri() {
+    
+    var ref = window.open('http://www.aams.gov.it/site.php?id=13982', '_blank', 'location=si');
 }
 
-function carica5(id) {
-	//alert(id)
-	provino2(id)
-
+function apripanel() {
+    $('#transp').removeClass('div2').addClass('div1');
 }
 
-function provino() {
-	var ciccio;
-	var conta = 1;
-	
-	var contenuto = ""
-
-	$(".spinner").show();
-	$.ajax({
-		   type:"GET",
-		   url:"http://interactivebusinessapp.it/event_list/tokendiprova",
-		   //data: {token:localStorage.getItem("Token")},
-		   contentType: "application/json; charset=utf-8",
-		   json: 'callback',
-		   timeout: 7000,
-		   crossDomain: true,
-		   success:function(result){
-		   
-		   $.each(result, function(i,item){
-				  
-				  if (item.company_id!=0){
-				  //OK
-				  
-				  if(item.is_read==false){
-					contenuto = contenuto + "<tr title='"+ item.event_id +"'><td width='220' align='center'><table width='100%' align='left' valign='center'><tr><td width='100%' align='left' colspan='2' valign='center'><font size='3' color='#042e72'>"+ item.activated_at +" - "+ item.expire_on +" </font></td></tr><tr><td width='100%' colspan='2' valign='center'><font size='3'>"+ item.title +"</font> </td></tr></table></td><td width='120' align='center' valign='center'><img src='img/notRead.png' width='42px'></td></tr><tr><td colspan='2'><hr></td></tr>"
-				  
-					//ciccio = item.image_tag;
-				  }
-				  else{
-					contenuto = contenuto + "<tr title='"+ item.event_id +"'><td width='220' align='center'><table width='100%' align='left' valign='center'><tr><td width='100%' align='left' colspan='2' valign='center'><font size='3' color='#042e72'>"+ item.activated_at +" - "+ item.expire_on +" </font></td></tr><tr><td width='100%' colspan='2' valign='center'><font size='3'>"+ item.title +"</font> </td></tr></table></td><td width='120' align='center' valign='center'><img src='img/read.png' width='42px'></td></tr><tr><td colspan='2'><hr></td></tr>"
-				  
-					//ciccio = ciccio + item.image_tag;
-				  }
-				  
-				  conta = conta + 1;
-				  
-				  }
-				  else{
-				  //alert(result.msg);
-				  //window.location.href = "Froala/basic.html";
-				  //self.document.formia2.emailL.value = localStorage.getItem("emailMemoria");
-				  //window.location.href = "#article4";
-				  
-					contenuto = contenuto + "<tr title='http://path/to/download'><td width='220' align='center'><table width='100%' align='left' valign='center'><tr><td width='95%'>&nbsp;</td><td width='5%'></td></tr><tr><td width='100%' align='left' colspan='2' valign='center'><font size='3' color='#042e72'>Nessuna Notifica</font></td></tr><tr><td width='100%' colspan='2' valign='center'><font size='3'> </font> </td></tr></table></td><td width='120' align='center' valign='center'><img src='img/notRead.png' width='42px'></td></tr><tr><td colspan='2'><hr></td></tr>"
-			}
-				  
-		   });
-		   
-		   $("#contenuto").html(contenuto);
-		   
-		   $(".spinner").hide();
-		   
-		   $("tr").click(function(event) {
-				if(event.target.nodeName != "A"){
-					if ($(this).attr("title") === null || typeof($(this).attr("title")) == 'undefined' || $(this).attr("title")==0){
-				}
-					else{
-						 $.mobile.changePage( "#page5", { transition: "slide", changeHash: false });
-						 carica5($(this).attr("title"))
-					}
-				}
-			});
-		   
-		   var myScroll4;
-		   
-		   myScroll4 = new iScroll('wrapper4', { click: true });
-		   setTimeout (function(){
-				myScroll4.refresh();
-			}, 700);
-		   
-		   
-		   document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-		   
-		   document.addEventListener('DOMContentLoaded', loaded, false);
-		   
-		   },
-		   error: function(){
-		   $(".spinner").hide();
-		   
-		   navigator.notification.alert(
-										'possible network error 2',  // message
-										alertDismissed,         // callback
-										'Error',            // title
-										'OK'                  // buttonName
-										);
-		   
-		   
-		   },
-		   dataType:"json"});
+function chiudipanel() {
+    $('#transp').removeClass('div1').addClass('div2');
 }
 
-function provino2(id) {
-	var ciccio;
-	var conta = 1;
-	
-	var contenuto2 = ""
-	
-	$(".spinner").show();
-	$.ajax({
-		   type:"GET",
-		   url:"http://interactivebusinessapp.it/event_details/by_id/"+ id +"/tokendiprova",
-		   //data: {token:localStorage.getItem("Token")},
-		   contentType: "application/json; charset=utf-8",
-		   json: 'callback',
-		   timeout: 7000,
-		   crossDomain: true,
-		   success:function(result){
+function checkPos() {
+    
+    navigator.geolocation.getCurrentPosition(onSuccess, onError, { maximumAge:600000, timeout:80000, enableHighAccuracy: true });
+    
+    function onSuccess(position) {
 
-				  if (result.company_id!=0){
-					contenuto2 = contenuto2 + "<table width='98%' height='100%' border='0' valign='center' align='center' class='div8'><tr><td width='100%' align='center' colspan='2'><font size='3' color='#042e72'><b>"+ result.activated_at +" - "+ result.expire_on +"</b></font></td></tr><tr><td width='100%' colspan='2' align='center'><font size='3' color='#000'><b>"+ result.title +"</b></font></td></tr><tr><td><hr></td></tr><tr> <td width='100%' align='left'>"+ result.description +"</td></tr><tr> <td width='100%'>&nbsp;</td></tr><tr><td width='100%' align='center' colspan='2'><img src='http://interactivebusinessapp.it/event_image/full_size/by_tag/"+ result.image_tag +"' width='90%'></td></tr></table>"
-				  
-					conta = conta + 1;
-				  
-				  }
-				  else{
-				  
-				  contenuto2 = contenuto2 + "<table width='98%' height='100%' border='0' valign='center' align='center' class='div8'><tr><td width='100%' align='center' colspan='2'>Nessuna Notifica</td></tr><tr><td width='100%' colspan='2'>Titolo della notifica</td></tr><tr><td><hr></td></tr><tr> <td width='100%' align='left'></td></tr><tr> <td width='100%'>&nbsp;</td></tr><tr><td width='100%' align='center' colspan='2'></td></tr></table>"
-				  }
-		   
-		   $("#contenuto2").html(contenuto2);
-		   
-		   
-		   var myScroll5;
-		   
-		   myScroll5 = new iScroll('wrapper5', {
-								   zoom: true,
-								   click: true,
-								   zoomMin:1,
-								   zoomMax:2
-			});
-		   setTimeout (function(){
-				$(".spinner").hide();
-				myScroll5.refresh();
-			}, 700);
-		   
-		   
-		   document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-		   
-		   document.addEventListener('DOMContentLoaded', loaded, false);
-		   
+        var ciao = position.coords.latitude;
 
-		   
-		   },
-		   error: function(){
-		   $(".spinner").hide();
-		   
-		   navigator.notification.alert(
-										'possible network error',  // message
-										alertDismissed,         // callback
-										'Error',            // title
-										'OK'                  // buttonName
-										);
-		   
-		   
-		   },
-		   dataType:"json"});
-}
+        var ciao1 = position.coords.longitude;
 
-function checkpush() {
+        localStorage.setItem("lat", ciao);
 
-	$(".spinner").show();
-	$.ajax({
-		   type:"GET",
-		   url:"http://interactivebusinessapp.it/event_list/tokendiprova",
-		   //data: {token:localStorage.getItem("Token")},
-		   contentType: "application/json; charset=utf-8",
-		   json: 'callback',
-		   timeout: 7000,
-		   crossDomain: true,
-		   success:function(result){
-		   
-		   $.each(result, function(i,item){
-				  
-				  if (item.company_id!=0){
-				  //OK
-				  
-					if(item.is_read==false){
-					  $("#pushbutton").removeClass("pulsante3").addClass("pulsante3new");
-					  return false;
-					}
-				  }
-			});
+        localStorage.setItem("lng", ciao1);
 
-		   
-		   $(".spinner").hide();
-		   
-		   
-		   },
-		   error: function(jqxhr,textStatus,errorThrown){
+        localStorage.setItem("geostory", "SI");
 		
-		console.log(jqxhr);
-		console.log(textStatus);
-		console.log(errorThrown);
+		 //alert(ciao + "--" + ciao1 + "One");
+    }
 
-					
-		   //alert(ts.responseText)
-		   
-		   $(".spinner").hide();
-		
-		   navigator.notification.alert(
-										'possible network error 3',  // message
-										alertDismissed,         // callback
-										'Error',            // title
-										'OK'                  // buttonName
-										);
-		   
-		   
-		   },
-		   dataType:"json"});
+    function onError(error) {
+        
+        localStorage.setItem("geostory", "NO");
+    }
+    
 }
 
-
-
-function regToken(token) {
-	var ciccio;
-	var conta = 1;
-	
-	$(".spinner").show();
-	$.ajax({
-		   type:"GET",
-		   url:"http://interactivebusinessapp.it/device/set_token/lpJkwsXpIGgLLAROXQoDbvEMblCgeTjAj2VQuTgdAwZl7Q95Gy/nD44CFruHMUPGbj213sd1kMiHygU41biNIThN36jWE2JPN8RZF/"+ token +"",
-		   //url:"http://interactivebusinessapp.it/device/set_token/{platform_code}/{company_code}/{device_token}",
-		   //Android PxgLiaL7dBgTYUzUyHZRNGIUlT5NIabyHrkZC57PHoJGiiAQZA
-		   //data: {token:localStorage.getItem("Token")},
-		   contentType: "application/json; charset=utf-8",
-		   json: 'callback',
-		   timeout: 7000,
-		   crossDomain: true,
-		   success:function(result){
-		   
-
-		   
-		   },
-		   error: function(){
-		   $(".spinner").hide();
-		   
-		   navigator.notification.alert(
-										'possible network error',  // message
-										alertDismissed,         // callback
-										'Error',            // title
-										'OK'                  // buttonName
-										);
-		   
-		   window.location.href = "#article4";
-		   
-		   },
-		   dataType:"json"});
-}
-
-function apri(){
-
-	$("#pluto").show();
-	$("#pippo").slideToggle( "slow" );
-}
-
-function aprisms(){
-	
-	$("#pluto5").show();
-	$("#pippo5").slideToggle("slow");
-}
-
-function chiudi(){
-	
-	$("#pluto").hide();
-	$("#pippo").slideToggle( "slow" );
-}
-
-function chiudi5(){
-	
-	$("#pluto5").hide();
-	$("#pippo5").slideToggle("slow");
-}
-
-function vedi () {
-	
-	var myScroll7;
-	
-	myScroll7 = new iScroll('wrapper7', {
-							zoom: true,
-							click: true,
-							zoomMin:1,
-							zoomMax:2
-	});
-	setTimeout (function(){
-		myScroll7.refresh();
-	}, 500);
-	
-	
-	document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
-	
-	document.addEventListener('DOMContentLoaded', loaded, false);
-	
-	//$("#altro").show();
-	//myScroll.refresh();
-	
-}
-
-function NoVedi () {
-	myScroll.scrollTo(0,0);
-	myScroll.refresh();
-}
-
-
-function aprifb () {
-	var ref = window.open('https://www.facebook.com/domenico.putignano.52', '_system', 'location=no');
-}
-
-function apritw () {
-	var ref = window.open('https://www.facebook.com/domenico.putignano.52', '_system', 'location=no');
-}
-
-function aprili () {
-	var ref = window.open('https://www.facebook.com/domenico.putignano.52', '_system', 'location=no');
-}
-
-function aprimail () {
-
-window.plugin.email.open({
-	to:      'max@mustermann.de',
-	subject: 'Greetings',
-	body:    '<h1>Nice greetings from Leipzig</h1>',
-	isHtml:  true
+function send() {
+    window.plugin.email.open({
+    to:      ['info@pokeranswer.it'],
+    subject: 'Contatto',
+    body:    'Scrivici pure, risponderemo alle tue domande nel piu breve tempo possibile...<br><br>TeamPokerAnswer<br><img src="http://www.pokeranswer.it/img/logo256.png" width="80px">',
+    isHtml:  true
 });
+}
 
+function friend() {
+    window.plugin.email.open({
+    to:      [''],
+    subject: 'Nuova Applicazione sul Poker',
+    body:    'Scopri la nuova applicazione PokerAnswer, tante funzioni pensate per tutti giocatori.<br><br><img src="http://www.pokeranswer.it/img/logo256.png" width="80px">',
+    isHtml:  true
+    });
 
 }
 
-function mandasms () {
-	window.plugins.socialsharing.shareViaSMS("My cool message", "0612345678", function(msg) {console.log('ok: ' + msg)}, function(msg) {alert('error: ' + msg)})
+function onResume() {
+    app.initialize();
 }
 
-function aprimappa () {
-	
-	var addressLongLat = '41.929622, 12.608878';
-	
-	window.open("http://maps.apple.com/?q="+addressLongLat, '_blank');
-	
+function compraFB() {
+    window.plugins.socialsharing.shareViaFacebook('PokerAnswer, Il poker nelle tue mani!', 'http://www.pokeranswer.it/img/logo256.png', 'http://www.pokeranswer.it', function() {notifiche('Condivisione Riuscita')}, function(errormsg){notifiche('Nessuna Condivisione')});
+    
+    //alert('compra chips');
 }
-
-function aprivideo1 () {
-	
-var id = "cf5PVgbrlCM";
-var ref = window.open('http://www.youtube.com/embed/cf5PVgbrlCM?html5=1', '_blank', 'location=yes');
-	
-}
-
-function aprivideo2 () {
-	
-var id = "Hl10lNEVBrU";
-var ref = window.open('http://www.youtube.com/embed/Hl10lNEVBrU?html5=1', '_blank', 'location=yes');
-	
-}
-
-/*function aprivideo1 () {
-	
-VideoPlayer.play("https://www.youtube.com/watch?v=cf5PVgbrlCM");
-	
-}
-
-function aprivideo2 () {
-	
-VideoPlayer.play("https://www.youtube.com/watch?v=Hl10lNEVBrU");
-	
-}*/
-
